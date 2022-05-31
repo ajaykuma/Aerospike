@@ -73,6 +73,8 @@ Type "help", "copyright", "credits" or "license" for more information.
 
 >root@instance-template-1:~/aerospike-server-community-5.7.0.17-ubuntu18.04# ufw status
 Status: inactive
+
+#if firewall turned on (replace eth1 with your interface)[interface can be found by using 'ip address']
 root@instance-template-1:~/aerospike-server-community-5.7.0.17-ubuntu18.04# sudo ufw allow in on eth1 to any port 3000 proto tcp
 Rules updated
 Rules updated (v6)

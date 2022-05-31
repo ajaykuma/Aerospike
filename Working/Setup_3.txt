@@ -27,9 +27,9 @@ root@instance-template-1:~#cp /etc/aerospike/aerospike.conf /usr/local/myconfs
 root@instance-template-1:~#vi /etc/aerospike/aerospike.conf
 
 #to setup cluster using 'mesh' mode
-#Earlier our single node cluster was probably multicast mode
+#Earlier our single node cluster was setup with multicast mode settings
 
----
+---edit heartbeat stanza to have the following
 heartbeat {
                 mode mesh
                 address 10.128.0.3
@@ -38,9 +38,11 @@ heartbeat {
                 # List one or more other nodes, one ip-address & port per line:
                 # Please note that we do not have the address of the incoming node in this list
                 mesh-seed-address-port 10.128.0.3  3002
-                mesh-seed-address-port 10.128.0.4  3002
+                #mesh-seed-address-port 10.128.0.4  3002 #ip and port for 2nd node
+		#mesh-seed-address-port 10.128.0.5  3002 #ip and port for 3rd node
                 # Having the node itself as a mesh seed node is allowed
                 # and helps with consistent configuration files across the cluster
+		#we can just keep our 1st node as seed
                 interval 150
                 timeout 10
         }
@@ -58,7 +60,7 @@ heartbeat {
 #specifiying our internal ip
 network {
         service {
-                address any
+                #address any
                 access-address 10.128.0.3
                 port 3000
         }
@@ -83,6 +85,7 @@ root@instance-template-1:~#service aerospike start
 ##2nd Node--10.128.0.4
 #using your existing VM template , spin up a new machine
 #make sure you add your own public ssh key as we did in 1st machine before create & start of your new machine
+
 #repeat steps on new instance to setup aerospike (as done in 1st instance)
 
 #before starting aerospike, edit aerospike.conf as done on 1st machine or copy the config from 1st node
@@ -98,6 +101,7 @@ root@instance-template-1:~#service aerospike start
 #check log and look at cluster size
 #check in AMC if cluster shows up 2 nodes
 
+#same thing can be repeated on 3rd machine
 ------------------------------------------
 ###Removing a node from cluster..
 Removing a node from a cluster is as easy as stopping the node
