@@ -1,0 +1,275 @@
+Tools setup and usage
+--------------
+apt-get install python3-distutils (if not done )
+
+###########CLUSTER MANAGEMENT TOOLS##################
+
+--configurations
+root@instance-template-1:~# ls /etc/aerospike/astools.conf
+
+##Aerospike Admin (asadm)
+Aerospike Admin is an interactive Python utility used for getting summary info for the current health of a cluster,
+administering the access control list (ACL), managing user defined functions (UDFs), 
+managing secondary indexes (sindex), changing dynamic configurations, and tuning commands across the cluster.
+
+root@instance-template-1:~#asadm --help
+
+root@instance-template-1:~# asadm
+Seed:        [('127.0.0.1', 3000, None)]
+Config_file: /root/.aerospike/astools.conf, /etc/aerospike/astools.conf
+Aerospike Interactive Shell, version 2.4.0
+
+Found 1 nodes
+Online:  10.128.0.3:3000
+
+Admin> summary
+Cluster
+=======
+
+   1.   Server Version     :  C-5.7.0.17
+   2.   OS Version         :  Ubuntu 18.04.6 LTS (5.4.0-1072-gcp)
+   3.   Cluster Size       :  1
+   4.   Devices            :  Total 1, per-node 1
+   5.   Memory             :  Total 8.000 GB, 0.00% used (88.000 B), 100.00% available (8.000 GB)
+   6.   Disk               :  Total 8.000 GB, 0.00% used (0.000 B), 99.00% available contiguous space (7.920 GB)
+   7.   Usage (Unique Data):  53.000 B
+   8.   Active Namespaces  :  1 of 2
+   9.   Features           :  KVS, Scan
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Namespaces~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Namespace|~~~Devices~~~~|~~~~~~~~Memory~~~~~~~|~~~~~~~~~Disk~~~~~~~~|Replication| Master
+         |Total|Per-Node|   Total|Used%|Avail%|   Total|Used%|Avail%|    Factors|Objects
+bar      |    1|       1|4.000 GB|  0.0| 100.0|8.000 GB|  0.0|  99.0|          2|0.000
+test     |    0|       0|4.000 GB|  0.0| 100.0|0.000 B |  0.0|   0.0|          2|1.000
+Number of rows: 2
+
+----------------
+#Show 'info network' 3 times and pause for 1 second each time.
+Admin> watch 1 3 info network
+[ 2022-05-29 20:02:50 'info network' sleep: 1.0s iteration: 1  of 3 ]
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Network Information (2022-05-29 20:02:50 UTC)~~~~~~~~~~~~~~~             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                                                                Node|         Node ID|             IP|     Build|Migrations|~~~~             ~~~~~~~~~~~~~Cluster~~~~~~~~~~~~~~~~~~|Client|  Uptime
+                                                                    |                |               |          |          |Size             |        Key|Integrity|      Principal| Conns|
+instance-template-1.us-central1-a.c.model-block-277513.internal:3000|*BB90300800A0142|10.128.0.3:3000|C-5.7.0.17|   0.000  |   1             |491429E3053|True     |BB90300800A0142|     5|00:38:41
+Number of rows: 1
+
+
+[ 2022-05-29 20:02:51 'info network' sleep: 1.0s iteration: 2  of 3 ]
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Network Information (2022-05-29 20:02:51 UTC)~~~~~~~~~~~~~~~             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                                                                Node|         Node ID|             IP|     Build|Migrations|~~~~             ~~~~~~~~~~~~~Cluster~~~~~~~~~~~~~~~~~~|Client|  Uptime
+                                                                    |                |               |          |          |Size             |        Key|Integrity|      Principal| Conns|
+instance-template-1.us-central1-a.c.model-block-277513.internal:3000|*BB90300800A0142|10.128.0.3:3000|C-5.7.0.17|   0.000  |   1             |491429E3053|True     |BB90300800A0142|     4|00:38:42
+Number of rows: 1
+
+
+[ 2022-05-29 20:02:52 'info network' sleep: 1.0s iteration: 3  of 3 ]
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Network Information (2022-05-29 20:02:52 UTC)~~~~~~~~~~~~~~~             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                                                                Node|         Node ID|             IP|     Build|Migrations|~~~~             ~~~~~~~~~~~~~Cluster~~~~~~~~~~~~~~~~~~|Client|  Uptime
+                                                                    |                |               |          |          |Size             |        Key|Integrity|      Principal| Conns|
+instance-template-1.us-central1-a.c.model-block-277513.internal:3000|*BB90300800A0142|10.128.0.3:3000|C-5.7.0.17|   0.000  |   1             |491429E3053|True     |BB90300800A0142|     4|00:38:43
+Number of rows: 1
+
+--------------
+
+#Show "info namespace" with 5 seconds pause until interrupted
+Admin> watch 5 info namespace
+[ 2022-05-29 20:04:24 'info namespace' sleep: 5.0s iteration: 1 ]
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Namespace Usage Information (2022-05-29 20:04:24 UTC)~~~~~~~~~~~~~~~~~~~~~~~~~    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Namespace|                                                                Node|  Total|Expirations|Evictions|  Stop|~~~~~~~~~~~Disk~~~~~~~~~~    ~|~~~~~~~~~~Memory~~~~~~~~~~|~Primary~
+         |                                                                    |Records|           |         |Writes|    Used|Used%|HWM%|Avail    %|     Used|Used%|HWM%|Stop%|~~Index~~
+         |                                                                    |       |           |         |      |        |     |    |          |         |     |    |     |     Type
+bar      |instance-template-1.us-central1-a.c.model-block-277513.internal:3000|0.000  |    0.000  |  0.000  |False |0.000 B |    0|   0|    9    9| 0.000 B |    0|   0|   90|mem
+bar      |                                                                    |0.000  |    0.000  |  0.000  |      |0.000 B |     |    |          | 0.000 B |     |    |     |
+test     |instance-template-1.us-central1-a.c.model-block-277513.internal:3000|1.000  |    0.000  |  0.000  |False |      --|   --|   0|    -    -|88.000 B |    1|   0|   90|mem
+test     |                                                                    |1.000  |    0.000  |  0.000  |      |      --|     |    |          |88.000 B |     |    |     |
+Number of rows: 2
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Namespace Object Information (2022-05-29 20:04:24 UTC)~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Namespace|                                                                Node|Rack|  Repl|  Total|~~~~~~~~~~Objects~~~~~~~~~~|~~~~~~~~~Tombs    tones~~~~~~~~|~~~~Pending~~~~
+         |                                                                    |  ID|Factor|Records| Master|  Prole|Non-Replica| Master|  Prol    e|Non-Replica|~~~~Migrates~~~
+         |                                                                    |    |      |       |       |       |           |       |           |           |     Tx|     Rx
+bar      |instance-template-1.us-central1-a.c.model-block-277513.internal:3000|   0|     1|0.000  |0.000  |0.000  |    0.000  |0.000  |0.000      |    0.000  |0.000  |0.000
+bar      |                                                                    |    |      |0.000  |0.000  |0.000  |    0.000  |0.000  |0.000      |    0.000  |0.000  |0.000
+test     |instance-template-1.us-central1-a.c.model-block-277513.internal:3000|   0|     1|1.000  |1.000  |0.000  |    0.000  |0.000  |0.000      |    0.000  |0.000  |0.000
+test     |                                                                    |    |      |1.000  |1.000  |0.000  |    0.000  |0.000  |0.000      |    0.000  |0.000  |0.000
+Number of rows: 2
+
+
+[ 2022-05-29 20:04:29 'info namespace' sleep: 5.0s iteration: 2 ]
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Namespace Usage Information (2022-05-29 20:04:29 UTC)~~~~~~~~~~~~~~~~~~~~~~~~~    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Namespace|                                                                Node|  Total|Expirations|Evictions|  Stop|~~~~~~~~~~~Disk~~~~~~~~~~    ~|~~~~~~~~~~Memory~~~~~~~~~~|~Primary~
+         |                                                                    |Records|           |         |Writes|    Used|Used%|HWM%|Avail    %|     Used|Used%|HWM%|Stop%|~~Index~~
+         |                                                                    |       |           |         |      |        |     |    |          |         |     |    |     |     Type
+bar      |instance-template-1.us-central1-a.c.model-block-277513.internal:3000|0.000  |    0.000  |  0.000  |False |0.000 B |    0|   0|    9    9| 0.000 B |    0|   0|   90|mem
+bar      |                                                                    |0.000  |    0.000  |  0.000  |      |0.000 B |     |    |          | 0.000 B |     |    |     |
+test     |instance-template-1.us-central1-a.c.model-block-277513.internal:3000|1.000  |    0.000  |  0.000  |False |      --|   --|   0|    -    -|88.000 B |    1|   0|   90|mem
+test     |                                                                    |1.000  |    0.000  |  0.000  |      |      --|     |    |          |88.000 B |     |    |     |
+Number of rows: 2
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Namespace Object Information (2022-05-29 20:04:29 UTC)~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Namespace|                                                                Node|Rack|  Repl|  Total|~~~~~~~~~~Objects~~~~~~~~~~|~~~~~~~~~Tombs    tones~~~~~~~~|~~~~Pending~~~~
+         |                                                                    |  ID|Factor|Records| Master|  Prole|Non-Replica| Master|  Prol    e|Non-Replica|~~~~Migrates~~~
+         |                                                                    |    |      |       |       |       |           |       |           |           |     Tx|     Rx
+bar      |instance-template-1.us-central1-a.c.model-block-277513.internal:3000|   0|     1|0.000  |0.000  |0.000  |    0.000  |0.000  |0.000      |    0.000  |0.000  |0.000
+bar      |                                                                    |    |      |0.000  |0.000  |0.000  |    0.000  |0.000  |0.000      |    0.000  |0.000  |0.000
+test     |instance-template-1.us-central1-a.c.model-block-277513.internal:3000|   0|     1|1.000  |1.000  |0.000  |    0.000  |0.000  |0.000      |    0.000  |0.000  |0.000
+test     |                                                                    |    |      |1.000  |1.000  |0.000  |    0.000  |0.000  |0.000      |    0.000  |0.000  |0.000
+Number of rows: 2
+
+-----------------
+
+##Aerospike Information Tool (asinfo)
+asinfo is a command-line utility that provides an interface to Aerospike's cluster command and control functions. 
+This includes the ability to change server configuration parameters while the Aerospike is running.
+
+root@instance-template-1:~# asinfo
+1 :  features
+     batch-index;blob-bits;cdt-list;cdt-map;cluster-stable;float;geo;sindex-exists;peers;pipelining;pscans;
+query-show;relaxed-sc;replicas;replicas-all;replicas-master;replicas-max;truncate-namespace;udf
+2 :  node
+     BB90300800A0142
+3 :  compatibility-id
+     10
+4 :  edition
+     Aerospike Community Edition
+5 :  build_time
+     Wed Apr 20 00:41:47 UTC 2022
+6 :  build_os
+     ubuntu18.04
+7 :  build
+     5.7.0.17
+8 :  version
+     Aerospike Community Edition build 5.7.0.17
+9 :  statistics
+     .....
+10 :  services-alumni
+
+11 :  services
+
+12 :  partition-generation
+     0
+
+OR
+Aerospike also provides a telnet service which is typically configured to port 3003. This service provides the 
+same functionality as asinfo, once connected type the same commands
+
+root@instance-template-1:~# asinfo -v "namespaces"
+test;bar
+root@instance-template-1:~# telnet 127.0.0.1 3003
+Trying 127.0.0.1...
+Connected to 127.0.0.1.
+Escape character is '^]'.
+namespaces
+test;bar
+
+-------------
+##Speeding Up Cold Starts with the Aerospike Shared-Memory Tool (asmt)
+Aerospike Shared-Memory Tool (asmt) lets you perform faster cold starts of nodes in an Aerospike Database 
+Enterprise Edition cluster.
+#You cannot use asmt while your Aerospike cluster is running.
+
+
+###############DATA MANAGEMENT TOOLS###################
+##AQL: Aerospike Query Language
+AQL is a data browser for examination of the DB and a tool for lightweight administrative tasks for maintaining.
+
+The aql command is complementary to asadm and asinfo, which are the primary administrative mechanisms for major, 
+extensive DB needs or examination.
+
+##Aerospike Validation Tool (asvalidation)
+The asvalidation tool checks the validity of collection data type (CDT) bins in a namespace. 
+It produces a report of problem bins it discovers. 
+It also has an option to fix some of the discovered problems.
+
+######################Performance Assessment & Monitoring tools#################
+##Log Latency Tool (asloglatency)
+The Aerospike Log Latency tool (asloglatency) analyzes Aerospike log files and returns the 
+latency measurements. It returns latency analysis for a given time period in a tabular, 
+easy to read form. The utility analyzes a histogram by parsing latency log lines during 
+successive time slices, and calculating the percentage of operations in each time slice 
+that exceeded various latency thresholds.
+
+for example:
+asloglatency -h {test}-write
+
+##Aerospike Benchmark (asbench)
+The Aerospike Benchmark tool measures the performance of an Aerospike cluster. 
+It can mimic real-world workloads with configurable record structures, various access patterns, and UDF calls.
+
+root@instance-template-1:~# asbench
+hosts:                  127.0.0.1
+port:                   3000
+user:                   (null)
+services-alternate:     false
+namespace:              test
+set:                    testset
+start-key:              1
+keys/records:           1000000
+object spec:            I4
+- duration: 10
+  desc: default config (specify your own with --workload-stages)
+  tps: 0
+  key-start: 1
+  key-end: 1000001
+  pause: 0
+  batch-size: 1
+  async: false
+  random: false
+  workload: RU,50%
+  stage: 1
+  object-spec: I4
+  read-bins: (null)
+  write-bins: (null)
+threads:                16
+enable compression:     false
+compression ratio:      1.000000
+read socket timeout:    30000 ms
+write socket timeout:   30000 ms
+read total timeout:     1000 ms
+write total timeout:    1000 ms
+max retries:            1
+debug:                  false
+latency:                false
+latency histogram:      false
+cumulative HDR hist:    false
+shared memory:          false
+read replica:           sequence
+read mode AP:           one
+read mode SC:           session
+write commit level:     all
+conn pools per node:    1
+async max commands:     50
+event loops:            1
+auth mode:              INTERNAL
+2022-05-29 20:23:37.691 INFO Add node BB90300800A0142 127.0.0.1:3000
+2022-05-29 20:23:37.697 INFO Start 16 transaction threads
+Stage 1: default config (specify your own with --workload-stages)
+2022-05-29 20:23:38.697 INFO write(tps=19677 timeouts=0 errors=0) read(tps=19915 timeouts=0 errors=0) total(tps=39592 timeouts=0 errors=0)
+2022-05-29 20:23:39.697 INFO write(tps=19849 timeouts=0 errors=0) read(tps=19827 timeouts=0 errors=0) total(tps=39676 timeouts=0 errors=0)
+2022-05-29 20:23:40.697 INFO write(tps=19646 timeouts=0 errors=0) read(tps=19683 timeouts=0 errors=0) total(tps=39329 timeouts=0 errors=0)
+2022-05-29 20:23:41.697 INFO write(tps=19927 timeouts=0 errors=0) read(tps=19710 timeouts=0 errors=0) total(tps=39637 timeouts=0 errors=0)
+2022-05-29 20:23:42.697 INFO write(tps=19943 timeouts=0 errors=0) read(tps=19820 timeouts=0 errors=0) total(tps=39763 timeouts=0 errors=0)
+^C
+root@instance-template-1:~#
+root@instance-template-1:~# asbench  -n  test -k 1000 -l 30 -S 1 -w RU,10 -z 20
+
+#############Data Import/Export Tools################
+##Aerospike Loader (asloader)
+The Aerospike Loader can help migrate data from any other database to Aerospike. 
+A user can dump data from different databases in .DSV format and use this tool to parse 
+and load the data into an Aerospike cluster. The user needs to provide .DSV data files to 
+load and an aerospike schema file in JSON format. The asloader tool will parse those .DSV files 
+and load the data into the Aerospike cluster according to the given schema in the schema file(s).
+
+##asbackup and asrestore for backup & restore
+
+The Aerospike tools for backing up and restoring are asbackup and asrestore
+
+----------------------------------------------------------
+
+https://docs.aerospike.com/server/operations/install/common/benchmark
+----------------------------------------------------------
+
+
+

@@ -1,0 +1,55 @@
+vi /etc/aerospike/aerospike.conf
+
+configure namespaces:
+#we can use these as samples for our namespaces (i.e databases)
+
+namespace test {
+        replication-factor 2
+        memory-size 4G
+        default-ttl 30d # 30 days ,use 0 to never expire/evict.
+        allow-ttl-without-nsup true
+        storage-engine memory
+}
+
+#uses 4g ram, 
+#clears out every 30 days and stores everything in memory 
+#which means, i.e. if node does down , we loose everything
+#allow-ttl-without-nsup true
+
+namespace bar {
+        replication-factor 2
+        memory-size 4G
+        default-ttl 30d # 30 days ,use 0 to never expire/evict.
+        storage-engine memory
+
+        # To use file storage backing, comment out the line above and use the
+        # following lines instead.
+#       storage-engine device {
+#               file /opt/aerospike/data/bar.dat
+#               filesize 16G
+#               data-in-memory true # Store data in memory in addition to file.
+#       }
+
+for bar make changes as shown:
+--default-ttl 0 (as we dont want to loose data afetr 30 days)
+--comment our storage-engine memory
+--uncomment storage-engine device
+--uncomment data-in-memory and set to true (it will still use memory for faster access)
+
+so finally bar namespace would be as follows:
+namespace bar {
+        replication-factor 2
+        memory-size 4G
+        default-ttl 0 # 30 days ,use 0 to never expire/evict.
+        #storage-engine memory
+
+        # To use file storage backing, comment out the line above and use the
+        # following lines instead.
+        storage-engine device {
+                file /opt/aerospike/data/bar.dat
+                filesize 8G
+                data-in-memory true # Store data in memory in addition to file.
+        }
+}
+
+

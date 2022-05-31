@@ -1,0 +1,299 @@
+#Aerospike 
+
+Terminologies:
+Cluster Hosts namespaces.
+Namespace = Database
+Sets = Tables
+Keys/Records = Rows
+Bins = Columns
+
+#Install Aerospike community edition on Ubuntu 18
+>wget -O aerospike.tgz https://download.aerospike.com/artifacts/aerospike-server-community/5.7.0.17/aerospike-server-community-5.7.0.17-ubuntu18.04.tgz
+>tar -xvf aerospike.tgz
+
+>root@instance-template-1:~# ls
+aerospike-server-community-5.7.0.17-ubuntu18.04  aerospike.tgz
+
+#The directory includes:
+
+#license.txt — licenses for Aerospike and other software included in the package.
+#aerospike-tools-<aerospike_version>.<ubuntu_version>.x86_64.deb — Aerospike command-line tools and utilities.
+#aerospike-server-<community_or_enterprise>-<aerospike_version>.<ubuntu_version>.x86_64.deb — the Aerospike server package.
+
+>root@instance-template-1:~# ls aerospike-server-community-5.7.0.17-ubuntu18.04/
+LICENSE     aerospike-server-community-5.7.0.17.ubuntu18.04.x86_64.deb  asinstall
+SHA256SUMS  aerospike-tools-6.1.0.ubuntu18.04.x86_64.deb                dep-check
+
+#Install:
+>root@instance-template-1:~# cd aerospike-server-community-5.7.0.17-ubuntu18.04/
+>root@instance-template-1:~/aerospike-server-community-5.7.0.17-ubuntu18.04# sudo ./asinstall
+---output---
+WARN: Could not find python3-distutils. Asadm and asinfo will fail.
+WARN: To install either install pip3 or run 'apt-get install python3-distutils'.
+Installing tools
+dpkg -i aerospike-tools-6.1.0.ubuntu18.04.x86_64.deb
+Selecting previously unselected package aerospike-tools.
+(Reading database ... 65719 files and directories currently installed.)
+Preparing to unpack aerospike-tools-6.1.0.ubuntu18.04.x86_64.deb ...
+Unpacking aerospike-tools (6.1.0) ...
+Setting up aerospike-tools (6.1.0) ...
+Installing /opt/aerospike
+Writing /usr/local/lib/python3.6/dist-packages/aerospike.pth
+Adding python path /opt/aerospike/lib/python
+-----output ends---
+
+#Installing server
+>dpkg -i aerospike-server-community-5.7.0.17.ubuntu18.04.x86_64.deb
+
+Selecting previously unselected package aerospike-server-community.
+(Reading database ... 65752 files and directories currently installed.)
+Preparing to unpack aerospike-server-community-5.7.0.17.ubuntu18.04.x86_64.deb ...
+Unpacking aerospike-server-community (5.7.0.17-1) ...
+Setting up aerospike-server-community (5.7.0.17-1) ...
+
+>root@instance-template-1:~/aerospike-server-community-5.7.0.17-ubuntu18.04# 
+
+>root@instance-template-1:~/aerospike-server-community-5.7.0.17-ubuntu18.04# apt-get install python3-distutils
+
+>root@instance-template-1:~/aerospike-server-community-5.7.0.17-ubuntu18.04# python3
+Python 3.6.9 (default, Mar 15 2022, 13:55:28) 
+[GCC 8.4.0] on linux
+Type "help", "copyright", "credits" or "license" for more information.
+>>> quit()
+
+#Configure Aerospike:
+#Installation establishes the server's default configuration. An in-memory test namespace is configured by default.
+
+>root@instance-template-1:~/aerospike-server-community-5.7.0.17-ubuntu18.04# sudo service aerospike status
+● aerospike.service - Aerospike Server
+   Loaded: loaded (/usr/lib/systemd/system/aerospike.service; disabled; vendor preset: enabled)
+  Drop-In: /etc/systemd/system/aerospike.service.d
+           └─aerospike.conf
+   Active: inactive (dead)
+
+>root@instance-template-1:~/aerospike-server-community-5.7.0.17-ubuntu18.04# ufw status
+Status: inactive
+root@instance-template-1:~/aerospike-server-community-5.7.0.17-ubuntu18.04# sudo ufw allow in on eth1 to any port 3000 proto tcp
+Rules updated
+Rules updated (v6)
+
+>root@instance-template-1:~/aerospike-server-community-5.7.0.17-ubuntu18.04#
+
+#Start service and check
+>root@instance-template-1:~/aerospike-server-community-5.7.0.17-ubuntu18.04# sudo service aerospike start
+>root@instance-template-1:~/aerospike-server-community-5.7.0.17-ubuntu18.04# sudo service aerospike status
+● aerospike.service - Aerospike Server
+   Loaded: loaded (/usr/lib/systemd/system/aerospike.service; disabled; vendor preset: enabled)
+  Drop-In: /etc/systemd/system/aerospike.service.d
+           └─aerospike.conf
+   Active: active (running) since Fri 2022-05-27 07:09:09 UTC; 4s ago
+  Process: 3417 ExecStartPre=/bin/systemctl start aerospike_telemetry (code=exited, status=0/SUCCESS)
+  Process: 3399 ExecStartPre=/usr/bin/asd-systemd-helper (code=exited, status=0/SUCCESS)
+ Main PID: 3419 (asd)
+    Tasks: 113 (limit: 4915)
+   CGroup: /system.slice/aerospike.service
+           └─3419 /usr/bin/asd --config-file /etc/aerospike/aerospike.conf --fgdaemon
+
+May 27 07:09:11 instance-template-1 asd[3419]: May 27 2022 07:09:11 GMT: INFO (clustering): (clustering.c:5797) applied new succession list
+May 27 07:09:11 instance-template-1 asd[3419]: May 27 2022 07:09:11 GMT: INFO (clustering): (clustering.c:5799) applied cluster size 1
+May 27 07:09:11 instance-template-1 asd[3419]: May 27 2022 07:09:11 GMT: INFO (exchange): (exchange.c:2319) data exchange started with clus
+May 27 07:09:11 instance-template-1 asd[3419]: May 27 2022 07:09:11 GMT: INFO (exchange): (exchange.c:2671) exchange-compatibility-id: self
+May 27 07:09:11 instance-template-1 asd[3419]: May 27 2022 07:09:11 GMT: INFO (exchange): (exchange.c:3219) received commit command from pr
+May 27 07:09:11 instance-template-1 asd[3419]: May 27 2022 07:09:11 GMT: INFO (exchange): (exchange.c:3182) data exchange completed with cl
+May 27 07:09:11 instance-template-1 asd[3419]: May 27 2022 07:09:11 GMT: INFO (partition): (partition_balance.c:1006) {test} replication fa
+May 27 07:09:11 instance-template-1 asd[3419]: May 27 2022 07:09:11 GMT: INFO (partition): (partition_balance.c:978) {test} rebalanced: exp
+May 27 07:09:11 instance-template-1 asd[3419]: May 27 2022 07:09:11 GMT: INFO (partition): (partition_balance.c:1006) {bar} replication fac
+May 27 07:09:11 instance-template-1 asd[3419]: May 27 2022 07:09:11 GMT: INFO (partition): (partition_balance.c:978) {bar} rebalanced: exp
+
+##AMC- Aerospike Management Console
+--shows info about your cluster
+--Resource usage such as RAM, Disk, Throughput, Nodes, Namespaces etc
+--Statistics, Defintions & Jobs
+
+#Install Aerospike management server -Default Dashboard
+
+>root@instance-template-1:~#cd
+>root@instance-template-1:~# wget https://github.com/aerospike-community/amc/releases/download/5.0.0/aerospike-amc-enterprise-5.0.0_amd64.deb
+>root@instance-template-1:~# dpkg -i aerospike-amc-enterprise-5.0.0_amd64.deb
+>root@instance-template-1:~# ufw allow 8081/tcp
+>root@instance-template-1:~# /etc/init.d/amc start
+[ ok ] Starting amc (via systemctl): amc.service.
+
+>root@instance-template-1:~# /etc/init.d/amc status
+● amc.service - LSB: Manage the amc app server
+   Loaded: loaded (/etc/init.d/amc; generated)
+   Active: active (running) since Sun 2022-05-29 14:20:54 UTC; 5s ago
+     Docs: man:systemd-sysv-generator(8)
+  Process: 3345 ExecStart=/etc/init.d/amc start (code=exited, status=0/SUCCESS)
+ Main PID: 3368 (amc)
+    Tasks: 5 (limit: 4915)
+   CGroup: /system.slice/amc.service
+           └─3368 /opt/amc/amc -config-file=/etc/amc/amc.conf -config-dir=/etc/amc
+
+May 29 14:20:54 instance-template-1 systemd[1]: Starting LSB: Manage the amc app server...
+May 29 14:20:54 instance-template-1 amc[3345]: Starting amc: 0
+May 29 14:20:54 instance-template-1 systemd[1]: Started LSB: Manage the amc app server.
+
+
+#Access the console:
+
+<Ipaddress of node where amc was started/Public-IP>:8081
+--when it asks for IP of node to connect we can give '127.0.0.1' & port as default would be 3000
+http://<Ipaddress of node where amc was started/Public-IP>:8081/#dashboard/127.0.0.1:3000/60/<private-ip>:3000
+
+#Installing go for testing...
+>wget https://go.dev/dl/go1.15.15.linux-amd64.tar.gz
+>root@instance-template-1:~# tar -xf go1.15.15.linux-amd64.tar.gz
+>root@instance-template-1:~# ls
+aerospike-amc-enterprise-5.0.0_amd64.deb  aerospike-server-community-5.7.0.17-ubuntu18.04  
+aerospike.tgz  go  go1.15.15.linux-amd64.tar.gz
+
+>root@instance-template-1:~# mv go /usr/local/go
+>root@instance-template-1:~# chown root:root /usr/local/go
+>root@instance-template-1:~# chmod 755 /usr/local/go
+
+>root@instance-template-1:~# mkdir /usr/local/go/workspace_test
+>root@instance-template-1:~# mkdir /usr/local/go/workspace_test/bin
+>root@instance-template-1:~# mkdir /usr/local/go/workspace_test/pkg
+>root@instance-template-1:~# mkdir /usr/local/go/workspace_test/src
+
+#Setting environment variables:
+>root@instance-template-1:~#vi .bashrc
+export GOPATH=/usr/local/go/workspace_test
+export GOROOT=/usr/local/go
+export GPATH=/usr/local/go
+export PATH=$PATH:$GPATH/bin
+
+>source .bashrc
+
+>root@instance-template-1:~# go version
+go version go1.15.15 linux/amd64
+
+>root@instance-template-1:~# echo $GOPATH
+/usr/local/go/workspace_test
+
+>root@instance-template-1:~# echo $GOROOT
+/usr/local/go
+
+>root@instance-template-1:~# go get github.com/aerospike/aerospike-client-go
+>root@instance-template-1:~# ls /usr/local/go/workspace_test/pkg
+ linux_amd64
+>root@instance-template-1:~# ls /usr/local/go/workspace_test/src
+ github.com  golang.org
+
+>root@instance-template-1:~# cd /usr/local/go/workspace_test/src/github.com/aerospike/aerospike-client-go/tools/benchmark/
+>root@instance-template-1:/usr/local/go/workspace_test/src/github.com/aerospike/aerospike-client-go/tools/benchmark# go run benchmark.go -h 10.128.0.3
+2022/05/29 17:57:37 Setting number of CPUs to use: 2
+2022/05/29 17:57:37 benchmark.go:202: hosts:            10.128.0.3
+2022/05/29 17:57:37 benchmark.go:203: port:             3000
+2022/05/29 17:57:37 benchmark.go:204: namespace:        test
+2022/05/29 17:57:37 benchmark.go:205: set:              testset
+2022/05/29 17:57:37 benchmark.go:206: keys/records:     1000000
+2022/05/29 17:57:37 benchmark.go:207: object spec:      I, size: 0
+2022/05/29 17:57:37 benchmark.go:208: random bin values:        false
+2022/05/29 17:57:37 benchmark.go:209: workload:         Initialize 100% of records
+2022/05/29 17:57:37 benchmark.go:210: concurrency:      32
+2022/05/29 17:57:37 benchmark.go:211: max throughput:   unlimited
+2022/05/29 17:57:37 benchmark.go:212: timeout:          0 ms
+2022/05/29 17:57:37 benchmark.go:213: max retries:      2
+2022/05/29 17:57:37 benchmark.go:214: debug:            false
+2022/05/29 17:57:37 benchmark.go:215: latency:          0:0
+2022/05/29 17:57:37 benchmark.go:216: conn. pool size:  128
+2022/05/29 17:57:37 benchmark.go:217: conn. threshold:  64
+2022/05/29 17:57:37 benchmark.go:156: Warm-up conns.    :127
+2022/05/29 17:57:37 benchmark.go:158: Nodes Found: [BB90300800A0142]
+2022/05/29 17:57:38 benchmark.go:735: write(tps=37849 timeouts=0 errors=0 totalCount=37849)
+2022/05/29 17:57:39 benchmark.go:735: write(tps=43443 timeouts=0 errors=0 totalCount=81292)
+2022/05/29 17:57:40 benchmark.go:735: write(tps=42000 timeouts=0 errors=0 totalCount=123292)
+2022/05/29 17:57:41 benchmark.go:735: write(tps=42687 timeouts=0 errors=0 totalCount=165979)
+2022/05/29 17:57:42 benchmark.go:735: write(tps=44013 timeouts=0 errors=0 totalCount=209992)
+2022/05/29 17:57:43 benchmark.go:735: write(tps=42151 timeouts=0 errors=0 totalCount=252143)
+2022/05/29 17:57:44 benchmark.go:735: write(tps=42846 timeouts=0 errors=0 totalCount=294989)
+2022/05/29 17:57:45 benchmark.go:735: write(tps=43598 timeouts=0 errors=0 totalCount=338587)
+2022/05/29 17:57:46 benchmark.go:735: write(tps=42566 timeouts=0 errors=0 totalCount=381153)
+2022/05/29 17:57:47 benchmark.go:735: write(tps=41282 timeouts=0 errors=0 totalCount=422435)
+2022/05/29 17:57:48 benchmark.go:735: write(tps=43182 timeouts=0 errors=0 totalCount=465617)
+2022/05/29 17:57:49 benchmark.go:735: write(tps=42115 timeouts=0 errors=0 totalCount=507732)
+2022/05/29 17:57:50 benchmark.go:735: write(tps=43425 timeouts=0 errors=0 totalCount=551157)
+2022/05/29 17:57:51 benchmark.go:735: write(tps=43127 timeouts=0 errors=0 totalCount=594284)
+2022/05/29 17:57:52 benchmark.go:735: write(tps=43606 timeouts=0 errors=0 totalCount=637890)
+2022/05/29 17:57:53 benchmark.go:735: write(tps=42294 timeouts=0 errors=0 totalCount=680184)
+2022/05/29 17:57:54 benchmark.go:735: write(tps=44598 timeouts=0 errors=0 totalCount=724782)
+2022/05/29 17:57:55 benchmark.go:735: write(tps=43489 timeouts=0 errors=0 totalCount=768271)
+2022/05/29 17:57:56 benchmark.go:735: write(tps=42221 timeouts=0 errors=0 totalCount=810492)
+2022/05/29 17:57:57 benchmark.go:735: write(tps=42990 timeouts=0 errors=0 totalCount=853482)
+2022/05/29 17:57:58 benchmark.go:735: write(tps=42309 timeouts=0 errors=0 totalCount=895791)
+2022/05/29 17:57:59 benchmark.go:735: write(tps=41770 timeouts=0 errors=0 totalCount=937561)
+2022/05/29 17:58:00 benchmark.go:735: write(tps=44314 timeouts=0 errors=0 totalCount=981875)
+2022/05/29 17:58:00 benchmark.go:735: write(tps=18125 timeouts=0 errors=0 totalCount=1000000)
+
+Note**
+root@instance-template-1:~# go help get
+usage: go get [-d] [-f] [-t] [-u] [-v] [-fix] [-insecure] [build flags] [packages]
+
+Get downloads the packages named by the import paths, along with their
+dependencies. It then installs the named packages, like 'go install'.
+
+The -d flag instructs get to stop after downloading the packages; that is,
+it instructs get not to install the packages.
+
+The -f flag, valid only when -u is set, forces get -u not to verify that
+each package has been checked out from the source control repository
+implied by its import path. This can be useful if the source is a local fork
+of the original.
+
+The -fix flag instructs get to run the fix tool on the downloaded packages
+before resolving dependencies or building the code.
+
+The -insecure flag permits fetching from repositories and resolving
+custom domains using insecure schemes such as HTTP. Use with caution.
+
+The -t flag instructs get to also download the packages required to build
+the tests for the specified packages.
+
+The -u flag instructs get to use the network to update the named packages
+and their dependencies. By default, get uses the network to check out
+missing packages but does not use it to look for updates to existing packages.
+
+The -v flag enables verbose progress and debug output.
+
+Get also accepts build flags to control the installation. See 'go help build'.
+
+When checking out a new package, get creates the target directory
+GOPATH/src/<import-path>. If the GOPATH contains multiple entries,
+get uses the first one. For more details see: 'go help gopath'.
+
+When checking out or updating a package, get looks for a branch or tag
+that matches the locally installed version of Go. The most important
+rule is that if the local installation is running version "go1", get
+searches for a branch or tag named "go1". If no such version exists
+it retrieves the default branch of the package.
+
+When go get checks out or updates a Git repository,
+it also updates any git submodules referenced by the repository.
+
+Get never checks out or updates code stored in vendor directories.
+
+See also: go build, go install, go clean.
+
+===========================
+
+Extras:
+See Configure Aerospike Database to modify and tune the configuration.
+
+Adding devices and more
+To add SSDs, make sure to read about setup and initialization.
+
+Aerospike EE feature key file
+Aerospike EE requires a feature-key file to start up and optionally enable gated features, such as compression. See Configure the Feature Key File.
+Configure Logging
+To configure logging for the Aerospike server, see Configure - Log.
+
+Start Aerospike
+The Aerospike server can be controlled with standard systemctl commands. For details, see Aerospike systemd Daemon Management.
+
+
+
+
+
+

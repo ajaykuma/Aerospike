@@ -1,0 +1,182 @@
+Adding a node:
+
+Aerospike supports adding a single or multiple nodes to a running cluster and does not have specific 
+requirements in the number of nodes that can be added based on the number of existing node.
+
+Note**
+It is important to prepare the node. To avoid any scenario of pre-existing data, the drives must be initialized. 
+New SSD drives must be prepared/installed before use.
+The files under the /opt/aerospike/smd folder should be removed if the node was previously in use in a different cluster.
+ The system metadata files in this folder contain details about secondary index definitions, udf modules, 
+user roles and permissions, truncate and truncate-namespace related information, roster information and more. 
+Adding a node in a cluster with existing data from a different cluster in the smd folder would result 
+in potentially disastrous situations.
+
+##1st Node--10.128.0.3
+Login to your 1st node
+service aerospike status
+service amc status
+
+--check if everything is running fine..
+--stop aerospike
+root@instance-template-1:~#service aerospike status
+root@instance-template-1:~#mkdir /usr/local/myconfs
+root@instance-template-1:~#cp /etc/aerospike/aerospike.conf /usr/local/myconfs
+
+--Now lets edit our existing aerospike.conf for cluster setup
+root@instance-template-1:~#vi /etc/aerospike/aerospike.conf
+
+#to setup cluster using 'mesh' mode
+#Earlier our single node cluster was probably multicast mode
+
+---
+heartbeat {
+                mode mesh
+                address 10.128.0.3
+                port 3002 # Heartbeat port for this node
+
+                # List one or more other nodes, one ip-address & port per line:
+                # Please note that we do not have the address of the incoming node in this list
+                mesh-seed-address-port 10.128.0.3  3002
+                mesh-seed-address-port 10.128.0.4  3002
+                # Having the node itself as a mesh seed node is allowed
+                # and helps with consistent configuration files across the cluster
+                interval 150
+                timeout 10
+        }
+
+        fabric {
+                port 3001
+        }
+
+        info {
+                port 3003
+        }
+}
+
+----
+#specifiying our internal ip
+network {
+        service {
+                address any
+                access-address 10.128.0.3
+                port 3000
+        }
+----
+#specifying log
+logging {
+        file /var/log/aerospike/aerospike.log {
+                context any info
+        }
+}
+-----
+#make sure to create directory 'aerospike' under /var/log & check permissions
+#save 
+root@instance-template-1:~#service aerospike status
+root@instance-template-1:~#service aerospike start
+
+#check in AMC if one node shows up
+
+#check in log /var/log/aerospike/aerospike.log 
+--might show msgs of unable to reach our other machine..
+
+##2nd Node--10.128.0.4
+#using your existing VM template , spin up a new machine
+#make sure you add your own public ssh key as we did in 1st machine before create & start of your new machine
+#repeat steps on new instance to setup aerospike (as done in 1st instance)
+
+#before starting aerospike, edit aerospike.conf as done on 1st machine or copy the config from 1st node
+and change the 
+access-address in 'service' to 10.128.0.4
+address in 'heartbeat' to address 10.128.0.4
+
+#make sure to create directory 'aerospike' under /var/log & check permissions
+
+root@instance-template-1:~#service aerospike status
+root@instance-template-1:~#service aerospike start
+
+#check log and look at cluster size
+#check in AMC if cluster shows up 2 nodes
+
+------------------------------------------
+###Removing a node from cluster..
+Removing a node from a cluster is as easy as stopping the node
+Prevent the remaining nodes in the cluster to re-connect to the removed node if they are restarted.
+Prevent a cluster from attempting to join another cluster when one of its previously removed node is recommissioned.
+
+It is a good practice to quiesce a node prior to shutting it down or removing it from a cluster.
+If the node is shipping records via XDR, it is a good practice to wait for lag to drop to zero prior to removing the node from the cluster.
+
+Findout  the cluster migrations state. One of the way is to look at the migration-related statistics 
+Pending Migrates (tx%,rx%) on all the nodes. 
+
+root@instance-template-1:~# asadm
+Seed:        [('127.0.0.1', 3000, None)]
+Config_file: /root/.aerospike/astools.conf, /etc/aerospike/astools.conf
+Aerospike Interactive Shell, version 2.4.0
+
+Found 2 nodes
+Online:  10.128.0.3:3000, 10.128.0.4:3000
+
+Admin> info namespace
+
+Admin> show statistics like migrate
+
+in our case on node2
+root@instance-template-2:~# sudo service aerospike stop
+root@instance-template-2:~# sudo service aerospike status
+● aerospike.service - Aerospike Server
+   Loaded: loaded (/usr/lib/systemd/system/aerospike.service; disabled; vendor preset: enabled)
+  Drop-In: /etc/systemd/system/aerospike.service.d
+           └─aerospike.conf
+   Active: inactive (dead)
+
+Stopped Aerospike Server.
+
+#If the cluster is formed using mesh mode, the next step is to run the 'tip-clear' 
+command on all the remaining nodes in the cluster. This is to clear the configured 
+hostname tip list from mesh-mode heartbeat list to prevent the remaining nodes from 
+continuously trying to send heartbeats to the removed node.
+
+$ asadm -e "enable; asinfo -v 'tip-clear:host-port-list=<hostname>:3002'"
+
+or
+
+$ asadm
+Admin+> asinfo -v 'tip-clear:host-port-list=10.128.0.4:3002'
+
+
+----output
+Admin> asinfo -v 'tip-clear:host-port-list=10.128.0.4:3002'
+ERROR: User must be in privileged mode to issue "asinfo" commands.
+       Type "enable" to enter privileged mode.
+Admin> enable
+Admin+> asinfo -v 'tip-clear:host-port-list=10.128.0.4:3002'
+instance-template-1.us-central1-a.c.model-block-277513.internal:3000 (10.128.0.3) returned:
+error: 0 cleared, 1 not found
+
+
+-----
+$ asadm
+Admin+> asinfo -v 'dump-hb:verbose=true'
+
+Alumni reset
+As a final step, remove the node from the alumni list. 
+The alumni list is used by some tools to refer to all nodes in a cluster, 
+even nodes that may have split from the cluster, so it is important to also clear this node from the list.
+ This command should be run on all the remaining nodes in the cluster:
+
+Admin+> asinfo -v 'services-alumni-reset'
+instance-template-1.us-central1-a.c.model-block-277513.internal:3000 (10.128.0.3) returned:
+ok
+
+--------------------
+
+
+
+
+
+
+
+
+
