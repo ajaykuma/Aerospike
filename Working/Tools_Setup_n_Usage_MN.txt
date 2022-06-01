@@ -1,0 +1,478 @@
+Tools setup and usage
+--------------
+apt-get install python3-distutils (if not done )
+
+###########CLUSTER MANAGEMENT TOOLS##################
+
+--configurations
+root@instance-template-1:~# ls /etc/aerospike/astools.conf
+
+##IN CLUSTER
+root@instance-template-1:~# asadm
+Seed:        [('127.0.0.1', 3000, None)]
+Config_file: /root/.aerospike/astools.conf, /etc/aerospike/astools.conf
+Aerospike Interactive Shell, version 2.4.0
+
+Found 3 nodes
+Online:  10.128.0.3:3000, 10.128.0.5:3000, 10.128.0.4:3000
+
+Admin> summary
+Cluster
+=======
+
+   1.   Server Version     :  C-5.7.0.17
+   2.   OS Version         :  Ubuntu 18.04.6 LTS (5.4.0-1075-gcp)
+   3.   Cluster Size       :  3
+   4.   Devices            :  Total 3, per-node 1
+   5.   Memory             :  Total 24.000 GB, 0.00% used (0.000 B), 100.00% available (24.000 GB)
+   6.   Disk               :  Total 24.000 GB, 0.00% used (0.000 B), 99.00% available contiguous space (23.760 GB)
+   7.   Usage (Unique Data):  None
+   8.   Active Namespaces  :  0 of 2
+   9.   Features           :
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Namespaces~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Namespace|~~~Devices~~~~|~~~~~~~~Memory~~~~~~~~|~~~~~~~~~Disk~~~~~~~~~|Replication| Master
+         |Total|Per-Node|    Total|Used%|Avail%|    Total|Used%|Avail%|    Factors|Objects
+bar      |    3|       1|12.000 GB|  0.0| 100.0|24.000 GB|  0.0|  99.0|          2|0.000
+test     |    0|       0|12.000 GB|  0.0| 100.0| 0.000 B |  0.0|   0.0|          2|0.000
+Number of rows: 2
+-------------
+#Show 'info network' 3 times and pause for 1 second each time.
+Admin> watch 1 3 info network
+[ 2022-05-31 23:26:44 'info network' sleep: 1.0s iteration: 1  of 3 ]
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Network Information (2022-05-31 23:26:44 UTC)~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                                                                Node|         Node ID|             IP|     Build|Migrations|~~~~~~~~~~~~~~~~~~Cluster~~~~~~~~~~~~~~~~~~|Client|  Uptime
+                                                                    |                |               |          |          |Size|         Key|Integrity|      Principal| Conns|
+instance-template-1.us-central1-a.c.model-block-277513.internal:3000| BB90300800A0142|10.128.0.3:3000|C-5.7.0.17|   0.000  |   3|9BC889C48AB5|True     |BB90500800A0142|     4|00:51:02
+instance-template-2.us-central1-a.c.model-block-277513.internal:3000| BB90400800A0142|10.128.0.4:3000|C-5.7.0.17|   0.000  |   3|9BC889C48AB5|True     |BB90500800A0142|     6|00:25:16
+instance-template-3.us-central1-a.c.model-block-277513.internal:3000|*BB90500800A0142|10.128.0.5:3000|C-5.7.0.17|   0.000  |   3|9BC889C48AB5|True     |BB90500800A0142|     6|00:21:29
+Number of rows: 3
+
+
+[ 2022-05-31 23:26:45 'info network' sleep: 1.0s iteration: 2  of 3 ]
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Network Information (2022-05-31 23:26:45 UTC)~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                                                                Node|         Node ID|             IP|     Build|Migrations|~~~~~~~~~~~~~~~~~~Cluster~~~~~~~~~~~~~~~~~~|Client|  Uptime
+                                                                    |                |               |          |          |Size|         Key|Integrity|      Principal| Conns|
+instance-template-1.us-central1-a.c.model-block-277513.internal:3000| BB90300800A0142|10.128.0.3:3000|C-5.7.0.17|   0.000  |   3|9BC889C48AB5|True     |BB90500800A0142|     3|00:51:03
+instance-template-2.us-central1-a.c.model-block-277513.internal:3000| BB90400800A0142|10.128.0.4:3000|C-5.7.0.17|   0.000  |   3|9BC889C48AB5|True     |BB90500800A0142|     4|00:25:17
+instance-template-3.us-central1-a.c.model-block-277513.internal:3000|*BB90500800A0142|10.128.0.5:3000|C-5.7.0.17|   0.000  |   3|9BC889C48AB5|True     |BB90500800A0142|     4|00:21:30
+Number of rows: 3
+
+
+[ 2022-05-31 23:26:46 'info network' sleep: 1.0s iteration: 3  of 3 ]
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Network Information (2022-05-31 23:26:46 UTC)~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                                                                Node|         Node ID|             IP|     Build|Migrations|~~~~~~~~~~~~~~~~~~Cluster~~~~~~~~~~~~~~~~~~|Client|  Uptime
+                                                                    |                |               |          |          |Size|         Key|Integrity|      Principal| Conns|
+instance-template-1.us-central1-a.c.model-block-277513.internal:3000| BB90300800A0142|10.128.0.3:3000|C-5.7.0.17|   0.000  |   3|9BC889C48AB5|True     |BB90500800A0142|     3|00:51:04
+instance-template-2.us-central1-a.c.model-block-277513.internal:3000| BB90400800A0142|10.128.0.4:3000|C-5.7.0.17|   0.000  |   3|9BC889C48AB5|True     |BB90500800A0142|     4|00:25:18
+instance-template-3.us-central1-a.c.model-block-277513.internal:3000|*BB90500800A0142|10.128.0.5:3000|C-5.7.0.17|   0.000  |   3|9BC889C48AB5|True     |BB90500800A0142|     4|00:21:31
+Number of rows: 3
+
+------------------
+#Show "info namespace" with 5 seconds pause until interrupted
+Admin> watch 5 info namespace
+[ 2022-05-31 23:27:51 'info namespace' sleep: 5.0s iteration: 1 ]
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Namespace Usage Information (2022-05-31 23:27:51 UTC)~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Namespace|                                                                Node|  Total|Expirations|Evictions|  Stop|~~~~~~~~~~~Disk~~~~~~~~~~~|~~~~~~~~~~Memory~~~~~~~~~|~Primary~
+         |                                                                    |Records|           |         |Writes|    Used|Used%|HWM%|Avail%|    Used|Used%|HWM%|Stop%|~~Index~~
+         |                                                                    |       |           |         |      |        |     |    |      |        |     |    |     |     Type
+bar      |instance-template-1.us-central1-a.c.model-block-277513.internal:3000|0.000  |    0.000  |  0.000  |False |0.000 B |    0|   0|    99|0.000 B |    0|   0|   90|mem
+bar      |instance-template-2.us-central1-a.c.model-block-277513.internal:3000|0.000  |    0.000  |  0.000  |False |0.000 B |    0|   0|    99|0.000 B |    0|   0|   90|mem
+bar      |instance-template-3.us-central1-a.c.model-block-277513.internal:3000|0.000  |    0.000  |  0.000  |False |0.000 B |    0|   0|    99|0.000 B |    0|   0|   90|mem
+bar      |                                                                    |0.000  |    0.000  |  0.000  |      |0.000 B |     |    |      |0.000 B |     |    |     |
+test     |instance-template-1.us-central1-a.c.model-block-277513.internal:3000|0.000  |    0.000  |  0.000  |False |      --|   --|   0|    --|0.000 B |    0|   0|   90|mem
+test     |instance-template-2.us-central1-a.c.model-block-277513.internal:3000|0.000  |    0.000  |  0.000  |False |      --|   --|   0|    --|0.000 B |    0|   0|   90|mem
+test     |instance-template-3.us-central1-a.c.model-block-277513.internal:3000|0.000  |    0.000  |  0.000  |False |      --|   --|   0|    --|0.000 B |    0|   0|   90|mem
+test     |                                                                    |0.000  |    0.000  |  0.000  |      |      --|     |    |      |0.000 B |     |    |     |
+Number of rows: 6
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Namespace Object Information (2022-05-31 23:27:51 UTC)~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Namespace|                                                                Node|Rack|  Repl|  Total|~~~~~~~~~~Objects~~~~~~~~~~|~~~~~~~~~Tombstones~~~~~~~~|~~~~Pending~~~~
+         |                                                                    |  ID|Factor|Records| Master|  Prole|Non-Replica| Master|  Prole|Non-Replica|~~~~Migrates~~~
+         |                                                                    |    |      |       |       |       |           |       |       |           |     Tx|     Rx
+bar      |instance-template-1.us-central1-a.c.model-block-277513.internal:3000|   0|     2|0.000  |0.000  |0.000  |    0.000  |0.000  |0.000  |    0.000  |0.000  |0.000
+bar      |instance-template-2.us-central1-a.c.model-block-277513.internal:3000|   0|     2|0.000  |0.000  |0.000  |    0.000  |0.000  |0.000  |    0.000  |0.000  |0.000
+bar      |instance-template-3.us-central1-a.c.model-block-277513.internal:3000|   0|     2|0.000  |0.000  |0.000  |    0.000  |0.000  |0.000  |    0.000  |0.000  |0.000
+bar      |                                                                    |    |      |0.000  |0.000  |0.000  |    0.000  |0.000  |0.000  |    0.000  |0.000  |0.000
+test     |instance-template-1.us-central1-a.c.model-block-277513.internal:3000|   0|     2|0.000  |0.000  |0.000  |    0.000  |0.000  |0.000  |    0.000  |0.000  |0.000
+test     |instance-template-2.us-central1-a.c.model-block-277513.internal:3000|   0|     2|0.000  |0.000  |0.000  |    0.000  |0.000  |0.000  |    0.000  |0.000  |0.000
+test     |instance-template-3.us-central1-a.c.model-block-277513.internal:3000|   0|     2|0.000  |0.000  |0.000  |    0.000  |0.000  |0.000  |    0.000  |0.000  |0.000
+test     |                                                                    |    |      |0.000  |0.000  |0.000  |    0.000  |0.000  |0.000  |    0.000  |0.000  |0.000
+Number of rows: 6
+
+
+[ 2022-05-31 23:27:56 'info namespace' sleep: 5.0s iteration: 2 ]
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Namespace Usage Information (2022-05-31 23:27:56 UTC)~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Namespace|                                                                Node|  Total|Expirations|Evictions|  Stop|~~~~~~~~~~~Disk~~~~~~~~~~~|~~~~~~~~~~Memory~~~~~~~~~|~Primary~
+         |                                                                    |Records|           |         |Writes|    Used|Used%|HWM%|Avail%|    Used|Used%|HWM%|Stop%|~~Index~~
+         |                                                                    |       |           |         |      |        |     |    |      |        |     |    |     |     Type
+bar      |instance-template-1.us-central1-a.c.model-block-277513.internal:3000|0.000  |    0.000  |  0.000  |False |0.000 B |    0|   0|    99|0.000 B |    0|   0|   90|mem
+bar      |instance-template-2.us-central1-a.c.model-block-277513.internal:3000|0.000  |    0.000  |  0.000  |False |0.000 B |    0|   0|    99|0.000 B |    0|   0|   90|mem
+bar      |instance-template-3.us-central1-a.c.model-block-277513.internal:3000|0.000  |    0.000  |  0.000  |False |0.000 B |    0|   0|    99|0.000 B |    0|   0|   90|mem
+bar      |                                                                    |0.000  |    0.000  |  0.000  |      |0.000 B |     |    |      |0.000 B |     |    |     |
+test     |instance-template-1.us-central1-a.c.model-block-277513.internal:3000|0.000  |    0.000  |  0.000  |False |      --|   --|   0|    --|0.000 B |    0|   0|   90|mem
+test     |instance-template-2.us-central1-a.c.model-block-277513.internal:3000|0.000  |    0.000  |  0.000  |False |      --|   --|   0|    --|0.000 B |    0|   0|   90|mem
+test     |instance-template-3.us-central1-a.c.model-block-277513.internal:3000|0.000  |    0.000  |  0.000  |False |      --|   --|   0|    --|0.000 B |    0|   0|   90|mem
+test     |                                                                    |0.000  |    0.000  |  0.000  |      |      --|     |    |      |0.000 B |     |    |     |
+Number of rows: 6
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Namespace Object Information (2022-05-31 23:27:56 UTC)~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Namespace|                                                                Node|Rack|  Repl|  Total|~~~~~~~~~~Objects~~~~~~~~~~|~~~~~~~~~Tombstones~~~~~~~~|~~~~Pending~~~~
+         |                                                                    |  ID|Factor|Records| Master|  Prole|Non-Replica| Master|  Prole|Non-Replica|~~~~Migrates~~~
+         |                                                                    |    |      |       |       |       |           |       |       |           |     Tx|     Rx
+bar      |instance-template-1.us-central1-a.c.model-block-277513.internal:3000|   0|     2|0.000  |0.000  |0.000  |    0.000  |0.000  |0.000  |    0.000  |0.000  |0.000
+bar      |instance-template-2.us-central1-a.c.model-block-277513.internal:3000|   0|     2|0.000  |0.000  |0.000  |    0.000  |0.000  |0.000  |    0.000  |0.000  |0.000
+bar      |instance-template-3.us-central1-a.c.model-block-277513.internal:3000|   0|     2|0.000  |0.000  |0.000  |    0.000  |0.000  |0.000  |    0.000  |0.000  |0.000
+bar      |                                                                    |    |      |0.000  |0.000  |0.000  |    0.000  |0.000  |0.000  |    0.000  |0.000  |0.000
+test     |instance-template-1.us-central1-a.c.model-block-277513.internal:3000|   0|     2|0.000  |0.000  |0.000  |    0.000  |0.000  |0.000  |    0.000  |0.000  |0.000
+test     |instance-template-2.us-central1-a.c.model-block-277513.internal:3000|   0|     2|0.000  |0.000  |0.000  |    0.000  |0.000  |0.000  |    0.000  |0.000  |0.000
+test     |instance-template-3.us-central1-a.c.model-block-277513.internal:3000|   0|     2|0.000  |0.000  |0.000  |    0.000  |0.000  |0.000  |    0.000  |0.000  |0.000
+test     |                                                                    |    |      |0.000  |0.000  |0.000  |    0.000  |0.000  |0.000  |    0.000  |0.000  |0.000
+Number of rows: 6
+
+
+[ 2022-05-31 23:28:01 'info namespace' sleep: 5.0s iteration: 3 ]
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Namespace Usage Information (2022-05-31 23:28:01 UTC)~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Namespace|                                                                Node|  Total|Expirations|Evictions|  Stop|~~~~~~~~~~~Disk~~~~~~~~~~~|~~~~~~~~~~Memory~~~~~~~~~|~Primary~
+         |                                                                    |Records|           |         |Writes|    Used|Used%|HWM%|Avail%|    Used|Used%|HWM%|Stop%|~~Index~~
+         |                                                                    |       |           |         |      |        |     |    |      |        |     |    |     |     Type
+bar      |instance-template-1.us-central1-a.c.model-block-277513.internal:3000|0.000  |    0.000  |  0.000  |False |0.000 B |    0|   0|    99|0.000 B |    0|   0|   90|mem
+bar      |instance-template-2.us-central1-a.c.model-block-277513.internal:3000|0.000  |    0.000  |  0.000  |False |0.000 B |    0|   0|    99|0.000 B |    0|   0|   90|mem
+bar      |instance-template-3.us-central1-a.c.model-block-277513.internal:3000|0.000  |    0.000  |  0.000  |False |0.000 B |    0|   0|    99|0.000 B |    0|   0|   90|mem
+bar      |                                                                    |0.000  |    0.000  |  0.000  |      |0.000 B |     |    |      |0.000 B |     |    |     |
+test     |instance-template-1.us-central1-a.c.model-block-277513.internal:3000|0.000  |    0.000  |  0.000  |False |      --|   --|   0|    --|0.000 B |    0|   0|   90|mem
+test     |instance-template-2.us-central1-a.c.model-block-277513.internal:3000|0.000  |    0.000  |  0.000  |False |      --|   --|   0|    --|0.000 B |    0|   0|   90|mem
+test     |instance-template-3.us-central1-a.c.model-block-277513.internal:3000|0.000  |    0.000  |  0.000  |False |      --|   --|   0|    --|0.000 B |    0|   0|   90|mem
+test     |                                                                    |0.000  |    0.000  |  0.000  |      |      --|     |    |      |0.000 B |     |    |     |
+Number of rows: 6
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Namespace Object Information (2022-05-31 23:28:01 UTC)~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Namespace|                                                                Node|Rack|  Repl|  Total|~~~~~~~~~~Objects~~~~~~~~~~|~~~~~~~~~Tombstones~~~~~~~~|~~~~Pending~~~~
+         |                                                                    |  ID|Factor|Records| Master|  Prole|Non-Replica| Master|  Prole|Non-Replica|~~~~Migrates~~~
+         |                                                                    |    |      |       |       |       |           |       |       |           |     Tx|     Rx
+bar      |instance-template-1.us-central1-a.c.model-block-277513.internal:3000|   0|     2|0.000  |0.000  |0.000  |    0.000  |0.000  |0.000  |    0.000  |0.000  |0.000
+bar      |instance-template-2.us-central1-a.c.model-block-277513.internal:3000|   0|     2|0.000  |0.000  |0.000  |    0.000  |0.000  |0.000  |    0.000  |0.000  |0.000
+bar      |instance-template-3.us-central1-a.c.model-block-277513.internal:3000|   0|     2|0.000  |0.000  |0.000  |    0.000  |0.000  |0.000  |    0.000  |0.000  |0.000
+bar      |                                                                    |    |      |0.000  |0.000  |0.000  |    0.000  |0.000  |0.000  |    0.000  |0.000  |0.000
+test     |instance-template-1.us-central1-a.c.model-block-277513.internal:3000|   0|     2|0.000  |0.000  |0.000  |    0.000  |0.000  |0.000  |    0.000  |0.000  |0.000
+test     |instance-template-2.us-central1-a.c.model-block-277513.internal:3000|   0|     2|0.000  |0.000  |0.000  |    0.000  |0.000  |0.000  |    0.000  |0.000  |0.000
+test     |instance-template-3.us-central1-a.c.model-block-277513.internal:3000|   0|     2|0.000  |0.000  |0.000  |    0.000  |0.000  |0.000  |    0.000  |0.000  |0.000
+test     |                                                                    |    |      |0.000  |0.000  |0.000  |    0.000  |0.000  |0.000  |    0.000  |0.000  |0.000
+Number of rows: 6
+
+-------------
+root@instance-template-1:~# asinfo
+1 :  features
+     batch-index;blob-bits;cdt-list;cdt-map;cluster-stable;float;geo;sindex-exists;peers;pipelining;pscans;query-show;relaxed-sc;replicas;replicas-all;replicas-master;replicas-max;truncate-namespace;udf
+2 :  node
+     BB90300800A0142
+3 :  compatibility-id
+     10
+4 :  edition
+     Aerospike Community Edition
+5 :  build_time
+     Wed Apr 20 00:41:47 UTC 2022
+6 :  build_os
+     ubuntu18.04
+7 :  build
+     5.7.0.17
+8 :  version
+     Aerospike Community Edition build 5.7.0.17
+9 :  statistics
+     failed_best_practices=true;cluster_size=3;cluster_key=9BC889C48AB5;cluster_generation=3;cluster_principal=BB90500800A0142;cluster_min_compatibility_id=10;cluster_max_compatibility_id=10;cluster_integrity=true;cluster_is_member=true;cluster_duplicate_nodes=null;cluster_clock_skew_stop_writes_sec=0;cluster_clock_skew_ms=0;cluster_clock_skew_outliers=null;uptime=3322;system_total_cpu_pct=6;system_user_cpu_pct=6;system_kernel_cpu_pct=0;system_free_mem_kbytes=7816296;system_free_mem_pct=95;system_thp_mem_kbytes=0;process_cpu_pct=1;threads_joinable=9;threads_detached=65;threads_pool_total=42;threads_pool_active=42;heap_allocated_kbytes=2245696;heap_active_kbytes=2247252;heap_mapped_kbytes=2364416;heap_efficiency_pct=95;heap_site_count=0;objects=0;tombstones=0;info_queue=0;rw_in_progress=0;proxy_in_progress=0;tree_gc_queue=0;client_connections=2;client_connections_opened=30;client_connections_closed=28;heartbeat_connections=2;heartbeat_connections_opened=5;heartbeat_connections_closed=3;fabric_connections=48;fabric_connections_opened=72;fabric_connections_closed=24;heartbeat_received_self=2;heartbeat_received_foreign=32425;reaped_fds=0;info_complete=8964;demarshal_error=0;early_tsvc_client_error=0;early_tsvc_from_proxy_error=0;early_tsvc_batch_sub_error=0;early_tsvc_from_proxy_batch_sub_error=0;early_tsvc_udf_sub_error=0;early_tsvc_ops_sub_error=0;batch_index_initiate=0;batch_index_queue=0:0,0:0;batch_index_complete=0;batch_index_error=0;batch_index_timeout=0;batch_index_delay=0;batch_index_unused_buffers=0;batch_index_huge_buffers=0;batch_index_created_buffers=0;batch_index_destroyed_buffers=0;batch_index_proto_uncompressed_pct=0.000;batch_index_proto_compression_ratio=1.000;scans_active=0;query_short_running=0;query_long_running=0;paxos_principal=BB90500800A0142;time_since_rebalance=1547;migrate_allowed=true;migrate_partitions_remaining=0;fabric_bulk_send_rate=0;fabric_bulk_recv_rate=0;fabric_ctrl_send_rate=0;fabric_ctrl_recv_rate=0;fabric_meta_send_rate=0;fabric_meta_recv_rate=0;fabric_rw_send_rate=0;fabric_rw_recv_rate=0
+10 :  services-alumni
+     10.128.0.4:3000;10.128.0.5:3000
+11 :  services
+     10.128.0.4:3000;10.128.0.5:3000
+12 :  partition-generation
+     23166
+-------------------------
+#using AQL in a cluster
+root@instance-template-2:~# aql
+Seed:         127.0.0.1
+User:         None
+Config File:  /etc/aerospike/astools.conf /root/.aerospike/astools.conf
+Aerospike Query Client
+Version 6.1.0
+C Client Version 5.2.3
+Copyright 2012-2021 Aerospike. All rights reserved.
+aql> show namespaces
++------------+
+| namespaces |
++------------+
+| "test"     |
+| "bar"      |
++------------+
+[127.0.0.1:3000] 2 rows in set (0.002 secs)
+
++------------+
+| namespaces |
++------------+
+| "test"     |
+| "bar"      |
++------------+
+[10.128.0.3:3000] 2 rows in set (0.002 secs)
+
++------------+
+| namespaces |
++------------+
+| "test"     |
+| "bar"      |
++------------+
+[10.128.0.5:3000] 2 rows in set (0.003 secs)
+
+OK
+
+aql> show bins
+[127.0.0.1:3000] 0 rows in set (0.001 secs)
+
+[10.128.0.3:3000] 0 rows in set (0.002 secs)
+
+[10.128.0.5:3000] 0 rows in set (0.002 secs)
+
+OK
+
+aql> show sets
+[127.0.0.1:3000] 0 rows in set (0.000 secs)
+
+[10.128.0.3:3000] 0 rows in set (0.001 secs)
+
+[10.128.0.5:3000] 0 rows in set (0.001 secs)
+
+OK
+
+aql> insert into test.firstset (pk, name) values ('k1', 'John')
+OK, 1 record affected.
+
+aql> insert into test.firstset (pk, age) values ('k1', 35)
+OK, 1 record affected.
+
+aql> insert into test.firstset (pk, location) values ('k1', 'Berlin')
+OK, 1 record affected.
+
+aql> insert into test.firstset (pk, location) values ('k2', 'Frankfurt')
+OK, 1 record affected.
+
+aql> insert into test.firstset (pk, name) values ('k3', 'Marie')
+OK, 1 record affected.
+
+aql> insert into test.firstset (pk, status) values ('k3', 'Married')
+OK, 1 record affected.
+
+aql> insert into test.firstset (pk, age) values ('k3', 32.5)
+OK, 1 record affected.
+
+aql> insert into test.firstset (pk, acad) values ('k3', 'bachelors')
+OK, 1 record affected.
+
+aql> select * from test.firstset
++-------------+---------+------+-----------+-------------+
+| location    | name    | age  | status    | acad        |
++-------------+---------+------+-----------+-------------+
+| "Frankfurt" |         |      |           |             |
+| "Berlin"    | "John"  | 35   |           |             |
+|             | "Marie" | 32.5 | "Married" | "bachelors" |
++-------------+---------+------+-----------+-------------+
+3 rows in set (0.047 secs)
+
+OK
+
+aql> set record_print_metadata true
+RECORD_PRINT_METADATA = true
+aql> select * from test.firstset
++-------------+--------------------------------+------------+---------+-------+---------+------+-----------+-------------+
+| location    | {edigest}                      | {set}      | {ttl}   | {gen} | name    | age  | status    | acad        |
++-------------+--------------------------------+------------+---------+-------+---------+------+-----------+-------------+
+| "Frankfurt" | "buGGyp+jfRIbU6FAARHuqhj9DGs=" | "firstset" | 2591869 | 1     |         |      |           |             |
+| "Berlin"    | "whlHDulJzNioUhzb2lbTjFFIO8E=" | "firstset" | 2591827 | 3     | "John"  | 35   |           |             |
+|             | "rq2eCnVvhAEIME5cK5HpwbdEaY4=" | "firstset" | 2591958 | 4     | "Marie" | 32.5 | "Married" | "bachelors" |
++-------------+--------------------------------+------------+---------+-------+---------+------+-----------+-------------+
+3 rows in set (0.037 secs)
+
+OK
+
+aql> insert into test.firstset (pk, name) values ('k1', 'Johnny')
+OK, 1 record affected.
+
+aql> select * from test.firstset
++-------------+--------------------------------+------------+---------+-------+----------+------+-----------+-------------+
+| location    | {edigest}                      | {set}      | {ttl}   | {gen} | name     | age  | status    | acad        |
++-------------+--------------------------------+------------+---------+-------+----------+------+-----------+-------------+
+| "Frankfurt" | "buGGyp+jfRIbU6FAARHuqhj9DGs=" | "firstset" | 2591827 | 1     |          |      |           |             |
+| "Berlin"    | "whlHDulJzNioUhzb2lbTjFFIO8E=" | "firstset" | 2591991 | 4     | "Johnny" | 35   |           |             |
+|             | "rq2eCnVvhAEIME5cK5HpwbdEaY4=" | "firstset" | 2591916 | 4     | "Marie"  | 32.5 | "Married" | "bachelors" |
++-------------+--------------------------------+------------+---------+-------+----------+------+-----------+-------------+
+3 rows in set (0.051 secs)
+
+OK
+
+aql> show sets
++------------------+--------+------------------+---------+-------------------+------------+--------------+----------+-------------------+-------------------+--------------+------------+
+| disable-eviction | ns     | index_populating | objects | stop-writes-count | set        | enable-index | sindexes | memory_data_bytes | device_data_bytes | truncate_lut | tombstones |
++------------------+--------+------------------+---------+-------------------+------------+--------------+----------+-------------------+-------------------+--------------+------------+
+| "false"          | "test" | "false"          | "3"     | "0"               | "firstset" | "false"      | "0"      | "166"             | "0"               | "0"          | "0"        |
++------------------+--------+------------------+---------+-------------------+------------+--------------+----------+-------------------+-------------------+--------------+------------+
+[127.0.0.1:3000] 1 row in set (0.001 secs)
+
++------------------+--------+------------------+---------+-------------------+------------+--------------+----------+-------------------+-------------------+--------------+------------+
+| disable-eviction | ns     | index_populating | objects | stop-writes-count | set        | enable-index | sindexes | memory_data_bytes | device_data_bytes | truncate_lut | tombstones |
++------------------+--------+------------------+---------+-------------------+------------+--------------+----------+-------------------+-------------------+--------------+------------+
+| "false"          | "test" | "false"          | "1"     | "0"               | "firstset" | "false"      | "0"      | "57"              | "0"               | "0"          | "0"        |
++------------------+--------+------------------+---------+-------------------+------------+--------------+----------+-------------------+-------------------+--------------+------------+
+[10.128.0.3:3000] 1 row in set (0.001 secs)
+
++------------------+--------+------------------+---------+-------------------+------------+--------------+----------+-------------------+-------------------+--------------+------------+
+| disable-eviction | ns     | index_populating | objects | stop-writes-count | set        | enable-index | sindexes | memory_data_bytes | device_data_bytes | truncate_lut | tombstones |
++------------------+--------+------------------+---------+-------------------+------------+--------------+----------+-------------------+-------------------+--------------+------------+
+| "false"          | "test" | "false"          | "2"     | "0"               | "firstset" | "false"      | "0"      | "109"             | "0"               | "0"          | "0"        |
++------------------+--------+------------------+---------+-------------------+------------+--------------+----------+-------------------+-------------------+--------------+------------+
+[10.128.0.5:3000] 1 row in set (0.002 secs)
+
+OK
+
+aql> insert into test.firstset (pk, name) values ('k4', 'Joe')
+OK, 1 record affected.
+
+aql> insert into test.firstset (pk, acad) values ('k4', 'bachelors')
+OK, 1 record affected.
+
+aql> insert into test.firstset (pk, status) values ('k4', 'Single')
+OK, 1 record affected.
+
+aql> select * from test.firstset
++----------+-------------+-----------+--------------------------------+------------+---------+-------+-------------+------+
+| name     | acad        | status    | {edigest}                      | {set}      | {ttl}   | {gen} | location    | age  |
++----------+-------------+-----------+--------------------------------+------------+---------+-------+-------------+------+
+| "Joe"    | "bachelors" | "Single"  | "4NAjMxhvv3uTDTZeSGiDKFBGk2E=" | "firstset" | 2591992 | 3     |             |      |
+|          |             |           | "buGGyp+jfRIbU6FAARHuqhj9DGs=" | "firstset" | 2591454 | 1     | "Frankfurt" |      |
+| "Johnny" |             |           | "whlHDulJzNioUhzb2lbTjFFIO8E=" | "firstset" | 2591618 | 4     | "Berlin"    | 35   |
+| "Marie"  | "bachelors" | "Married" | "rq2eCnVvhAEIME5cK5HpwbdEaY4=" | "firstset" | 2591543 | 4     |             | 32.5 |
++----------+-------------+-----------+--------------------------------+------------+---------+-------+-------------+------+
+4 rows in set (0.046 secs)
+
+#while writing we can use asloglatency
+The Aerospike Log Latency tool (asloglatency) analyzes Aerospike log files and returns the latency measurements. 
+It returns latency analysis for a given time period in a tabular, easy to read form. The utility analyzes a 
+histogram by parsing latency log lines during successive time slices, and calculating the percentage of operations 
+in each time slice that exceeded various latency thresholds.
+
+Histogram buckets illustrate a distribution of events. Column 1 contains the % of write operations that were not 
+completed within 1 ms. The second column contains counts of writes that were not completed within 8 ms.
+
+asloglatency does not calculate in increments between 0 and 1. If you need to measure sub-millisecond latencies, 
+you can measure them and calculate averages on the client.
+
+#using asinfo to see 
+root@instance-template-2:~# asinfo -v "latencies:"
+batch-index:;{test}-read:;{test}-write:msec,0.0,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,
+0.00,0.00,0.00;{test}-udf:;{test}-query:;{bar}-read:;{bar}-write:;{bar}-udf:;{bar}-query:
+
+root@instance-template-2:~# asloglatency -h {test}-write
+or 
+$ asloglatency -N test -h write
+
+Histogram Name : {test}-write
+Log       : /var/log/aerospike/aerospike.log
+From      : 2022-05-31 23:41:28
+
+May 31 2022 23:41:28
+               %> (ms)
+slice-to (sec)      1      8     64    ops/sec
+-------------- ------ ------ ------ ----------
+23:41:38    10   0.00   0.00   0.00        0.0
+
+23:44:08    10   0.00   0.00   0.00        0.0
+23:44:18    10   0.00   0.00   0.00        0.0
+
+23:47:08    10   0.00   0.00   0.00        0.0
+23:47:18    10   0.00   0.00   0.00        0.0
+23:47:28    10   0.00   0.00   0.00        0.1
+23:47:38    10   0.00   0.00   0.00        0.0
+23:47:48    10   0.00   0.00   0.00        0.0
+23:47:58    10   0.00   0.00   0.00        0.0
+23:48:08    10   0.00   0.00   0.00        0.0
+-------------- ------ ------ ------ ----------
+     avg         0.00   0.00   0.00        0.0
+     max         0.00   0.00   0.00        0.1
+
+#For batch analysis
+#For detailed batch transaction analysis, enable the batch sub transactions benchmarks
+root@instance-template-1:~# asinfo -v 'set-config:context=namespace;id=test;enable-benchmarks-batch-sub=true'
+ok
+
+#following commands can be used
+asloglatency -l $f -h "{ns}-batch-sub-start"
+asloglatency -l $f -h "{ns}-batch-sub-restart"
+asloglatency -l $f -h "{ns}-batch-sub-dup-res"
+asloglatency -l $f -h "{ns}-batch-sub-read-local"
+asloglatency -l $f -h "{ns}-batch-sub-response"
+asloglatency -l $f -h "{ns}-batch-sub-repl-ping"
+
+For example:
+root@instance-template-1:~# asloglatency -h "{test}-batch-sub-start"
+Histogram Name : {test}-batch-sub-start
+Log       : /var/log/aerospike/aerospike.log
+From      : 2022-06-01 00:03:33
+
+Jun 01 2022 00:06:13
+               %> (ms)
+slice-to (sec)      1      8     64    ops/sec
+-------------- ------ ------ ------ ----------
+00:06:23    10   0.00   0.00   0.00        0.0
+00:06:33    10   0.00   0.00   0.00        0.0
+00:08:23    10   0.00   0.00   0.00        0.0
+00:08:33    10   0.00   0.00   0.00        0.0
+00:08:43    10   0.00   0.00   0.00        0.0
+-------------- ------ ------ ------ ----------
+     avg         0.00   0.00   0.00        0.0
+     max         0.00   0.00   0.00        0.0
+
+using asadm
+Admin> show latencies
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Latency  (2022-06-01 00:12:58 UTC)~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Namespace|Histogram|                                                                Node|ops/sec|>1ms|>8ms|>64ms
+test     |write    |instance-template-2.us-central1-a.c.model-block-277513.internal:3000|    0.0| 0.0| 0.0|  0.0
+test     |write    |instance-template-3.us-central1-a.c.model-block-277513.internal:3000|    0.0| 0.0| 0.0|  0.0
+         |         |                                                                    |    0.0| 0.0| 0.0|  0.0
+~~       |~~       |instance-template-1.us-central1-a.c.model-block-277513.internal:3000|     ~~|  ~~|  ~~|   ~~
+         |         |                                                                    |     ~~|  ~~|  ~~|   ~~
+Number of rows: 3
+
+
+using Log-analyzer to analyze logs
+root@instance-template-1:~# asadm -lf /var/log/aerospike/aerospike.log
+Seed:        [('127.0.0.1', 3000, None)]
+Config_file: /root/.aerospike/astools.conf, /etc/aerospike/astools.conf
+Aerospike Log Analyzer Shell, version 2.4.0
+
+INFO: Added Log File /var/log/aerospike/aerospike.log.
+Log-analyzer>
+
+#to use collectinfo-analyzer
+root@instance-template-1:~# asadm -e collectinfo
+#The collectinfo command gathers the cluster configuration, statistics and metrics, 
+as well as operating system information, into a tgz file. This allows the support team to 
+see important system and cluster information for troubleshooting purposes.
+...
+INFO: Please provide file /tmp/collect_info_20220601_002711.tgz to Aerospike Support.
+INFO: END OF ASCOLLECTINFO
+
+
+root@instance-template-1:~# asadm -cf /tmp/collect_info_20220601_002711.tgz
+Config_file: /root/.aerospike/astools.conf, /etc/aerospike/astools.conf
+Aerospike Collectinfo Shell, version 2.4.0
+
+
+ 1: collect_info_20220601_002711.tgz (2022-06-01 00:27:11 UTC)
+        Found 3 nodes
+        Online:  10.128.0.3:3000, 10.128.0.5:3000, 10.128.0.4:3000
+
+Collectinfo-analyzer>
+
+
+
+
+
+
+
