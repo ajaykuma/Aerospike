@@ -1,0 +1,1042 @@
+Admin> show statistics -bins
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~test Bin Statistics (2022-06-01 00:41:08 UTC)~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Node           |10.128.0.4:3000|instance-template-1.us-central1-a.c.model-block-277513.internal:3000
+bin_names      |--             |6
+bin_names_quota|--             |65535
+Number of rows: 3
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~bar Bin Statistics (2022-06-01 00:41:08 UTC)~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Node           |10.128.0.4:3000|instance-template-1.us-central1-a.c.model-block-277513.internal:3000
+bin_names      |--             |0
+bin_names_quota|--             |65535
+Number of rows: 3
+
+~~~~~~~~~~~~~~~~~~~~~~~~~test firstset Set Statistics (2022-06-01 00:41:08 UTC)~~~~~~~~~~~~~~~~~~~~~~~~
+Node             |10.128.0.4:3000|instance-template-1.us-central1-a.c.model-block-277513.internal:3000
+device_data_bytes|--             |0
+disable-eviction |--             |false
+enable-index     |--             |false
+index_populating |--             |false
+memory_data_bytes|--             |309
+ns               |--             |test
+objects          |--             |7
+set              |--             |firstset
+sindexes         |--             |0
+stop-writes-count|--             |0
+tombstones       |--             |0
+truncate_lut     |--             |0
+Number of rows: 13
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Service Statistics (2022-06-01 00:41:08 UTC)~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Node                                 |10.128.0.4:3000|instance-template-1.us-central1-a.c.model-block-277513.internal:3000
+batch_index_complete                 |~~             |0
+batch_index_created_buffers          |~~             |0
+batch_index_delay                    |~~             |0
+batch_index_destroyed_buffers        |~~             |0
+batch_index_error                    |~~             |0
+batch_index_huge_buffers             |~~             |0
+batch_index_initiate                 |~~             |0
+batch_index_proto_compression_ratio  |~~             |1.0
+batch_index_proto_uncompressed_pct   |~~             |0.0
+batch_index_queue                    |~~             |0:0,0:0
+batch_index_timeout                  |~~             |0
+batch_index_unused_buffers           |~~             |0
+client_connections                   |~~             |4
+client_connections_closed            |~~             |74
+client_connections_opened            |~~             |78
+cluster_clock_skew_ms                |~~             |0
+cluster_clock_skew_outliers          |~~             |null
+cluster_clock_skew_stop_writes_sec   |~~             |0
+cluster_duplicate_nodes              |~~             |null
+cluster_generation                   |~~             |5
+cluster_integrity                    |~~             |true
+cluster_is_member                    |~~             |true
+cluster_key                          |~~             |AB854ACF7DFC
+cluster_max_compatibility_id         |~~             |10
+cluster_min_compatibility_id         |~~             |10
+cluster_principal                    |~~             |BB90300800A0142
+cluster_size                         |~~             |1
+demarshal_error                      |~~             |0
+early_tsvc_batch_sub_error           |~~             |0
+early_tsvc_client_error              |~~             |0
+early_tsvc_from_proxy_batch_sub_error|~~             |0
+early_tsvc_from_proxy_error          |~~             |0
+early_tsvc_ops_sub_error             |~~             |0
+early_tsvc_udf_sub_error             |~~             |0
+fabric_bulk_recv_rate                |~~             |0
+fabric_bulk_send_rate                |~~             |0
+fabric_connections                   |~~             |0
+fabric_connections_closed            |~~             |72
+fabric_connections_opened            |~~             |72
+fabric_ctrl_recv_rate                |~~             |0
+fabric_ctrl_send_rate                |~~             |0
+fabric_meta_recv_rate                |~~             |0
+fabric_meta_send_rate                |~~             |0
+fabric_rw_recv_rate                  |~~             |0
+fabric_rw_send_rate                  |~~             |0
+failed_best_practices                |~~             |true
+heap_active_kbytes                   |~~             |2229964
+heap_allocated_kbytes                |~~             |2228034
+heap_efficiency_pct                  |~~             |94
+heap_mapped_kbytes                   |~~             |2358272
+heap_site_count                      |~~             |0
+heartbeat_connections                |~~             |0
+heartbeat_connections_closed         |~~             |5
+heartbeat_connections_opened         |~~             |5
+heartbeat_received_foreign           |~~             |85764
+heartbeat_received_self              |~~             |2
+info_complete                        |~~             |23526
+info_queue                           |~~             |0
+migrate_allowed                      |~~             |true
+migrate_partitions_remaining         |~~             |0
+objects                              |~~             |7
+paxos_principal                      |~~             |BB90300800A0142
+process_cpu_pct                      |~~             |1
+proxy_in_progress                    |~~             |0
+query_long_running                   |~~             |0
+query_short_running                  |~~             |0
+reaped_fds                           |~~             |0
+rw_in_progress                       |~~             |0
+scans_active                         |~~             |0
+system_free_mem_kbytes               |~~             |7772132
+system_free_mem_pct                  |~~             |95
+system_kernel_cpu_pct                |~~             |0
+system_thp_mem_kbytes                |~~             |0
+system_total_cpu_pct                 |~~             |0
+system_user_cpu_pct                  |~~             |0
+threads_detached                     |~~             |65
+threads_joinable                     |~~             |9
+threads_pool_active                  |~~             |42
+threads_pool_total                   |~~             |46
+time_since_rebalance                 |~~             |36
+tombstones                           |~~             |0
+tree_gc_queue                        |~~             |0
+uptime                               |~~             |7511
+Number of rows: 84
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~bar Namespace Statistics (2022-06-01 00:41:08 UTC)~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Node                                     |10.128.0.4:3000|instance-template-1.us-central1-a.c.model-block-277513.internal:3000
+allow-ttl-without-nsup                   |~~             |false
+appeals_records_exonerated               |~~             |0
+appeals_rx_active                        |~~             |0
+appeals_tx_active                        |~~             |0
+appeals_tx_remaining                     |~~             |0
+available_bin_names                      |~~             |65535
+background-scan-max-rps                  |~~             |10000
+batch_sub_proxy_complete                 |~~             |0
+batch_sub_proxy_error                    |~~             |0
+batch_sub_proxy_timeout                  |~~             |0
+batch_sub_read_error                     |~~             |0
+batch_sub_read_filtered_out              |~~             |0
+batch_sub_read_not_found                 |~~             |0
+batch_sub_read_success                   |~~             |0
+batch_sub_read_timeout                   |~~             |0
+batch_sub_tsvc_error                     |~~             |0
+batch_sub_tsvc_timeout                   |~~             |0
+client_delete_error                      |~~             |0
+client_delete_filtered_out               |~~             |0
+client_delete_not_found                  |~~             |0
+client_delete_success                    |~~             |0
+client_delete_timeout                    |~~             |0
+client_lang_delete_success               |~~             |0
+client_lang_error                        |~~             |0
+client_lang_read_success                 |~~             |0
+client_lang_write_success                |~~             |0
+client_proxy_complete                    |~~             |0
+client_proxy_error                       |~~             |0
+client_proxy_timeout                     |~~             |0
+client_read_error                        |~~             |0
+client_read_filtered_out                 |~~             |0
+client_read_not_found                    |~~             |0
+client_read_success                      |~~             |0
+client_read_timeout                      |~~             |0
+client_tsvc_error                        |~~             |0
+client_tsvc_timeout                      |~~             |0
+client_udf_complete                      |~~             |0
+client_udf_error                         |~~             |0
+client_udf_filtered_out                  |~~             |0
+client_udf_timeout                       |~~             |0
+client_write_error                       |~~             |0
+client_write_filtered_out                |~~             |0
+client_write_success                     |~~             |0
+client_write_timeout                     |~~             |0
+clock_skew_stop_writes                   |~~             |false
+conflict-resolution-policy               |~~             |generation
+conflict-resolve-writes                  |~~             |false
+current_time                             |~~             |391740063
+data-in-index                            |~~             |false
+dead_partitions                          |~~             |0
+default-ttl                              |~~             |0
+deleted_last_bin                         |~~             |0
+device_available_pct                     |~~             |99
+device_free_pct                          |~~             |100
+device_total_bytes                       |~~             |8589934592
+device_used_bytes                        |~~             |0
+disable-cold-start-eviction              |~~             |false
+disable-write-dup-res                    |~~             |false
+disallow-null-setname                    |~~             |false
+dup_res_ask                              |~~             |0
+dup_res_respond_no_read                  |~~             |0
+dup_res_respond_read                     |~~             |0
+effective_is_quiesced                    |~~             |false
+effective_prefer_uniform_balance         |~~             |false
+effective_replication_factor             |~~             |1
+enable-benchmarks-batch-sub              |~~             |false
+enable-benchmarks-ops-sub                |~~             |false
+enable-benchmarks-read                   |~~             |false
+enable-benchmarks-udf                    |~~             |false
+enable-benchmarks-udf-sub                |~~             |false
+enable-benchmarks-write                  |~~             |false
+enable-hist-proxy                        |~~             |false
+evict-hist-buckets                       |~~             |10000
+evict-tenths-pct                         |~~             |5
+evict_ttl                                |~~             |0
+evict_void_time                          |~~             |0
+evicted_objects                          |~~             |0
+expired_objects                          |~~             |0
+fail_client_lost_conflict                |~~             |0
+fail_generation                          |~~             |0
+fail_key_busy                            |~~             |0
+fail_record_too_big                      |~~             |0
+fail_xdr_forbidden                       |~~             |0
+fail_xdr_lost_conflict                   |~~             |0
+from_proxy_batch_sub_read_error          |~~             |0
+from_proxy_batch_sub_read_filtered_out   |~~             |0
+from_proxy_batch_sub_read_not_found      |~~             |0
+from_proxy_batch_sub_read_success        |~~             |0
+from_proxy_batch_sub_read_timeout        |~~             |0
+from_proxy_batch_sub_tsvc_error          |~~             |0
+from_proxy_batch_sub_tsvc_timeout        |~~             |0
+from_proxy_delete_error                  |~~             |0
+from_proxy_delete_filtered_out           |~~             |0
+from_proxy_delete_not_found              |~~             |0
+from_proxy_delete_success                |~~             |0
+from_proxy_delete_timeout                |~~             |0
+from_proxy_lang_delete_success           |~~             |0
+from_proxy_lang_error                    |~~             |0
+from_proxy_lang_read_success             |~~             |0
+from_proxy_lang_write_success            |~~             |0
+from_proxy_read_error                    |~~             |0
+from_proxy_read_filtered_out             |~~             |0
+from_proxy_read_not_found                |~~             |0
+from_proxy_read_success                  |~~             |0
+from_proxy_read_timeout                  |~~             |0
+from_proxy_tsvc_error                    |~~             |0
+from_proxy_tsvc_timeout                  |~~             |0
+from_proxy_udf_complete                  |~~             |0
+from_proxy_udf_error                     |~~             |0
+from_proxy_udf_filtered_out              |~~             |0
+from_proxy_udf_timeout                   |~~             |0
+from_proxy_write_error                   |~~             |0
+from_proxy_write_filtered_out            |~~             |0
+from_proxy_write_success                 |~~             |0
+from_proxy_write_timeout                 |~~             |0
+geo2dsphere-within.earth-radius-meters   |~~             |6371000
+geo2dsphere-within.level-mod             |~~             |1
+geo2dsphere-within.max-cells             |~~             |12
+geo2dsphere-within.max-level             |~~             |20
+geo2dsphere-within.min-level             |~~             |1
+geo2dsphere-within.strict                |~~             |true
+geo_region_query_cells                   |~~             |0
+geo_region_query_falsepos                |~~             |0
+geo_region_query_points                  |~~             |0
+geo_region_query_reqs                    |~~             |0
+high-water-disk-pct                      |~~             |0
+high-water-memory-pct                    |~~             |0
+hwm_breached                             |~~             |false
+ignore-migrate-fill-delay                |~~             |false
+index-stage-size                         |~~             |1073741824
+index-type                               |~~             |mem
+master_objects                           |~~             |0
+master_tombstones                        |~~             |0
+max-record-size                          |~~             |0
+memory-size                              |~~             |4294967296
+memory_free_pct                          |~~             |100
+memory_used_bytes                        |~~             |0
+memory_used_data_bytes                   |~~             |0
+memory_used_index_bytes                  |~~             |0
+memory_used_set_index_bytes              |~~             |0
+memory_used_sindex_bytes                 |~~             |0
+migrate-order                            |~~             |5
+migrate-retransmit-ms                    |~~             |5000
+migrate-sleep                            |~~             |1
+migrate_record_receives                  |~~             |0
+migrate_record_retransmits               |~~             |0
+migrate_records_skipped                  |~~             |0
+migrate_records_transmitted              |~~             |0
+migrate_rx_instances                     |~~             |0
+migrate_rx_partitions_active             |~~             |0
+migrate_rx_partitions_initial            |~~             |0
+migrate_rx_partitions_remaining          |~~             |0
+migrate_signals_active                   |~~             |0
+migrate_signals_remaining                |~~             |0
+migrate_tx_instances                     |~~             |0
+migrate_tx_partitions_active             |~~             |0
+migrate_tx_partitions_imbalance          |~~             |0
+migrate_tx_partitions_initial            |~~             |0
+migrate_tx_partitions_lead_remaining     |~~             |0
+migrate_tx_partitions_remaining          |~~             |0
+nodes_quiesced                           |~~             |0
+non_expirable_objects                    |~~             |0
+non_replica_objects                      |~~             |0
+non_replica_tombstones                   |~~             |0
+ns_cluster_size                          |~~             |1
+nsup-hist-period                         |~~             |3600
+nsup-period                              |~~             |0
+nsup-threads                             |~~             |1
+nsup_cycle_duration                      |~~             |0
+objects                                  |~~             |0
+ops_sub_tsvc_error                       |~~             |0
+ops_sub_tsvc_timeout                     |~~             |0
+ops_sub_write_error                      |~~             |0
+ops_sub_write_filtered_out               |~~             |0
+ops_sub_write_success                    |~~             |0
+ops_sub_write_timeout                    |~~             |0
+partition-tree-sprigs                    |~~             |256
+pending_quiesce                          |~~             |false
+prefer-uniform-balance                   |~~             |false
+prole_objects                            |~~             |0
+prole_tombstones                         |~~             |0
+query_aggr_abort                         |~~             |0
+query_aggr_avg_rec_count                 |~~             |0
+query_aggr_complete                      |~~             |0
+query_aggr_error                         |~~             |0
+query_basic_abort                        |~~             |0
+query_basic_avg_rec_count                |~~             |0
+query_basic_complete                     |~~             |0
+query_basic_error                        |~~             |0
+query_fail                               |~~             |0
+query_false_positives                    |~~             |0
+query_long_queue_full                    |~~             |0
+query_long_reqs                          |~~             |0
+query_ops_bg_abort                       |~~             |0
+query_ops_bg_complete                    |~~             |0
+query_ops_bg_error                       |~~             |0
+query_proto_compression_ratio            |~~             |1.0
+query_proto_uncompressed_pct             |~~             |0.0
+query_reqs                               |~~             |0
+query_short_queue_full                   |~~             |0
+query_short_reqs                         |~~             |0
+query_udf_bg_abort                       |~~             |0
+query_udf_bg_complete                    |~~             |0
+query_udf_bg_error                       |~~             |0
+rack-id                                  |~~             |0
+re_repl_error                            |~~             |0
+re_repl_success                          |~~             |0
+re_repl_timeout                          |~~             |0
+read-consistency-level-override          |~~             |off
+record_proto_compression_ratio           |~~             |1.0
+record_proto_uncompressed_pct            |~~             |0.0
+reject-non-xdr-writes                    |~~             |false
+reject-xdr-writes                        |~~             |false
+replication-factor                       |~~             |2
+retransmit_all_batch_sub_dup_res         |~~             |0
+retransmit_all_delete_dup_res            |~~             |0
+retransmit_all_delete_repl_write         |~~             |0
+retransmit_all_read_dup_res              |~~             |0
+retransmit_all_udf_dup_res               |~~             |0
+retransmit_all_udf_repl_write            |~~             |0
+retransmit_all_write_dup_res             |~~             |0
+retransmit_all_write_repl_write          |~~             |0
+retransmit_ops_sub_dup_res               |~~             |0
+retransmit_ops_sub_repl_write            |~~             |0
+retransmit_udf_sub_dup_res               |~~             |0
+retransmit_udf_sub_repl_write            |~~             |0
+scan_aggr_abort                          |~~             |0
+scan_aggr_complete                       |~~             |0
+scan_aggr_error                          |~~             |0
+scan_basic_abort                         |~~             |0
+scan_basic_complete                      |~~             |0
+scan_basic_error                         |~~             |0
+scan_ops_bg_abort                        |~~             |0
+scan_ops_bg_complete                     |~~             |0
+scan_ops_bg_error                        |~~             |0
+scan_proto_compression_ratio             |~~             |1.0
+scan_proto_uncompressed_pct              |~~             |0.0
+scan_udf_bg_abort                        |~~             |0
+scan_udf_bg_complete                     |~~             |0
+scan_udf_bg_error                        |~~             |0
+sindex.num-partitions                    |~~             |32
+sindex_gc_cleaned                        |~~             |0
+single-bin                               |~~             |false
+single-scan-threads                      |~~             |4
+smd_evict_void_time                      |~~             |0
+stop-writes-pct                          |~~             |90
+stop_writes                              |~~             |false
+storage-engine                           |~~             |device
+storage-engine.cache-replica-writes      |~~             |false
+storage-engine.cold-start-empty          |~~             |false
+storage-engine.commit-min-size           |~~             |0
+storage-engine.commit-to-device          |~~             |false
+storage-engine.compression               |~~             |none
+storage-engine.compression-level         |~~             |0
+storage-engine.data-in-memory            |~~             |true
+storage-engine.defrag-lwm-pct            |~~             |50
+storage-engine.defrag-queue-min          |~~             |0
+storage-engine.defrag-sleep              |~~             |1000
+storage-engine.defrag-startup-minimum    |~~             |0
+storage-engine.direct-files              |~~             |false
+storage-engine.disable-odsync            |~~             |false
+storage-engine.enable-benchmarks-storage |~~             |false
+storage-engine.encryption-key-file       |~~             |null
+storage-engine.encryption-old-key-file   |~~             |null
+storage-engine.file[0]                   |~~             |/opt/aerospike/data/bar.dat
+storage-engine.file[0].age               |~~             |-1
+storage-engine.file[0].defrag_q          |~~             |0
+storage-engine.file[0].defrag_reads      |~~             |0
+storage-engine.file[0].defrag_writes     |~~             |0
+storage-engine.file[0].free_wblocks      |~~             |8184
+storage-engine.file[0].shadow_write_q    |~~             |0
+storage-engine.file[0].used_bytes        |~~             |0
+storage-engine.file[0].write_q           |~~             |0
+storage-engine.file[0].writes            |~~             |0
+storage-engine.filesize                  |~~             |8589934592
+storage-engine.flush-max-ms              |~~             |1000
+storage-engine.max-write-cache           |~~             |67108864
+storage-engine.min-avail-pct             |~~             |5
+storage-engine.post-write-queue          |~~             |0
+storage-engine.read-page-cache           |~~             |false
+storage-engine.scheduler-mode            |~~             |null
+storage-engine.serialize-tomb-raider     |~~             |false
+storage-engine.sindex-startup-device-scan|~~             |false
+storage-engine.tomb-raider-sleep         |~~             |1000
+storage-engine.write-block-size          |~~             |1048576
+strong-consistency                       |~~             |false
+strong-consistency-allow-expunge         |~~             |false
+tomb-raider-eligible-age                 |~~             |86400
+tomb-raider-period                       |~~             |86400
+tombstones                               |~~             |0
+transaction-pending-limit                |~~             |20
+truncate-threads                         |~~             |4
+truncate_lut                             |~~             |0
+truncated_records                        |~~             |0
+udf_sub_lang_delete_success              |~~             |0
+udf_sub_lang_error                       |~~             |0
+udf_sub_lang_read_success                |~~             |0
+udf_sub_lang_write_success               |~~             |0
+udf_sub_tsvc_error                       |~~             |0
+udf_sub_tsvc_timeout                     |~~             |0
+udf_sub_udf_complete                     |~~             |0
+udf_sub_udf_error                        |~~             |0
+udf_sub_udf_filtered_out                 |~~             |0
+udf_sub_udf_timeout                      |~~             |0
+unavailable_partitions                   |~~             |0
+unreplicated_records                     |~~             |0
+write-commit-level-override              |~~             |off
+xdr-bin-tombstone-ttl                    |~~             |86400
+xdr-tomb-raider-period                   |~~             |120
+xdr-tomb-raider-threads                  |~~             |1
+xdr_bin_cemeteries                       |~~             |0
+xdr_client_delete_error                  |~~             |0
+xdr_client_delete_not_found              |~~             |0
+xdr_client_delete_success                |~~             |0
+xdr_client_delete_timeout                |~~             |0
+xdr_client_write_error                   |~~             |0
+xdr_client_write_success                 |~~             |0
+xdr_client_write_timeout                 |~~             |0
+xdr_from_proxy_delete_error              |~~             |0
+xdr_from_proxy_delete_not_found          |~~             |0
+xdr_from_proxy_delete_success            |~~             |0
+xdr_from_proxy_delete_timeout            |~~             |0
+xdr_from_proxy_write_error               |~~             |0
+xdr_from_proxy_write_success             |~~             |0
+xdr_from_proxy_write_timeout             |~~             |0
+xdr_tombstones                           |~~             |0
+xmem_id                                  |~~             |0
+Number of rows: 328
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~test Namespace Statistics (2022-06-01 00:41:08 UTC)~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Node                                  |10.128.0.4:3000|instance-template-1.us-central1-a.c.model-block-277513.internal:3000
+allow-ttl-without-nsup                |~~             |true
+appeals_records_exonerated            |~~             |0
+appeals_rx_active                     |~~             |0
+appeals_tx_active                     |~~             |0
+appeals_tx_remaining                  |~~             |0
+available_bin_names                   |~~             |65529
+background-scan-max-rps               |~~             |10000
+batch_sub_proxy_complete              |~~             |0
+batch_sub_proxy_error                 |~~             |0
+batch_sub_proxy_timeout               |~~             |0
+batch_sub_read_error                  |~~             |0
+batch_sub_read_filtered_out           |~~             |0
+batch_sub_read_not_found              |~~             |0
+batch_sub_read_success                |~~             |0
+batch_sub_read_timeout                |~~             |0
+batch_sub_tsvc_error                  |~~             |0
+batch_sub_tsvc_timeout                |~~             |0
+client_delete_error                   |~~             |0
+client_delete_filtered_out            |~~             |0
+client_delete_not_found               |~~             |0
+client_delete_success                 |~~             |0
+client_delete_timeout                 |~~             |0
+client_lang_delete_success            |~~             |0
+client_lang_error                     |~~             |0
+client_lang_read_success              |~~             |0
+client_lang_write_success             |~~             |0
+client_proxy_complete                 |~~             |0
+client_proxy_error                    |~~             |0
+client_proxy_timeout                  |~~             |0
+client_read_error                     |~~             |0
+client_read_filtered_out              |~~             |0
+client_read_not_found                 |~~             |0
+client_read_success                   |~~             |0
+client_read_timeout                   |~~             |0
+client_tsvc_error                     |~~             |0
+client_tsvc_timeout                   |~~             |0
+client_udf_complete                   |~~             |0
+client_udf_error                      |~~             |0
+client_udf_filtered_out               |~~             |0
+client_udf_timeout                    |~~             |0
+client_write_error                    |~~             |0
+client_write_filtered_out             |~~             |0
+client_write_success                  |~~             |0
+client_write_timeout                  |~~             |0
+clock_skew_stop_writes                |~~             |false
+conflict-resolution-policy            |~~             |generation
+conflict-resolve-writes               |~~             |false
+current_time                          |~~             |391740063
+data-in-index                         |~~             |false
+dead_partitions                       |~~             |0
+default-ttl                           |~~             |2592000
+deleted_last_bin                      |~~             |0
+disable-cold-start-eviction           |~~             |false
+disable-write-dup-res                 |~~             |false
+disallow-null-setname                 |~~             |false
+dup_res_ask                           |~~             |0
+dup_res_respond_no_read               |~~             |0
+dup_res_respond_read                  |~~             |0
+effective_is_quiesced                 |~~             |false
+effective_prefer_uniform_balance      |~~             |false
+effective_replication_factor          |~~             |1
+enable-benchmarks-batch-sub           |~~             |true
+enable-benchmarks-ops-sub             |~~             |false
+enable-benchmarks-read                |~~             |false
+enable-benchmarks-udf                 |~~             |false
+enable-benchmarks-udf-sub             |~~             |false
+enable-benchmarks-write               |~~             |false
+enable-hist-proxy                     |~~             |false
+evict-hist-buckets                    |~~             |10000
+evict-tenths-pct                      |~~             |5
+evict_ttl                             |~~             |0
+evict_void_time                       |~~             |0
+evicted_objects                       |~~             |0
+expired_objects                       |~~             |0
+fail_client_lost_conflict             |~~             |0
+fail_generation                       |~~             |0
+fail_key_busy                         |~~             |0
+fail_record_too_big                   |~~             |0
+fail_xdr_forbidden                    |~~             |0
+fail_xdr_lost_conflict                |~~             |0
+from_proxy_batch_sub_read_error       |~~             |0
+from_proxy_batch_sub_read_filtered_out|~~             |0
+from_proxy_batch_sub_read_not_found   |~~             |0
+from_proxy_batch_sub_read_success     |~~             |0
+from_proxy_batch_sub_read_timeout     |~~             |0
+from_proxy_batch_sub_tsvc_error       |~~             |0
+from_proxy_batch_sub_tsvc_timeout     |~~             |0
+from_proxy_delete_error               |~~             |0
+from_proxy_delete_filtered_out        |~~             |0
+from_proxy_delete_not_found           |~~             |0
+from_proxy_delete_success             |~~             |0
+from_proxy_delete_timeout             |~~             |0
+from_proxy_lang_delete_success        |~~             |0
+from_proxy_lang_error                 |~~             |0
+from_proxy_lang_read_success          |~~             |0
+from_proxy_lang_write_success         |~~             |0
+from_proxy_read_error                 |~~             |0
+from_proxy_read_filtered_out          |~~             |0
+from_proxy_read_not_found             |~~             |0
+from_proxy_read_success               |~~             |0
+from_proxy_read_timeout               |~~             |0
+from_proxy_tsvc_error                 |~~             |0
+from_proxy_tsvc_timeout               |~~             |0
+from_proxy_udf_complete               |~~             |0
+from_proxy_udf_error                  |~~             |0
+from_proxy_udf_filtered_out           |~~             |0
+from_proxy_udf_timeout                |~~             |0
+from_proxy_write_error                |~~             |0
+from_proxy_write_filtered_out         |~~             |0
+from_proxy_write_success              |~~             |0
+from_proxy_write_timeout              |~~             |0
+geo2dsphere-within.earth-radius-meters|~~             |6371000
+geo2dsphere-within.level-mod          |~~             |1
+geo2dsphere-within.max-cells          |~~             |12
+geo2dsphere-within.max-level          |~~             |20
+geo2dsphere-within.min-level          |~~             |1
+geo2dsphere-within.strict             |~~             |true
+geo_region_query_cells                |~~             |0
+geo_region_query_falsepos             |~~             |0
+geo_region_query_points               |~~             |0
+geo_region_query_reqs                 |~~             |0
+high-water-disk-pct                   |~~             |0
+high-water-memory-pct                 |~~             |0
+hwm_breached                          |~~             |false
+ignore-migrate-fill-delay             |~~             |false
+index-stage-size                      |~~             |1073741824
+index-type                            |~~             |mem
+master_objects                        |~~             |7
+master_tombstones                     |~~             |0
+max-record-size                       |~~             |0
+memory-size                           |~~             |4294967296
+memory_free_pct                       |~~             |99
+memory_used_bytes                     |~~             |757
+memory_used_data_bytes                |~~             |309
+memory_used_index_bytes               |~~             |448
+memory_used_set_index_bytes           |~~             |0
+memory_used_sindex_bytes              |~~             |0
+migrate-order                         |~~             |5
+migrate-retransmit-ms                 |~~             |5000
+migrate-sleep                         |~~             |1
+migrate_record_receives               |~~             |4
+migrate_record_retransmits            |~~             |0
+migrate_records_skipped               |~~             |0
+migrate_records_transmitted           |~~             |1
+migrate_rx_instances                  |~~             |0
+migrate_rx_partitions_active          |~~             |0
+migrate_rx_partitions_initial         |~~             |0
+migrate_rx_partitions_remaining       |~~             |0
+migrate_signals_active                |~~             |0
+migrate_signals_remaining             |~~             |0
+migrate_tx_instances                  |~~             |0
+migrate_tx_partitions_active          |~~             |0
+migrate_tx_partitions_imbalance       |~~             |0
+migrate_tx_partitions_initial         |~~             |0
+migrate_tx_partitions_lead_remaining  |~~             |0
+migrate_tx_partitions_remaining       |~~             |0
+nodes_quiesced                        |~~             |0
+non_expirable_objects                 |~~             |0
+non_replica_objects                   |~~             |0
+non_replica_tombstones                |~~             |0
+ns_cluster_size                       |~~             |1
+nsup-hist-period                      |~~             |3600
+nsup-period                           |~~             |0
+nsup-threads                          |~~             |1
+nsup_cycle_duration                   |~~             |0
+objects                               |~~             |7
+ops_sub_tsvc_error                    |~~             |0
+ops_sub_tsvc_timeout                  |~~             |0
+ops_sub_write_error                   |~~             |0
+ops_sub_write_filtered_out            |~~             |0
+ops_sub_write_success                 |~~             |0
+ops_sub_write_timeout                 |~~             |0
+partition-tree-sprigs                 |~~             |256
+pending_quiesce                       |~~             |false
+prefer-uniform-balance                |~~             |false
+prole_objects                         |~~             |0
+prole_tombstones                      |~~             |0
+query_aggr_abort                      |~~             |0
+query_aggr_avg_rec_count              |~~             |0
+query_aggr_complete                   |~~             |0
+query_aggr_error                      |~~             |0
+query_basic_abort                     |~~             |0
+query_basic_avg_rec_count             |~~             |0
+query_basic_complete                  |~~             |0
+query_basic_error                     |~~             |0
+query_fail                            |~~             |0
+query_false_positives                 |~~             |0
+query_long_queue_full                 |~~             |0
+query_long_reqs                       |~~             |0
+query_ops_bg_abort                    |~~             |0
+query_ops_bg_complete                 |~~             |0
+query_ops_bg_error                    |~~             |0
+query_proto_compression_ratio         |~~             |1.0
+query_proto_uncompressed_pct          |~~             |0.0
+query_reqs                            |~~             |0
+query_short_queue_full                |~~             |0
+query_short_reqs                      |~~             |0
+query_udf_bg_abort                    |~~             |0
+query_udf_bg_complete                 |~~             |0
+query_udf_bg_error                    |~~             |0
+rack-id                               |~~             |0
+re_repl_error                         |~~             |0
+re_repl_success                       |~~             |0
+re_repl_timeout                       |~~             |0
+read-consistency-level-override       |~~             |off
+record_proto_compression_ratio        |~~             |1.0
+record_proto_uncompressed_pct         |~~             |0.0
+reject-non-xdr-writes                 |~~             |false
+reject-xdr-writes                     |~~             |false
+replication-factor                    |~~             |2
+retransmit_all_batch_sub_dup_res      |~~             |0
+retransmit_all_delete_dup_res         |~~             |0
+retransmit_all_delete_repl_write      |~~             |0
+retransmit_all_read_dup_res           |~~             |0
+retransmit_all_udf_dup_res            |~~             |0
+retransmit_all_udf_repl_write         |~~             |0
+retransmit_all_write_dup_res          |~~             |0
+retransmit_all_write_repl_write       |~~             |0
+retransmit_ops_sub_dup_res            |~~             |0
+retransmit_ops_sub_repl_write         |~~             |0
+retransmit_udf_sub_dup_res            |~~             |0
+retransmit_udf_sub_repl_write         |~~             |0
+scan_aggr_abort                       |~~             |0
+scan_aggr_complete                    |~~             |0
+scan_aggr_error                       |~~             |0
+scan_basic_abort                      |~~             |0
+scan_basic_complete                   |~~             |16
+scan_basic_error                      |~~             |0
+scan_ops_bg_abort                     |~~             |0
+scan_ops_bg_complete                  |~~             |0
+scan_ops_bg_error                     |~~             |0
+scan_proto_compression_ratio          |~~             |1.0
+scan_proto_uncompressed_pct           |~~             |0.0
+scan_udf_bg_abort                     |~~             |0
+scan_udf_bg_complete                  |~~             |0
+scan_udf_bg_error                     |~~             |0
+sindex.num-partitions                 |~~             |32
+sindex_gc_cleaned                     |~~             |0
+single-bin                            |~~             |false
+single-scan-threads                   |~~             |4
+smd_evict_void_time                   |~~             |0
+stop-writes-pct                       |~~             |90
+stop_writes                           |~~             |false
+storage-engine                        |~~             |memory
+strong-consistency                    |~~             |false
+strong-consistency-allow-expunge      |~~             |false
+tomb-raider-eligible-age              |~~             |86400
+tomb-raider-period                    |~~             |86400
+tombstones                            |~~             |0
+transaction-pending-limit             |~~             |20
+truncate-threads                      |~~             |4
+truncate_lut                          |~~             |0
+truncated_records                     |~~             |0
+udf_sub_lang_delete_success           |~~             |0
+udf_sub_lang_error                    |~~             |0
+udf_sub_lang_read_success             |~~             |0
+udf_sub_lang_write_success            |~~             |0
+udf_sub_tsvc_error                    |~~             |0
+udf_sub_tsvc_timeout                  |~~             |0
+udf_sub_udf_complete                  |~~             |0
+udf_sub_udf_error                     |~~             |0
+udf_sub_udf_filtered_out              |~~             |0
+udf_sub_udf_timeout                   |~~             |0
+unavailable_partitions                |~~             |0
+unreplicated_records                  |~~             |0
+write-commit-level-override           |~~             |off
+xdr-bin-tombstone-ttl                 |~~             |86400
+xdr-tomb-raider-period                |~~             |120
+xdr-tomb-raider-threads               |~~             |1
+xdr_bin_cemeteries                    |~~             |0
+xdr_client_delete_error               |~~             |0
+xdr_client_delete_not_found           |~~             |0
+xdr_client_delete_success             |~~             |0
+xdr_client_delete_timeout             |~~             |0
+xdr_client_write_error                |~~             |0
+xdr_client_write_success              |~~             |0
+xdr_client_write_timeout              |~~             |0
+xdr_from_proxy_delete_error           |~~             |0
+xdr_from_proxy_delete_not_found       |~~             |0
+xdr_from_proxy_delete_success         |~~             |0
+xdr_from_proxy_delete_timeout         |~~             |0
+xdr_from_proxy_write_error            |~~             |0
+xdr_from_proxy_write_success          |~~             |0
+xdr_from_proxy_write_timeout          |~~             |0
+xdr_tombstones                        |~~             |0
+xmem_id                               |~~             |0
+Number of rows: 287
+
+--------------
+Admin> show config
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Service Configuration (2022-06-01 00:47:52 UTC)~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Node                             |10.128.0.4:3000|instance-template-1.us-central1-a.c.model-block-277513.internal:3000
+advertise-ipv6                   |--             |false
+auto-pin                         |--             |none
+batch-index-threads              |--             |2
+batch-max-buffers-per-queue      |--             |255
+batch-max-requests               |--             |5000
+batch-max-unused-buffers         |--             |256
+batch-without-digests            |--             |true
+cluster-name                     |--             |null
+debug-allocations                |--             |none
+disable-udf-execution            |--             |false
+downgrading                      |--             |false
+enable-benchmarks-fabric         |--             |false
+enable-health-check              |--             |false
+enable-hist-info                 |--             |false
+enforce-best-practices           |--             |false
+fabric.channel-bulk-fds          |--             |2
+fabric.channel-bulk-recv-threads |--             |4
+fabric.channel-ctrl-fds          |--             |1
+fabric.channel-ctrl-recv-threads |--             |4
+fabric.channel-meta-fds          |--             |1
+fabric.channel-meta-recv-threads |--             |4
+fabric.channel-rw-fds            |--             |8
+fabric.channel-rw-recv-pools     |--             |1
+fabric.channel-rw-recv-threads   |--             |16
+fabric.keepalive-enabled         |--             |true
+fabric.keepalive-intvl           |--             |1
+fabric.keepalive-probes          |--             |10
+fabric.keepalive-time            |--             |1
+fabric.latency-max-ms            |--             |5
+fabric.port                      |--             |3001
+fabric.recv-rearm-threshold      |--             |1024
+fabric.send-threads              |--             |8
+fabric.tls-name                  |--             |null
+fabric.tls-port                  |--             |0
+heartbeat.address                |--             |10.128.0.3
+heartbeat.connect-timeout-ms     |--             |500
+heartbeat.interval               |--             |150
+heartbeat.mode                   |--             |mesh
+heartbeat.mtu                    |--             |1460
+heartbeat.port                   |--             |3002
+heartbeat.protocol               |--             |v3
+heartbeat.timeout                |--             |10
+heartbeat.tls-name               |--             |null
+heartbeat.tls-port               |--             |0
+indent-allocations               |--             |false
+info-threads                     |--             |16
+info.port                        |--             |3003
+keep-caps-ssd-health             |--             |false
+log-local-time                   |--             |false
+log-millis                       |--             |false
+microsecond-histograms           |--             |false
+migrate-fill-delay               |--             |0
+migrate-max-num-incoming         |--             |4
+migrate-threads                  |--             |1
+min-cluster-size                 |--             |1
+node-id                          |--             |BB90300800A0142
+node-id-interface                |--             |null
+os-group-perms                   |--             |false
+paxos-single-replica-limit       |--             |1
+pidfile                          |--             |null
+proto-fd-idle-ms                 |--             |0
+proto-fd-max                     |--             |15000
+proto-slow-netio-sleep-ms        |--             |1
+query-batch-size                 |--             |100
+query-buf-size                   |--             |1835008
+query-in-transaction-thread      |--             |false
+query-long-q-max-size            |--             |500
+query-microbenchmark             |--             |false
+query-priority                   |--             |10
+query-priority-sleep-us          |--             |1
+query-rec-count-bound            |--             |18446744073709551615
+query-req-in-query-thread        |--             |false
+query-req-max-inflight           |--             |100
+query-short-q-max-size           |--             |500
+query-threads                    |--             |6
+query-threshold                  |--             |10
+query-untracked-time-ms          |--             |1000
+query-worker-threads             |--             |15
+run-as-daemon                    |--             |true
+salt-allocations                 |--             |false
+scan-max-done                    |--             |100
+scan-threads-limit               |--             |128
+service-threads                  |--             |2
+service.access-address           |--             |10.128.0.3
+service.access-port              |--             |0
+service.alternate-access-port    |--             |0
+service.disable-localhost        |--             |false
+service.port                     |--             |3000
+service.tls-access-port          |--             |0
+service.tls-alternate-access-port|--             |0
+service.tls-name                 |--             |null
+service.tls-port                 |--             |0
+sindex-builder-threads           |--             |4
+sindex-gc-period                 |--             |10
+stay-quiesced                    |--             |false
+ticker-interval                  |--             |10
+transaction-max-ms               |--             |1000
+transaction-retry-ms             |--             |1002
+vault-ca                         |--             |null
+vault-path                       |--             |null
+vault-token-file                 |--             |null
+vault-url                        |--             |null
+work-directory                   |--             |/opt/aerospike
+Number of rows: 104
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Network Configuration (2022-06-01 00:47:52 UTC)~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Node                             |10.128.0.4:3000|instance-template-1.us-central1-a.c.model-block-277513.internal:3000
+fabric.channel-bulk-fds          |--             |2
+fabric.channel-bulk-recv-threads |--             |4
+fabric.channel-ctrl-fds          |--             |1
+fabric.channel-ctrl-recv-threads |--             |4
+fabric.channel-meta-fds          |--             |1
+fabric.channel-meta-recv-threads |--             |4
+fabric.channel-rw-fds            |--             |8
+fabric.channel-rw-recv-pools     |--             |1
+fabric.channel-rw-recv-threads   |--             |16
+fabric.keepalive-enabled         |--             |true
+fabric.keepalive-intvl           |--             |1
+fabric.keepalive-probes          |--             |10
+fabric.keepalive-time            |--             |1
+fabric.latency-max-ms            |--             |5
+fabric.port                      |--             |3001
+fabric.recv-rearm-threshold      |--             |1024
+fabric.send-threads              |--             |8
+fabric.tls-name                  |--             |null
+fabric.tls-port                  |--             |0
+heartbeat.address                |--             |10.128.0.3
+heartbeat.connect-timeout-ms     |--             |500
+heartbeat.interval               |--             |150
+heartbeat.mode                   |--             |mesh
+heartbeat.mtu                    |--             |1460
+heartbeat.port                   |--             |3002
+heartbeat.protocol               |--             |v3
+heartbeat.timeout                |--             |10
+heartbeat.tls-name               |--             |null
+heartbeat.tls-port               |--             |0
+info.port                        |--             |3003
+service.access-address           |--             |10.128.0.3
+service.access-port              |--             |0
+service.alternate-access-port    |--             |0
+service.disable-localhost        |--             |false
+service.port                     |--             |3000
+service.tls-access-port          |--             |0
+service.tls-alternate-access-port|--             |0
+service.tls-name                 |--             |null
+service.tls-port                 |--             |0
+Number of rows: 40
+-------------------
+Admin> show distribution for test
+~~~~~~~~~~~~~~~~~~~~~~~~~test - TTL Distribution in Seconds (2022-06-01 00:51:48 UTC)~~~~~~~~~~~~~~~~~~~~~~~~
+               Percentage of records having ttl less than or equal to value measured in Seconds
+                                                                Node|10%|20%|30%|40%|50%|60%|70%|80%|90%|100%
+10.128.0.4:3000                                                     | --| --| --| --| --| --| --| --| --|  --
+instance-template-1.us-central1-a.c.model-block-277513.internal:3000|100|100|100|100|100|100|100|100|100| 100
+Number of rows: 2
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~test - Object Size Distribution in bytes (2022-06-01 00:51:48 UTC)~~~~~~~~~~~~~~~~~~~~~~~~~~
+                   Percentage of records having objsz less than or equal to value measured in bytes
+                                                                Node| 10%| 20%| 30%| 40%| 50%| 60%| 70%| 80%| 90%|100%
+10.128.0.4:3000                                                     |  --|  --|  --|  --|  --|  --|  --|  --|  --|  --
+instance-template-1.us-central1-a.c.model-block-277513.internal:3000|1023|1023|1023|1023|1023|1023|1023|1023|1023|1023
+Number of rows: 2
+
+Admin> show statistics bins
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~test Bin Statistics (2022-06-01 00:52:55 UTC)~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Node           |10.128.0.4:3000|instance-template-1.us-central1-a.c.model-block-277513.internal:3000
+bin_names      |--             |6
+bin_names_quota|--             |65535
+Number of rows: 3
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~bar Bin Statistics (2022-06-01 00:52:55 UTC)~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Node           |10.128.0.4:3000|instance-template-1.us-central1-a.c.model-block-277513.internal:3000
+bin_names      |--             |0
+bin_names_quota|--             |65535
+Number of rows: 3
+---------------
+
+From AQL
+aql> show namespaces
+aql> show sets
+aql> show bins
+aql> explain select * from <ns>.<set> where PK=<primary key value>
+
+where
+“SET” is the set name for the record.
+“DIGEST” is the digest for the record.
+“NAMESPACE” is the namespace for the record.
+“PARTITION” is the partition where the record lives. The partition value is between 1 and 4095.
+“STATUS” is the status of the operation. It will be the code as returned by the client for the record. 
+  E.g: 0 is AEROSPIKE_OK and 2 is AEROSPIKE_ERR_RECORD_NOT_FOUND. 
+“UDF” tells if the AQL command was run as part of a UDF.
+"KEY_TYPE" is the type of the key (string/numeric etc) that was sent to the server.
+“TIMEOUT” is the timeout for the AQL command.
+“NODE” is the ID of the node where the master record currently lives. The node ID might change during migrations.
+“POLICY” is the replica read policy that the client can set when reading the record. 
+Two possible values are:
+1) AS_POLICY_REPLICA_MASTER (which is by default) to set the reads to go only to it's master copy and,
+2) AS_POLICY_REPLICA_ANY to read in a round-robin operation on all it's replica copies. 
+Set the policy to AS_POLICY_REPLICA_ANY by executing set replica_any true in AQL.
+“KEY POLICY” indicates whether the client had sent the key and digest to the server or just the digest. 
+Two possible values are:
+1) AS_POLICY_KEY_SEND if the key was sent along with the digest, and
+2) AS_POLICY_KEY_DIGEST if only the digest was sent.
+
+
+aql> insert into test.firstset (pk, name) values ('k1', 'John')
+OK, 1 record affected.
+
+aql> insert into bar.firstset (pk, name) values ('k1', 'John')
+OK, 1 record affected.
+
+aql> insert into test.firstset (pk, name) values ('k2', 'Johnny')
+OK, 1 record affected.
+
+aql> insert into bar.firstset (pk, name) values ('k2', 'Johnny')
+OK, 1 record affected.
+
+Example:
+aql> explain select * from test.firstset where PK = 'k1'
+
+[
+    [
+        {
+          "TIMEOUT": 1000,
+          "UDF": "FALSE",
+          "MASTER NODE": "BB90300800A0142",
+          "SET": "firstset",
+          "NAMESPACE": "test",
+          "DIGEST": "C219470EE949CCD8A8521CDBDA56D38C51483BC1",
+          "PARTITION": 2498,
+          "STATUS": "",
+          "KEY_TYPE": "STRING",
+          "POLICY_REPLICA": "AS_POLICY_REPLICA_MASTER",
+          "POLICY_KEY": "AS_POLICY_KEY_DEFAULT"
+        }
+    ],
+    [
+        {
+          "Status": 0
+        }
+    ]
+]
+
+aql> explain select * from test.firstset where PK = 'k2'
+
+[
+    [
+        {
+          "TIMEOUT": 1000,
+          "UDF": "FALSE",
+          "MASTER NODE": "BB90300800A0142",
+          "SET": "firstset",
+          "NAMESPACE": "test",
+          "DIGEST": "6EE186CA9FA37D121B53A1400111EEAA18FD0C6B",
+          "PARTITION": 366,
+          "STATUS": "",
+          "KEY_TYPE": "STRING",
+          "POLICY_REPLICA": "AS_POLICY_REPLICA_MASTER",
+          "POLICY_KEY": "AS_POLICY_KEY_DEFAULT"
+        }
+    ],
+    [
+        {
+          "Status": 0
+        }
+    ]
+]
+------------
+Admin> show pmap
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Partition Map Analysis (2022-06-01 02:44:41 UTC)~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Namespace|                                                                Node| Cluster Key|~~~~~~~~~~~~Partitions~~~~~~~~~~~~
+         |                                                                    |            |Primary|Secondary|Unavailable|Dead
+bar      |instance-template-1.us-central1-a.c.model-block-277513.internal:3000|3B4AE2010F1C|   4096|        0|          0|   0
+bar      |                                                                    |            |   4096|        0|          0|   0
+test     |instance-template-1.us-central1-a.c.model-block-277513.internal:3000|3B4AE2010F1C|   4096|        0|          0|   0
+test     |                                                                    |            |   4096|        0|          0|   0
+Number of rows: 2
+
+------------Admin> show best-practices
+~~~~~~~~Best Practices (2022-06-01 02:45:45 UTC)~~~~~~~~
+           Node|                                Response
+BB90300800A0142|min-free-kbytes, swappiness, memory-size
+Number of rows: 1
+
+Following Aerospike's best-practices are required for optimal stability and performance.
+Descriptions of each can be found @ https://docs.aerospike.com/docs/operations/install/linux/bestpractices/index.html
+
+------
+Admin> show mapping
+~IP to NODE-ID Mappings (2022-06-01 02:46:26 UTC)~
+             IP|        Node ID
+10.128.0.3:3000|BB90300800A0142
+Number of rows: 1
+
+~NODE-ID to IPs Mappings (2022-06-01 02:46:26 UTC)~
+        Node ID|             IP
+BB90300800A0142|10.128.0.3:3000
+Number of rows: 1
+
+----------------
+

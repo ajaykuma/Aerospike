@@ -351,6 +351,31 @@ aql> select * from test.firstset
 +----------+-------------+-----------+--------------------------------+------------+---------+-------+-------------+------+
 4 rows in set (0.046 secs)
 
+aql> show bins
++-------+------------+-------+-----------+
+| quota | bin        | count | namespace |
++-------+------------+-------+-----------+
+| 65535 | "name"     | 6     | "test"    |
+| 65535 | "age"      | 6     | "test"    |
+| 65535 | "location" | 6     | "test"    |
+| 65535 | "status"   | 6     | "test"    |
+| 65535 | "address"  | 6     | "test"    |
+| 65535 | "acad"     | 6     | "test"    |
++-------+------------+-------+-----------+
+[10.128.0.3:3000] 6 rows in set (0.001 secs)
+
++-------+------------+-------+-----------+
+| quota | bin        | count | namespace |
++-------+------------+-------+-----------+
+| 65535 | "name"     | 6     | "test"    |
+| 65535 | "age"      | 6     | "test"    |
+| 65535 | "location" | 6     | "test"    |
+| 65535 | "status"   | 6     | "test"    |
+| 65535 | "acad"     | 6     | "test"    |
+| 65535 | "address"  | 6     | "test"    |
++-------+------------+-------+-----------+
+[10.128.0.4:3000] 6 rows in set (0.001 secs)
+
 #while writing we can use asloglatency
 The Aerospike Log Latency tool (asloglatency) analyzes Aerospike log files and returns the latency measurements. 
 It returns latency analysis for a given time period in a tabular, easy to read form. The utility analyzes a 
