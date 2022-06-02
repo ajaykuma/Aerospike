@@ -255,6 +255,13 @@ Stage 1: default config (specify your own with --workload-stages)
 root@instance-template-1:~#
 root@instance-template-1:~# asbench  -n  test -k 1000 -l 30 -S 1 -w RU,10 -z 20
 
+#amc console should now show 1000 records
+
+#we can delete bins (a testbin is added in namespace test)
+#we can mark the values to null for the 'bin' which will be deleted 
+aql> insert into test.testset (pk,testbin) values(1,Null)
+
+
 #############Data Import/Export Tools################
 ##Aerospike Loader (asloader)
 The Aerospike Loader can help migrate data from any other database to Aerospike. 
