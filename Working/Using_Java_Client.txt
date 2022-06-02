@@ -27,3 +27,8 @@ root@instance-template-1:~/JC/aerospike-client-java/examples# ./run_examples -h 
 
 #verify from AQL
 
+#using batch
+root@instance-template-1:~/JC/aerospike-client-java/examples# ./run_examples -h localhost -p 3000 -n bar -s firstset Batch
+#verify from AQL
+
+
