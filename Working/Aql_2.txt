@@ -1,0 +1,627 @@
+#using AQL in a cluster
+root@instance-template-2:~# aql
+Seed:         127.0.0.1
+User:         None
+Config File:  /etc/aerospike/astools.conf /root/.aerospike/astools.conf
+Aerospike Query Client
+Version 6.1.0
+C Client Version 5.2.3
+Copyright 2012-2021 Aerospike. All rights reserved.
+aql> show namespaces
++------------+
+| namespaces |
++------------+
+| "test"     |
+| "bar"      |
++------------+
+[127.0.0.1:3000] 2 rows in set (0.002 secs)
+
++------------+
+| namespaces |
++------------+
+| "test"     |
+| "bar"      |
++------------+
+[10.128.0.3:3000] 2 rows in set (0.002 secs)
+
++------------+
+| namespaces |
++------------+
+| "test"     |
+| "bar"      |
++------------+
+[10.128.0.5:3000] 2 rows in set (0.003 secs)
+
+OK
+
+aql> show bins
+[127.0.0.1:3000] 0 rows in set (0.001 secs)
+
+[10.128.0.3:3000] 0 rows in set (0.002 secs)
+
+[10.128.0.5:3000] 0 rows in set (0.002 secs)
+
+OK
+
+aql> show sets
+[127.0.0.1:3000] 0 rows in set (0.000 secs)
+
+[10.128.0.3:3000] 0 rows in set (0.001 secs)
+
+[10.128.0.5:3000] 0 rows in set (0.001 secs)
+
+OK
+
+aql> insert into test.firstset (pk, name) values ('k1', 'John')
+OK, 1 record affected.
+
+aql> insert into test.firstset (pk, age) values ('k1', 35)
+OK, 1 record affected.
+
+aql> insert into test.firstset (pk, location) values ('k1', 'Berlin')
+OK, 1 record affected.
+
+aql> insert into test.firstset (pk, location) values ('k2', 'Frankfurt')
+OK, 1 record affected.
+
+aql> insert into test.firstset (pk, name) values ('k3', 'Marie')
+OK, 1 record affected.
+
+aql> insert into test.firstset (pk, status) values ('k3', 'Married')
+OK, 1 record affected.
+
+aql> insert into test.firstset (pk, age) values ('k3', 32.5)
+OK, 1 record affected.
+
+aql> insert into test.firstset (pk, acad) values ('k3', 'bachelors')
+OK, 1 record affected.
+
+aql> select * from test.firstset
++-------------+---------+------+-----------+-------------+
+| location    | name    | age  | status    | acad        |
++-------------+---------+------+-----------+-------------+
+| "Frankfurt" |         |      |           |             |
+| "Berlin"    | "John"  | 35   |           |             |
+|             | "Marie" | 32.5 | "Married" | "bachelors" |
++-------------+---------+------+-----------+-------------+
+3 rows in set (0.047 secs)
+
+OK
+
+aql> set record_print_metadata true
+RECORD_PRINT_METADATA = true
+aql> select * from test.firstset
++-------------+--------------------------------+------------+---------+-------+---------+------+-----------+-------------+
+| location    | {edigest}                      | {set}      | {ttl}   | {gen} | name    | age  | status    | acad        |
++-------------+--------------------------------+------------+---------+-------+---------+------+-----------+-------------+
+| "Frankfurt" | "buGGyp+jfRIbU6FAARHuqhj9DGs=" | "firstset" | 2591869 | 1     |         |      |           |             |
+| "Berlin"    | "whlHDulJzNioUhzb2lbTjFFIO8E=" | "firstset" | 2591827 | 3     | "John"  | 35   |           |             |
+|             | "rq2eCnVvhAEIME5cK5HpwbdEaY4=" | "firstset" | 2591958 | 4     | "Marie" | 32.5 | "Married" | "bachelors" |
++-------------+--------------------------------+------------+---------+-------+---------+------+-----------+-------------+
+3 rows in set (0.037 secs)
+
+OK
+
+aql> insert into test.firstset (pk, name) values ('k1', 'Johnny')
+OK, 1 record affected.
+
+aql> select * from test.firstset
++-------------+--------------------------------+------------+---------+-------+----------+------+-----------+-------------+
+| location    | {edigest}                      | {set}      | {ttl}   | {gen} | name     | age  | status    | acad        |
++-------------+--------------------------------+------------+---------+-------+----------+------+-----------+-------------+
+| "Frankfurt" | "buGGyp+jfRIbU6FAARHuqhj9DGs=" | "firstset" | 2591827 | 1     |          |      |           |             |
+| "Berlin"    | "whlHDulJzNioUhzb2lbTjFFIO8E=" | "firstset" | 2591991 | 4     | "Johnny" | 35   |           |             |
+|             | "rq2eCnVvhAEIME5cK5HpwbdEaY4=" | "firstset" | 2591916 | 4     | "Marie"  | 32.5 | "Married" | "bachelors" |
++-------------+--------------------------------+------------+---------+-------+----------+------+-----------+-------------+
+3 rows in set (0.051 secs)
+
+OK
+
+aql> show sets
++------------------+--------+------------------+---------+-------------------+------------+--------------+----------+-------------------+-------------------+--------------+------------+
+| disable-eviction | ns     | index_populating | objects | stop-writes-count | set        | enable-index | sindexes | memory_data_bytes | device_data_bytes | truncate_lut | tombstones |
++------------------+--------+------------------+---------+-------------------+------------+--------------+----------+-------------------+-------------------+--------------+------------+
+| "false"          | "test" | "false"          | "3"     | "0"               | "firstset" | "false"      | "0"      | "166"             | "0"               | "0"          | "0"        |
++------------------+--------+------------------+---------+-------------------+------------+--------------+----------+-------------------+-------------------+--------------+------------+
+[127.0.0.1:3000] 1 row in set (0.001 secs)
+
++------------------+--------+------------------+---------+-------------------+------------+--------------+----------+-------------------+-------------------+--------------+------------+
+| disable-eviction | ns     | index_populating | objects | stop-writes-count | set        | enable-index | sindexes | memory_data_bytes | device_data_bytes | truncate_lut | tombstones |
++------------------+--------+------------------+---------+-------------------+------------+--------------+----------+-------------------+-------------------+--------------+------------+
+| "false"          | "test" | "false"          | "1"     | "0"               | "firstset" | "false"      | "0"      | "57"              | "0"               | "0"          | "0"        |
++------------------+--------+------------------+---------+-------------------+------------+--------------+----------+-------------------+-------------------+--------------+------------+
+[10.128.0.3:3000] 1 row in set (0.001 secs)
+
++------------------+--------+------------------+---------+-------------------+------------+--------------+----------+-------------------+-------------------+--------------+------------+
+| disable-eviction | ns     | index_populating | objects | stop-writes-count | set        | enable-index | sindexes | memory_data_bytes | device_data_bytes | truncate_lut | tombstones |
++------------------+--------+------------------+---------+-------------------+------------+--------------+----------+-------------------+-------------------+--------------+------------+
+| "false"          | "test" | "false"          | "2"     | "0"               | "firstset" | "false"      | "0"      | "109"             | "0"               | "0"          | "0"        |
++------------------+--------+------------------+---------+-------------------+------------+--------------+----------+-------------------+-------------------+--------------+------------+
+[10.128.0.5:3000] 1 row in set (0.002 secs)
+
+OK
+
+aql> insert into test.firstset (pk, name) values ('k4', 'Joe')
+OK, 1 record affected.
+
+aql> insert into test.firstset (pk, acad) values ('k4', 'bachelors')
+OK, 1 record affected.
+
+aql> insert into test.firstset (pk, status) values ('k4', 'Single')
+OK, 1 record affected.
+
+aql> select * from test.firstset
++----------+-------------+-----------+--------------------------------+------------+---------+-------+-------------+------+
+| name     | acad        | status    | {edigest}                      | {set}      | {ttl}   | {gen} | location    | age  |
++----------+-------------+-----------+--------------------------------+------------+---------+-------+-------------+------+
+| "Joe"    | "bachelors" | "Single"  | "4NAjMxhvv3uTDTZeSGiDKFBGk2E=" | "firstset" | 2591992 | 3     |             |      |
+|          |             |           | "buGGyp+jfRIbU6FAARHuqhj9DGs=" | "firstset" | 2591454 | 1     | "Frankfurt" |      |
+| "Johnny" |             |           | "whlHDulJzNioUhzb2lbTjFFIO8E=" | "firstset" | 2591618 | 4     | "Berlin"    | 35   |
+| "Marie"  | "bachelors" | "Married" | "rq2eCnVvhAEIME5cK5HpwbdEaY4=" | "firstset" | 2591543 | 4     |             | 32.5 |
++----------+-------------+-----------+--------------------------------+------------+---------+-------+-------------+------+
+4 rows in set (0.046 secs)
+
+aql> show bins
++-------+------------+-------+-----------+
+| quota | bin        | count | namespace |
++-------+------------+-------+-----------+
+| 65535 | "name"     | 6     | "test"    |
+| 65535 | "age"      | 6     | "test"    |
+| 65535 | "location" | 6     | "test"    |
+| 65535 | "status"   | 6     | "test"    |
+| 65535 | "address"  | 6     | "test"    |
+| 65535 | "acad"     | 6     | "test"    |
++-------+------------+-------+-----------+
+[10.128.0.3:3000] 6 rows in set (0.001 secs)
+
++-------+------------+-------+-----------+
+| quota | bin        | count | namespace |
++-------+------------+-------+-----------+
+| 65535 | "name"     | 6     | "test"    |
+| 65535 | "age"      | 6     | "test"    |
+| 65535 | "location" | 6     | "test"    |
+| 65535 | "status"   | 6     | "test"    |
+| 65535 | "acad"     | 6     | "test"    |
+| 65535 | "address"  | 6     | "test"    |
++-------+------------+-------+-----------+
+[10.128.0.4:3000] 6 rows in set (0.001 secs)
+
+From AQL
+aql> show namespaces
+aql> show sets
+aql> show bins
+aql> explain select * from <ns>.<set> where PK=<primary key value>
+
+where
+“SET” is the set name for the record.
+“DIGEST” is the digest for the record.
+“NAMESPACE” is the namespace for the record.
+“PARTITION” is the partition where the record lives. The partition value is between 1 and 4095.
+“STATUS” is the status of the operation. It will be the code as returned by the client for the record. 
+  E.g: 0 is AEROSPIKE_OK and 2 is AEROSPIKE_ERR_RECORD_NOT_FOUND. 
+“UDF” tells if the AQL command was run as part of a UDF.
+"KEY_TYPE" is the type of the key (string/numeric etc) that was sent to the server.
+“TIMEOUT” is the timeout for the AQL command.
+“NODE” is the ID of the node where the master record currently lives. The node ID might change during migrations.
+“POLICY” is the replica read policy that the client can set when reading the record. 
+Two possible values are:
+1) AS_POLICY_REPLICA_MASTER (which is by default) to set the reads to go only to it's master copy and,
+2) AS_POLICY_REPLICA_ANY to read in a round-robin operation on all it's replica copies. 
+Set the policy to AS_POLICY_REPLICA_ANY by executing set replica_any true in AQL.
+“KEY POLICY” indicates whether the client had sent the key and digest to the server or just the digest. 
+Two possible values are:
+1) AS_POLICY_KEY_SEND if the key was sent along with the digest, and
+2) AS_POLICY_KEY_DIGEST if only the digest was sent.
+
+
+aql> insert into test.firstset (pk, name) values ('k1', 'John')
+OK, 1 record affected.
+
+Example:
+aql> explain select * from test.firstset where PK = 'k1'
+
+[
+    [
+        {
+          "TIMEOUT": 1000,
+          "UDF": "FALSE",
+          "MASTER NODE": "BB90300800A0142",
+          "SET": "firstset",
+          "NAMESPACE": "test",
+          "DIGEST": "C219470EE949CCD8A8521CDBDA56D38C51483BC1",
+          "PARTITION": 2498,
+          "STATUS": "",
+          "KEY_TYPE": "STRING",
+          "POLICY_REPLICA": "AS_POLICY_REPLICA_MASTER",
+          "POLICY_KEY": "AS_POLICY_KEY_DEFAULT"
+        }
+    ],
+    [
+        {
+          "Status": 0
+        }
+    ]
+]
+
+aql> explain select * from test.firstset where PK = 'k2'
+
+[
+    [
+        {
+          "TIMEOUT": 1000,
+          "UDF": "FALSE",
+          "MASTER NODE": "BB90300800A0142",
+          "SET": "firstset",
+          "NAMESPACE": "test",
+          "DIGEST": "6EE186CA9FA37D121B53A1400111EEAA18FD0C6B",
+          "PARTITION": 366,
+          "STATUS": "",
+          "KEY_TYPE": "STRING",
+          "POLICY_REPLICA": "AS_POLICY_REPLICA_MASTER",
+          "POLICY_KEY": "AS_POLICY_KEY_DEFAULT"
+        }
+    ],
+    [
+        {
+          "Status": 0
+        }
+    ]
+]
+
+--------------------
+aql> insert into bar.firstset (pk, name) values ('k1', 'John')
+OK, 1 record affected.
+
+aql> insert into bar.firstset (pk, age) values ('k1', 35)
+OK, 1 record affected.
+
+aql> insert into bar.firstset (pk, location) values ('k1', 'Berlin')
+OK, 1 record affected.
+
+aql> insert into bar.firstset (pk, location) values ('k2', 'Frankfurt')
+OK, 1 record affected.
+
+aql> insert into bar.firstset (pk, name) values ('k3', 'Marie')
+OK, 1 record affected.
+
+aql> insert into bar.firstset (pk, status) values ('k3', 'Married')
+OK, 1 record affected.
+
+aql> insert into bar.firstset (pk, age) values ('k3', 32.5)
+OK, 1 record affected.
+
+aql> insert into bar.firstset (pk, acad) values ('k3', 'bachelors')
+OK, 1 record affected.
+
+aql> select * from bar.firstset
++----------+-------------+------+-----------+-------------+
+| name     | location    | age  | status    | acad        |
++----------+-------------+------+-----------+-------------+
+| "Johnny" | "Frankfurt" |      |           |             |
+| "John"   | "Berlin"    | 35   |           |             |
+| "Marie"  |             | 32.5 | "Married" | "bachelors" |
++----------+-------------+------+-----------+-------------+
+3 rows in set (0.066 secs)
+
+OK
+
+#To retrieve the primary key (PK) in a record using AQL, KEY_SEND needs to be set to TRUE (it’s false by default) 
+prior to inserting the record. PK is an internal designation used by AQL for the user-specified primary key. 
+Internally, Aerospike does not store the user-specified primary key if KEY_SEND is not set to TRUE. 
+It only stores the digest.
+
+aql> set key_send true
+KEY_SEND = true
+aql> insert into bar.firstset (pk, name) values ('k4', 'Joe')
+OK, 1 record affected.
+
+aql> insert into bar.firstset (pk, acad) values ('k4', 'bachelors')
+OK, 1 record affected.
+
+aql> insert into bar.firstset (pk, status) values ('k4', 'Single')
+OK, 1 record affected.
+
+aql> select * from bar.firstset
++------+----------+-------------+-----------+-------------+------+
+| PK   | name     | acad        | status    | location    | age  |
++------+----------+-------------+-----------+-------------+------+
+| "k4" | "Joe"    | "bachelors" | "Single"  |             |      |
+|      | "Johnny" |             |           | "Frankfurt" |      |
+|      | "John"   |             |           | "Berlin"    | 35   |
+|      | "Marie"  | "bachelors" | "Married" |             | 32.5 |
++------+----------+-------------+-----------+-------------+------+
+4 rows in set (0.068 secs)
+
+
+aql> select * from bar.firstset where name='Marie'
+0 rows in set (0.001 secs)
+
+Error: (201) AEROSPIKE_ERR_INDEX_NOT_FOUND
+
+So either we need to query using PK
+aql> select * from bar.firstset where pk='k1'
++------+--------+-----+----------+
+| PK   | name   | age | location |
++------+--------+-----+----------+
+| "k1" | "John" | 35  | "Berlin" |
++------+--------+-----+----------+
+1 row in set (0.000 secs)
+
+OK
+
+aql> select * from bar.firstset where pk='k2'
++------+----------+-------------+
+| PK   | name     | location    |
++------+----------+-------------+
+| "k2" | "Johnny" | "Frankfurt" |
++------+----------+-------------+
+1 row in set (0.000 secs)
+
+OK
+
+aql> select * from bar.firstset where pk='k3'
++------+---------+-----------+------+-------------+
+| PK   | name    | status    | age  | acad        |
++------+---------+-----------+------+-------------+
+| "k3" | "Marie" | "Married" | 32.5 | "bachelors" |
++------+---------+-----------+------+-------------+
+1 row in set (0.000 secs)
+
+aql> show indexes
++--------+----------+-----------+------------+-------+------------+----------+-----------+
+| ns     | bin      | indextype | set        | state | indexname  | path     | type      |
++--------+----------+-----------+------------+-------+------------+----------+-----------+
+| "test" | "name"   | "DEFAULT" | "firstset" | "RW"  | "frstindx" | "name"   | "STRING"  |
+| "test" | "age"    | "DEFAULT" | "firstset" | "RW"  | "secindx"  | "age"    | "NUMERIC" |
+| "test" | "salary" | "DEFAULT" | "firstset" | "RW"  | "thrdindx" | "salary" | "NUMERIC" |
++--------+----------+-----------+------------+-------+------------+----------+-----------+
+[127.0.0.1:3000] 3 rows in set (0.002 secs)
+
+OK
+
+aql> drop index secindx
+Segmentation fault (core dumped)
+>
+caused by accessing memory that “does not belong to you.” When a piece of code tries to do read and 
+write operation in a read only location in memory or freed block of memory, it is known as core dump.
+
+#delete indexes using asadm
+root@instance-template-1:~# asadm
+
+Admin> manage sindex delete frstindx test testset
+ERROR: User must be in privileged mode to issue "manage" commands.
+       Type "enable" to enter privileged mode.
+Admin> enable
+Admin+> manage sindex delete frstindx ns test set testset
+Successfully deleted sindex frstindx.
+Admin+> manage sindex delete secindx ns test set testset
+Successfully deleted sindex secindx.
+Admin+> manage sindex delete thrdindx ns test set testset
+Successfully deleted sindex thrdindx.
+
+aql> create index newindx1 on bar.firstset (age) numeric
+OK, 1 index added.
+
+aql> insert into bar.firstset (pk, age) values ('k3', 33)
+OK, 1 record affected.
+
+aql> show indexes
++-------+-------+-----------+------------+-------+------------+-------+-----------+
+| ns    | bin   | indextype | set        | state | indexname  | path  | type      |
++-------+-------+-----------+------------+-------+------------+-------+-----------+
+| "bar" | "age" | "DEFAULT" | "firstset" | "RW"  | "newindx1" | "age" | "NUMERIC" |
++-------+-------+-----------+------------+-------+------------+-------+-----------+
+[127.0.0.1:3000] 1 row in set (0.000 secs)
+
+OK
+
+aql> select * from bar.firstset where age between 20 and 35
++---------+-----------+-----+-------------+----------+
+| name    | status    | age | acad        | location |
++---------+-----------+-----+-------------+----------+
+| "Marie" | "Married" | 33  | "bachelors" |          |
+| "John"  |           | 35  |             | "Berlin" |
++---------+-----------+-----+-------------+----------+
+2 rows in set (0.001 secs)
+
+OK
+
+#from asadm
+Admin> show sindex
+~~~~~Secondary Indexes (2022-06-02 01:19:34 UTC)~~~~~
+   Index|Namespace|     Set|Bin|    Bin|  Index|State
+    Name|         |        |   |   Type|   Type|
+newindx1|bar      |firstset|age|NUMERIC|DEFAULT|RW
+
+Admin> info sindex
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Secondary Index Information (2022-06-02 01:21:09 UTC)~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   Index|Namespace|     Set|  Node								|Bins|    Bin|State|Keys|Entries|   Memory|~~~~Queries~~~~~|~~~~Updates~~~~
+    Name|         |        |                                                                    |    |   Type|     |    |       |     Used|Requests|Avg Num| Writes|Deletes
+        |         |        |                                                                    |    |       |     |    |       |         |        |   Recs|       |
+newindx1|bar      |firstset|instance-template-1.us-central1-a.c.model-block-277513.internal:3000|age |NUMERIC|RW   |   2|2.000  |18.037 KB| 1.000  |2.000  |2.000  |0.000
+        |bar      |firstset|                                                                    |    |       |     |    |2.000  |18.037 KB| 1.000  |2.000  |2.000  |0.000
+Number of rows: 1
+
+#Making some updates in namespace in set
+#inserting new record with value in bin:age (sindex exists on this bin)
+aql> insert into bar.firstset (pk, age) values ('k10', 25)
+OK, 1 record affected.
+
+aql> insert into bar.firstset (pk, name) values ('k10', 'jackie')
+OK, 1 record affected.
+
+##
+Admin> info sindex
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Secondary Index Information (2022-06-02 01:24:04 UTC)~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   Index|Namespace|     Set|                                                                Node|Bins|    Bin|State|Keys|Entries|   Memory|~~~~Queries~~~~~|~~~~Updates~~~~
+    Name|         |        |                                                                    |    |   Type|     |    |       |     Used|Requests|Avg Num| Writes|Deletes
+        |         |        |                                                                    |    |       |     |    |       |         |        |   Recs|       |
+newindx1|bar      |firstset|instance-template-1.us-central1-a.c.model-block-277513.internal:3000|age |NUMERIC|RW   |   3|3.000  |18.056 KB| 1.000  |2.000  |3.000  |0.000
+        |bar      |firstset|                                                                    |    |       |     |    |3.000  |18.056 KB| 1.000  |2.000  |3.000  |0.000
+
+#notice the counters.
+
+#creating one more index using 'asadm manage'
+Admin+> manage sindex create string newindx2 ns  bar set firstset bin name
+Successfully created sindex newindx2.
+
+Admin+> show sindex
+~~~~~Secondary Indexes (2022-06-02 01:29:39 UTC)~~~~~~
+   Index|Namespace|     Set| Bin|    Bin|  Index|State
+    Name|         |        |    |   Type|   Type|
+newindx1|bar      |firstset| age|NUMERIC|DEFAULT|RW
+newindx2|bar      |firstset|name|STRING |DEFAULT|RW
+Number of rows: 2
+
+Admin+> info sindex
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Secondary Index Information (2022-06-02 01:30:10 UTC)~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   Index|Namespace|     Set|                                                                Node|Bins|    Bin|State|Keys|Entries|   Memory|~~~~Queries~~~~~|~~~~Updates~~~~
+    Name|         |        |                                                                    |    |   Type|     |    |       |     Used|Requests|Avg Num| Writes|Deletes
+        |         |        |                                                                    |    |       |     |    |       |         |        |   Recs|       |
+newindx1|bar      |firstset|instance-template-1.us-central1-a.c.model-block-277513.internal:3000|age |NUMERIC|RW   |   3|3.000  |18.056 KB| 1.000  |2.000  |3.000  |0.000
+newindx2|bar      |firstset|instance-template-1.us-central1-a.c.model-block-277513.internal:3000|name|STRING |RW   |   5|5.000  |18.343 KB| 0.000  |0.000  |5.000  |0.000
+        |bar      |firstset|                                                                    |    |       |     |    |8.000  |36.398 KB| 1.000  |2.000  |8.000  |0.000
+Number of rows: 2
+
+#insert data 
+--in a new set
+--in namespace directly
+--update the bin value in the record that was inserted in namespace directly
+
+aql> insert into bar (pk, name) values ('k11', 'jean')
+OK, 1 record affected.
+
+aql> insert into bar (pk, name) values ('k11', 'jeanie')
+OK, 1 record affected.
+
+aql> insert into bar.secondset (pk, name) values ('k12', 'jeanie')
+OK, 1 record affected.
+
+##
+Admin> info sindex
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Secondary Index Information (2022-06-02 01:32:47 UTC)~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   Index|Namespace|     Set|                                                                Node|Bins|    Bin|State|Keys|Entries|   Memory|~~~~Queries~~~~~|~~~~Updates~~~~
+    Name|         |        |                                                                    |    |   Type|     |    |       |     Used|Requests|Avg Num| Writes|Deletes
+        |         |        |                                                                    |    |       |     |    |       |         |        |   Recs|       |
+newindx1|bar      |firstset|instance-template-1.us-central1-a.c.model-block-277513.internal:3000|age |NUMERIC|RW   |   3|3.000  |18.056 KB| 1.000  |2.000  |3.000  |0.000
+newindx2|bar      |firstset|instance-template-1.us-central1-a.c.model-block-277513.internal:3000|name|STRING |RW   |   5|5.000  |18.343 KB| 0.000  |0.000  |5.000  |0.000
+        |bar      |firstset|                                                                    |    |       |     |    |8.000  |36.398 KB| 1.000  |2.000  |8.000  |0.000
+Number of rows: 2
+
+##
+Admin> show statistics like sindex
+~~~~~~~~~~~~test firstset Set Statistics (2022-06-02 01:33:48 UTC)~~~~~~~~~~~~
+Node    |instance-template-1.us-central1-a.c.model-block-277513.internal:3000
+sindexes|0
+Number of rows: 2
+
+~~~~~~~~~~~~test testset Set Statistics (2022-06-02 01:33:48 UTC)~~~~~~~~~~~~~
+Node    |instance-template-1.us-central1-a.c.model-block-277513.internal:3000
+sindexes|0
+Number of rows: 2
+
+~~~~~~~~~~~~bar firstset Set Statistics (2022-06-02 01:33:48 UTC)~~~~~~~~~~~~~
+Node    |instance-template-1.us-central1-a.c.model-block-277513.internal:3000
+sindexes|2
+Number of rows: 2
+
+~~~~~~~~~~~~bar secondset Set Statistics (2022-06-02 01:33:48 UTC)~~~~~~~~~~~~
+Node    |instance-template-1.us-central1-a.c.model-block-277513.internal:3000
+sindexes|0
+Number of rows: 2
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~bar Namespace Statistics (2022-06-02 01:33:48 UTC)~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Node                                     |instance-template-1.us-central1-a.c.model-block-277513.internal:3000
+memory_used_sindex_bytes                 |37272
+sindex.num-partitions                    |32
+sindex_gc_cleaned                        |0
+storage-engine.sindex-startup-device-scan|false
+Number of rows: 5
+
+~~~~~~~~~~~~~~~~~~~~~test Namespace Statistics (2022-06-02 01:33:48 UTC)~~~~~~~~~~~~~~~~~~~~~~
+Node                    |instance-template-1.us-central1-a.c.model-block-277513.internal:3000
+memory_used_sindex_bytes|0
+sindex.num-partitions   |32
+sindex_gc_cleaned       |0
+Number of rows: 4
+
+##seeing some statistics and focus on bar namespace + sindex
+Admin> show statistics like memory
+~~~~~~~~~~~~~~~~~test firstset Set Statistics (2022-06-02 01:35:51 UTC)~~~~~~~~~~~~~~~~
+Node             |instance-template-1.us-central1-a.c.model-block-277513.internal:3000
+memory_data_bytes|0
+Number of rows: 2
+
+~~~~~~~~~~~~~~~~~test testset Set Statistics (2022-06-02 01:35:51 UTC)~~~~~~~~~~~~~~~~~
+Node             |instance-template-1.us-central1-a.c.model-block-277513.internal:3000
+memory_data_bytes|0
+Number of rows: 2
+
+~~~~~~~~~~~~~~~~~bar firstset Set Statistics (2022-06-02 01:35:51 UTC)~~~~~~~~~~~~~~~~~
+Node             |instance-template-1.us-central1-a.c.model-block-277513.internal:3000
+memory_data_bytes|304
+Number of rows: 2
+
+~~~~~~~~~~~~~~~~~bar secondset Set Statistics (2022-06-02 01:35:51 UTC)~~~~~~~~~~~~~~~~
+Node             |instance-template-1.us-central1-a.c.model-block-277513.internal:3000
+memory_data_bytes|24
+Number of rows: 2
+
+~~~~~~~~~~~~~~~~~~~~~~~~~bar Namespace Statistics (2022-06-02 01:35:51 UTC)~~~~~~~~~~~~~~~~~~~~~~~~
+Node                         |instance-template-1.us-central1-a.c.model-block-277513.internal:3000
+high-water-memory-pct        |0
+memory-size                  |4294967296
+memory_free_pct              |99
+memory_used_bytes            |38072
+memory_used_data_bytes       |352
+memory_used_index_bytes      |448
+memory_used_set_index_bytes  |0
+memory_used_sindex_bytes     |37272
+storage-engine.data-in-memory|true
+Number of rows: 10
+
+~~~~~~~~~~~~~~~~~~~~~~~test Namespace Statistics (2022-06-02 01:35:51 UTC)~~~~~~~~~~~~~~~~~~~~~~~
+Node                       |instance-template-1.us-central1-a.c.model-block-277513.internal:3000
+high-water-memory-pct      |0
+memory-size                |4294967296
+memory_free_pct            |100
+memory_used_bytes          |0
+memory_used_data_bytes     |0
+memory_used_index_bytes    |0
+memory_used_set_index_bytes|0
+memory_used_sindex_bytes   |0
+Number of rows: 9
+
+-------------
+
+aql> stat index bar newindx1
++-----------------------------+---------+
+| name                        | value   |
++-----------------------------+---------+
+| "keys"                      | "3"     |
+| "entries"                   | "3"     |
+| "ibtr_memory_used"          | "18432" |
+| "nbtr_memory_used"          | "57"    |
+| "load_pct"                  | "100"   |
+| "loadtime"                  | "22"    |
+| "write_success"             | "3"     |
+| "write_error"               | "0"     |
+| "delete_success"            | "0"     |
+| "delete_error"              | "0"     |
+| "stat_gc_recs"              | "0"     |
+| "query_basic_complete"      | "1"     |
+| "query_basic_error"         | "0"     |
+| "query_basic_abort"         | "0"     |
+| "query_basic_avg_rec_count" | "2"     |
+| "histogram"                 | "false" |
++-----------------------------+---------+
+[127.0.0.1:3000] 16 rows in set (0.001 secs)
+
+
+keys	Number of primary keys indexed to this index. >	Statistics to monitor the quantity of unique keys in a secondary index.
+entries	Number of objects in the secondary index tree. >	For unique indexes, this value should equal the number of keys.
+ibtr_memory_used	Total memory used by a secondary index. >	Use this to check system memory memory usage.
+nbtr_memory_used	Total memory used by a secondary index.>	Use this to check system memory memory usage.
+stat_gc_recs	Number of records garbage collected from the secondary index.
+
+

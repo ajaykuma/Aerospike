@@ -1,4 +1,4 @@
-Admin> show statistics -bins
+Admin> show statistics 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~test Bin Statistics (2022-06-01 00:41:08 UTC)~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Node           |10.128.0.4:3000|instance-template-1.us-central1-a.c.model-block-277513.internal:3000
 bin_names      |--             |6
@@ -887,20 +887,6 @@ service.tls-name                 |--             |null
 service.tls-port                 |--             |0
 Number of rows: 40
 -------------------
-Admin> show distribution for test
-~~~~~~~~~~~~~~~~~~~~~~~~~test - TTL Distribution in Seconds (2022-06-01 00:51:48 UTC)~~~~~~~~~~~~~~~~~~~~~~~~
-               Percentage of records having ttl less than or equal to value measured in Seconds
-                                                                Node|10%|20%|30%|40%|50%|60%|70%|80%|90%|100%
-10.128.0.4:3000                                                     | --| --| --| --| --| --| --| --| --|  --
-instance-template-1.us-central1-a.c.model-block-277513.internal:3000|100|100|100|100|100|100|100|100|100| 100
-Number of rows: 2
-
-~~~~~~~~~~~~~~~~~~~~~~~~~~test - Object Size Distribution in bytes (2022-06-01 00:51:48 UTC)~~~~~~~~~~~~~~~~~~~~~~~~~~
-                   Percentage of records having objsz less than or equal to value measured in bytes
-                                                                Node| 10%| 20%| 30%| 40%| 50%| 60%| 70%| 80%| 90%|100%
-10.128.0.4:3000                                                     |  --|  --|  --|  --|  --|  --|  --|  --|  --|  --
-instance-template-1.us-central1-a.c.model-block-277513.internal:3000|1023|1023|1023|1023|1023|1023|1023|1023|1023|1023
-Number of rows: 2
 
 Admin> show statistics bins
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~test Bin Statistics (2022-06-01 00:52:55 UTC)~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -916,97 +902,12 @@ bin_names_quota|--             |65535
 Number of rows: 3
 ---------------
 
-From AQL
-aql> show namespaces
-aql> show sets
-aql> show bins
-aql> explain select * from <ns>.<set> where PK=<primary key value>
 
-where
-“SET” is the set name for the record.
-“DIGEST” is the digest for the record.
-“NAMESPACE” is the namespace for the record.
-“PARTITION” is the partition where the record lives. The partition value is between 1 and 4095.
-“STATUS” is the status of the operation. It will be the code as returned by the client for the record. 
-  E.g: 0 is AEROSPIKE_OK and 2 is AEROSPIKE_ERR_RECORD_NOT_FOUND. 
-“UDF” tells if the AQL command was run as part of a UDF.
-"KEY_TYPE" is the type of the key (string/numeric etc) that was sent to the server.
-“TIMEOUT” is the timeout for the AQL command.
-“NODE” is the ID of the node where the master record currently lives. The node ID might change during migrations.
-“POLICY” is the replica read policy that the client can set when reading the record. 
-Two possible values are:
-1) AS_POLICY_REPLICA_MASTER (which is by default) to set the reads to go only to it's master copy and,
-2) AS_POLICY_REPLICA_ANY to read in a round-robin operation on all it's replica copies. 
-Set the policy to AS_POLICY_REPLICA_ANY by executing set replica_any true in AQL.
-“KEY POLICY” indicates whether the client had sent the key and digest to the server or just the digest. 
-Two possible values are:
-1) AS_POLICY_KEY_SEND if the key was sent along with the digest, and
-2) AS_POLICY_KEY_DIGEST if only the digest was sent.
-
-
-aql> insert into test.firstset (pk, name) values ('k1', 'John')
-OK, 1 record affected.
-
-aql> insert into bar.firstset (pk, name) values ('k1', 'John')
-OK, 1 record affected.
-
-aql> insert into test.firstset (pk, name) values ('k2', 'Johnny')
-OK, 1 record affected.
-
-aql> insert into bar.firstset (pk, name) values ('k2', 'Johnny')
-OK, 1 record affected.
-
-Example:
-aql> explain select * from test.firstset where PK = 'k1'
-
-[
-    [
-        {
-          "TIMEOUT": 1000,
-          "UDF": "FALSE",
-          "MASTER NODE": "BB90300800A0142",
-          "SET": "firstset",
-          "NAMESPACE": "test",
-          "DIGEST": "C219470EE949CCD8A8521CDBDA56D38C51483BC1",
-          "PARTITION": 2498,
-          "STATUS": "",
-          "KEY_TYPE": "STRING",
-          "POLICY_REPLICA": "AS_POLICY_REPLICA_MASTER",
-          "POLICY_KEY": "AS_POLICY_KEY_DEFAULT"
-        }
-    ],
-    [
-        {
-          "Status": 0
-        }
-    ]
-]
-
-aql> explain select * from test.firstset where PK = 'k2'
-
-[
-    [
-        {
-          "TIMEOUT": 1000,
-          "UDF": "FALSE",
-          "MASTER NODE": "BB90300800A0142",
-          "SET": "firstset",
-          "NAMESPACE": "test",
-          "DIGEST": "6EE186CA9FA37D121B53A1400111EEAA18FD0C6B",
-          "PARTITION": 366,
-          "STATUS": "",
-          "KEY_TYPE": "STRING",
-          "POLICY_REPLICA": "AS_POLICY_REPLICA_MASTER",
-          "POLICY_KEY": "AS_POLICY_KEY_DEFAULT"
-        }
-    ],
-    [
-        {
-          "Status": 0
-        }
-    ]
-]
-------------
+Pmap--command displays partition map analysis of the Aerospike cluster.
+Primary Partitions: Total number of primary partitions for a specific namespace on that node.
+Secondary Partitions: Total number of secondary partitions for a specific namespace on that node.
+Unavailable Partitions: The number of partitions that are unavailable when roster nodes are missing.
+Dead Partitions: The number of partitions that are unavailable when all roster nodes are present.
 Admin> show pmap
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Partition Map Analysis (2022-06-01 02:44:41 UTC)~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Namespace|                                                                Node| Cluster Key|~~~~~~~~~~~~Partitions~~~~~~~~~~~~
@@ -1027,6 +928,7 @@ Following Aerospike's best-practices are required for optimal stability and perf
 Descriptions of each can be found @ https://docs.aerospike.com/docs/operations/install/linux/bestpractices/index.html
 
 ------
+#command displays mapping from IP to Node-ID and Node-ID to IPs.
 Admin> show mapping
 ~IP to NODE-ID Mappings (2022-06-01 02:46:26 UTC)~
              IP|        Node ID
@@ -1039,4 +941,17 @@ BB90300800A0142|10.128.0.3:3000
 Number of rows: 1
 
 ----------------
+#The show distribution command displays histograms and supports object_size and time_to_live histograms.
+Admin+> show distribution
+~~~~~~~~~~~~~~~~~~~~~~~~~bar - TTL Distribution in Seconds (2022-06-02 00:33:31 UTC)~~~~~~~~~~~~~~~~~~~~~~~~~
+               Percentage of records having ttl less than or equal to value measured in Seconds
+                                                                Node|10%|20%|30%|40%|50%|60%|70%|80%|90%|100%
+instance-template-1.us-central1-a.c.model-block-277513.internal:3000|  1|  1|  1|  1|  1|  1|  1|  1|  1|   1
+Number of rows: 1
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~bar - Object Size Distribution in bytes (2022-06-02 00:33:31 UTC)~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                   Percentage of records having objsz less than or equal to value measured in bytes
+                                                                Node| 10%| 20%| 30%| 40%| 50%| 60%| 70%| 80%| 90%|100%
+instance-template-1.us-central1-a.c.model-block-277513.internal:3000|1023|1023|1023|1023|1023|1023|1023|1023|1023|1023
+
 

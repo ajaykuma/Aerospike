@@ -1,0 +1,29 @@
+$apt install maven
+$mkdir JC
+$cd JC
+$root@instance-template-1:~/git clone https://github.com/aerospike/aerospike-client-java.git 
+root@instance-template-1:~/JC/aerospike-client-java#
+$root@instance-template-1:~/JC# mvn clean install
+$root@instance-template-1:~/cd aerospike-client-java
+$root@instance-template-1:~/JC/aerospike-client-java#ls test/target
+
+refer: run_examples
+       run_examples_swing
+
+root@instance-template-1:~/JC/aerospike-client-java# ls benchmarks/
+README.md  pom.xml  resources  run_benchmarks  src  target
+root@instance-template-1:~/JC/aerospike-client-java# ls examples/
+README.md  pom.xml  run_examples  run_examples_swing  src  target  udf
+root@instance-template-1:~/JC/aerospike-client-java# ls test
+README.md  pom.xml  run_tests  src  target
+
+
+Test examples:
+#to see server configuration
+root@instance-template-1:~/JC/aerospike-client-java/examples# ./run_examples -h localhost -p 3000 -n test ServerInfo
+
+#using PutGet and Checking generation
+root@instance-template-1:~/JC/aerospike-client-java/examples# ./run_examples -h localhost -p 3000 -n test -s demoset PutGet Generation
+
+#verify from AQL
+
