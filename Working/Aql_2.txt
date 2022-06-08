@@ -624,4 +624,19 @@ ibtr_memory_used	Total memory used by a secondary index. >	Use this to check sys
 nbtr_memory_used	Total memory used by a secondary index.>	Use this to check system memory memory usage.
 stat_gc_recs	Number of records garbage collected from the secondary index.
 
+-----
+There can be two cases of deleting a bin by setting value to null : Write-update or Write-replace.
 
+Write-Update:
+In write-update situation (the default behavior), the previous version of the record will be read in, 
+each bin will be updated with the incoming bin values (null bins will be removed as a result, 
+the database does not store null data), and then the new record is written out again. 
+After that, defragmentation works as usual and claims back the older version of the record.
+
+Write-Replace:
+As an aside, if you do not need any bins from the previous version, you can do a write-replace, 
+which will skip “reading the old version”.
+
+#we can delete bins (a testbin is added in namespace test when we run 'asbench')
+#we can mark the values to null for the 'bin' which will be deleted 
+aql> insert into test.testset (pk,testbin) values(1,Null)
