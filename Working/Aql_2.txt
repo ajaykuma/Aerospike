@@ -76,6 +76,25 @@ OK, 1 record affected.
 aql> insert into test.firstset (pk, acad) values ('k3', 'bachelors')
 OK, 1 record affected.
 
+or
+----
+set key_send true
+insert into test.firstset (pk, name) values ('k1', 'John')
+insert into test.firstset (pk, age) values ('k1', 35)
+insert into test.firstset (pk, location) values ('k1', 'Berlin')
+insert into test.firstset (pk, location) values ('k2', 'Frankfurt')
+insert into test.firstset (pk, name) values ('k3', 'Marie')
+insert into test.firstset (pk, status) values ('k3', 'Married')
+insert into test.firstset (pk, age) values ('k3', 32.5)
+insert into test.firstset (pk, acad) values ('k3', 'bachelors')
+insert into test.firstset (pk, name, age, location, status, acad) values ('k3', 'marie',45,'berlin','bachelor','science')
+insert into test.firstset (pk, name, age, location, status, acad) values ('k4', 'marie curie',45,'berlin','bachelor','science')
+insert into test.firstset (pk, name, age, location, status, acad) values ('k5', 'madam marie curie',45,'berlin','bachelor','science')
+insert into test.firstset (PK, intro_id, sample_data) VALUES ('k6', CAST('123' AS INT), JSON('{"a": 1.2, "b": [1, 2, 3]}'))
+insert into test.firstset (PK, intro_id, sample_data) VALUES ('k7', LIST('[1, 2, 3]'), MAP('{"a": 1, "b": 2}'))
+select * from test
+
+---
 aql> select * from test.firstset
 +-------------+---------+------+-----------+-------------+
 | location    | name    | age  | status    | acad        |
@@ -640,3 +659,18 @@ which will skip “reading the old version”.
 #we can delete bins (a testbin is added in namespace test when we run 'asbench')
 #we can mark the values to null for the 'bin' which will be deleted 
 aql> insert into test.testset (pk,testbin) values(1,Null)
+
+-------------------
+#Deleting content from NS
+Additional setting
+
+aql> get SCAN_RECORDS_PER_SECOND
+SCAN_RECORDS_PER_SECOND = 0
+aql> set SCAN_RECORDS_PER_SECOND 10
+SCAN_RECORDS_PER_SECOND = 10
+aql> get SCAN_RECORDS_PER_SECOND
+SCAN_RECORDS_PER_SECOND = 10
+
+
+	
+
