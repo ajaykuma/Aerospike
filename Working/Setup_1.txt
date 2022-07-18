@@ -43,6 +43,7 @@ Adding python path /opt/aerospike/lib/python
 -----output ends---
 
 #Installing server
+---not rerquired if previous step was successfully done----
 >dpkg -i aerospike-server-community-5.7.0.17.ubuntu18.04.x86_64.deb
 
 Selecting previously unselected package aerospike-server-community.
@@ -50,6 +51,8 @@ Selecting previously unselected package aerospike-server-community.
 Preparing to unpack aerospike-server-community-5.7.0.17.ubuntu18.04.x86_64.deb ...
 Unpacking aerospike-server-community (5.7.0.17-1) ...
 Setting up aerospike-server-community (5.7.0.17-1) ...
+
+---------------------
 
 >root@instance-template-1:~/aerospike-server-community-5.7.0.17-ubuntu18.04# 
 
@@ -121,6 +124,9 @@ May 27 07:09:11 instance-template-1 asd[3419]: May 27 2022 07:09:11 GMT: INFO (p
 >root@instance-template-1:~# /etc/init.d/amc start
 [ ok ] Starting amc (via systemctl): amc.service.
 
+OR
+>root@instance-template-1:~# service amc start
+
 >root@instance-template-1:~# /etc/init.d/amc status
 ● amc.service - LSB: Manage the amc app server
    Loaded: loaded (/etc/init.d/amc; generated)
@@ -143,7 +149,7 @@ May 29 14:20:54 instance-template-1 systemd[1]: Started LSB: Manage the amc app 
 --when it asks for IP of node to connect we can give '127.0.0.1' & port as default would be 3000
 http://<Ipaddress of node where amc was started/Public-IP>:8081/#dashboard/127.0.0.1:3000/60/<private-ip>:3000
 
-#Installing go for testing...
+#Installing go for testing...(OPTIONAL)
 >wget https://go.dev/dl/go1.15.15.linux-amd64.tar.gz
 >root@instance-template-1:~# tar -xf go1.15.15.linux-amd64.tar.gz
 >root@instance-template-1:~# ls
