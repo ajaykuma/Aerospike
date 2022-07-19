@@ -1,0 +1,28 @@
+
+#specifiying our internal ip
+network {
+        service {
+                #address any
+                access-address 10.128.0.3
+                port 3000
+        }
+----
+#specifying log
+logging {
+        file /var/log/aerospike/aerospike.log {
+                context any info
+        }
+}
+-----
+#make sure to create directory 'aerospike' under /var/log & check permissions
+#save 
+
+root@instance-template-1:~#service aerospike status
+root@instance-template-1:~#service aerospike restart
+root@instance-template-1:~#service aerospike status
+
+#check in AMC if one node shows up
+
+#check in log /var/log/aerospike/aerospike.log 
+
+

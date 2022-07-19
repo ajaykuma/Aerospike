@@ -286,20 +286,6 @@ See also: go build, go install, go clean.
 
 ===========================
 
-Extras:
-See Configure Aerospike Database to modify and tune the configuration.
-
-Adding devices and more
-To add SSDs, make sure to read about setup and initialization.
-
-Aerospike EE feature key file
-Aerospike EE requires a feature-key file to start up and optionally enable gated features, such as compression. See Configure the Feature Key File.
-Configure Logging
-To configure logging for the Aerospike server, see Configure - Log.
-
-Start Aerospike
-The Aerospike server can be controlled with standard systemctl commands. For details, see Aerospike systemd Daemon Management.
-
 
 
 
