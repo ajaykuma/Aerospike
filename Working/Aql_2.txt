@@ -656,9 +656,14 @@ Write-Replace:
 As an aside, if you do not need any bins from the previous version, you can do a write-replace, 
 which will skip “reading the old version”.
 
+For example:
 #we can delete bins (a testbin is added in namespace test when we run 'asbench')
 #we can mark the values to null for the 'bin' which will be deleted 
 aql> insert into test.testset (pk,testbin) values(1,Null)
+
+or 
+
+aql> truncate ns_name
 
 -------------------
 #Deleting content from NS
