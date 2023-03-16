@@ -7,117 +7,57 @@ Sets = Tables
 Keys/Records = Rows
 Bins = Columns
 
---older version
->wget -O aerospike.tgz https://download.aerospike.com/artifacts/aerospike-server-community/5.7.0.17/aerospike-server-community-5.7.0.17-ubuntu18.04.tgz
->tar -xvf aerospike.tgz
+#These steps to be done if we were running enterprise-edition of aerospike and 
+#To be able to run a cluster of aerospike community edition.
+(if no earlier setup, start from --download packages section)
+--perform below steps in all nodes
 
-[Optional: if aerospike already installed]
---on Ubuntu
-apt --purge autoremove aerospike*
+--cleanup
+sudo apt --purge autoremove aerospike*
+sudo dpkg --purge aerospike-tools 
+sudo dpkg --purge aerospike-server-enterprise 
 
---newer version
-wget https://github.com/aerospike/aerospike-server/releases/download/6.1.0.11/aerospike-server-community-6.1.0.11.debian10.x86_64.deb
+--download packages
+--for community edition server
+wget https://github.com/aerospike/aerospike-server/releases/download/6.1.0.11/aerospike-server-community-6.1.0.11.ubuntu18.04.x86_64.deb
+dpkg -i aerospike-server-community-6.1.0.11.ubuntu18.04.x86_64.deb
+
 --for tools
-wget https://download.aerospike.com/artifacts/aerospike-tools/6.1.0/aerospike-tools-6.1.0-ubuntu18.04.tgz
+wget https://download.aerospike.com/artifacts/aerospike-tools/8.0.4/aerospike-tools_8.0.4_ubuntu18.04_x86_64.tgz
+tar -xvf aerospike-tools_8.0.4_ubuntu18.04_x86_64.tgz
+cd aerospike-tools_8.0.4_ubuntu18.04_x86_64
+dpkg -i aerospike-tools_8.0.4-ubuntu18.04_amd64.deb
 
->root@instance-template-1:~# ls
-aerospike-server-community-5.7.0.17-ubuntu18.04  aerospike.tgz
+--list files
+root@templ-262:~# ls /etc/aerospike/
+aerospike.conf  astools.conf  irqbalance-ban.sh  sample  telemetry.conf
+root@templ-262:~# ls /opt
+aerospike  
 
-#The directory includes:
+--copy aerospike-cluster.conf as aerospike.conf into /etc/aerospike/
+--review it
+---above steps need to be done on all nodes---
 
-#license.txt — licenses for Aerospike and other software included in the package.
-#aerospike-tools-<aerospike_version>.<ubuntu_version>.x86_64.deb — Aerospike command-line tools and utilities.
-#aerospike-server-<community_or_enterprise>-<aerospike_version>.<ubuntu_version>.x86_64.deb — the Aerospike server package.
+>root@instance-template-1:~# sudo ufw status
+Status: inactive
 
->root@instance-template-1:~# ls aerospike-server-community-5.7.0.17-ubuntu18.04/
-LICENSE     aerospike-server-community-5.7.0.17.ubuntu18.04.x86_64.deb  asinstall
-SHA256SUMS  aerospike-tools-6.1.0.ubuntu18.04.x86_64.deb                dep-check
+#if firewall turned on (replace eth1 with your interface)[interface can be found by using 'ip address']
+root@instance-template-1:~># sudo ufw allow in on eth1 to any port 3000 proto tcp
+Rules updated
+Rules updated (v6)
 
-#Install:
->root@instance-template-1:~# cd aerospike-server-community-5.7.0.17-ubuntu18.04/
->root@instance-template-1:~/aerospike-server-community-5.7.0.17-ubuntu18.04# sudo ./asinstall
----output---
-WARN: Could not find python3-distutils. Asadm and asinfo will fail.
-WARN: To install either install pip3 or run 'apt-get install python3-distutils'.
-Installing tools
-dpkg -i aerospike-tools-6.1.0.ubuntu18.04.x86_64.deb
-Selecting previously unselected package aerospike-tools.
-(Reading database ... 65719 files and directories currently installed.)
-Preparing to unpack aerospike-tools-6.1.0.ubuntu18.04.x86_64.deb ...
-Unpacking aerospike-tools (6.1.0) ...
-Setting up aerospike-tools (6.1.0) ...
-Installing /opt/aerospike
-Writing /usr/local/lib/python3.6/dist-packages/aerospike.pth
-Adding python path /opt/aerospike/lib/python
------output ends---
+start aerospike -- 
+>sudo systemctl start aerospike (on node1, node2, node3)
 
-#Installing server
----not rerquired if previous step was successfully done----
->dpkg -i aerospike-server-community-5.7.0.17.ubuntu18.04.x86_64.deb
+-------------
 
-Selecting previously unselected package aerospike-server-community.
-(Reading database ... 65752 files and directories currently installed.)
-Preparing to unpack aerospike-server-community-5.7.0.17.ubuntu18.04.x86_64.deb ...
-Unpacking aerospike-server-community (5.7.0.17-1) ...
-Setting up aerospike-server-community (5.7.0.17-1) ...
+>root@instance-template-1:~sudo apt-get install python3-distutils
 
----------------------
-
->root@instance-template-1:~/aerospike-server-community-5.7.0.17-ubuntu18.04# 
-
->root@instance-template-1:~/aerospike-server-community-5.7.0.17-ubuntu18.04# sudo apt-get install python3-distutils
-
->root@instance-template-1:~/aerospike-server-community-5.7.0.17-ubuntu18.04# python3
+>root@instance-template-1:~# python3
 Python 3.6.9 (default, Mar 15 2022, 13:55:28) 
 [GCC 8.4.0] on linux
 Type "help", "copyright", "credits" or "license" for more information.
 >>> quit()
-
-#Configure Aerospike:
-#Installation establishes the server's default configuration. An in-memory test namespace is configured by default.
-
->root@instance-template-1:~/aerospike-server-community-5.7.0.17-ubuntu18.04# sudo service aerospike status
-● aerospike.service - Aerospike Server
-   Loaded: loaded (/usr/lib/systemd/system/aerospike.service; disabled; vendor preset: enabled)
-  Drop-In: /etc/systemd/system/aerospike.service.d
-           └─aerospike.conf
-   Active: inactive (dead)
-
->root@instance-template-1:~/aerospike-server-community-5.7.0.17-ubuntu18.04# sudo ufw status
-Status: inactive
-
-#if firewall turned on (replace eth1 with your interface)[interface can be found by using 'ip address']
-root@instance-template-1:~/aerospike-server-community-5.7.0.17-ubuntu18.04# sudo ufw allow in on eth1 to any port 3000 proto tcp
-Rules updated
-Rules updated (v6)
-
->root@instance-template-1:~/aerospike-server-community-5.7.0.17-ubuntu18.04#
-
-#Start service and check
->root@instance-template-1:~/aerospike-server-community-5.7.0.17-ubuntu18.04# sudo service aerospike start
->root@instance-template-1:~/aerospike-server-community-5.7.0.17-ubuntu18.04# sudo service aerospike status
-● aerospike.service - Aerospike Server
-   Loaded: loaded (/usr/lib/systemd/system/aerospike.service; disabled; vendor preset: enabled)
-  Drop-In: /etc/systemd/system/aerospike.service.d
-           └─aerospike.conf
-   Active: active (running) since Fri 2022-05-27 07:09:09 UTC; 4s ago
-  Process: 3417 ExecStartPre=/bin/systemctl start aerospike_telemetry (code=exited, status=0/SUCCESS)
-  Process: 3399 ExecStartPre=/usr/bin/asd-systemd-helper (code=exited, status=0/SUCCESS)
- Main PID: 3419 (asd)
-    Tasks: 113 (limit: 4915)
-   CGroup: /system.slice/aerospike.service
-           └─3419 /usr/bin/asd --config-file /etc/aerospike/aerospike.conf --fgdaemon
-
-May 27 07:09:11 instance-template-1 asd[3419]: May 27 2022 07:09:11 GMT: INFO (clustering): (clustering.c:5797) applied new succession list
-May 27 07:09:11 instance-template-1 asd[3419]: May 27 2022 07:09:11 GMT: INFO (clustering): (clustering.c:5799) applied cluster size 1
-May 27 07:09:11 instance-template-1 asd[3419]: May 27 2022 07:09:11 GMT: INFO (exchange): (exchange.c:2319) data exchange started with clus
-May 27 07:09:11 instance-template-1 asd[3419]: May 27 2022 07:09:11 GMT: INFO (exchange): (exchange.c:2671) exchange-compatibility-id: self
-May 27 07:09:11 instance-template-1 asd[3419]: May 27 2022 07:09:11 GMT: INFO (exchange): (exchange.c:3219) received commit command from pr
-May 27 07:09:11 instance-template-1 asd[3419]: May 27 2022 07:09:11 GMT: INFO (exchange): (exchange.c:3182) data exchange completed with cl
-May 27 07:09:11 instance-template-1 asd[3419]: May 27 2022 07:09:11 GMT: INFO (partition): (partition_balance.c:1006) {test} replication fa
-May 27 07:09:11 instance-template-1 asd[3419]: May 27 2022 07:09:11 GMT: INFO (partition): (partition_balance.c:978) {test} rebalanced: exp
-May 27 07:09:11 instance-template-1 asd[3419]: May 27 2022 07:09:11 GMT: INFO (partition): (partition_balance.c:1006) {bar} replication fac
-May 27 07:09:11 instance-template-1 asd[3419]: May 27 2022 07:09:11 GMT: INFO (partition): (partition_balance.c:978) {bar} rebalanced: exp
 
 ##AMC- Aerospike Management Console
 --shows info about your cluster
@@ -126,31 +66,21 @@ May 27 07:09:11 instance-template-1 asd[3419]: May 27 2022 07:09:11 GMT: INFO (p
 
 #Install Aerospike management server -Default Dashboard
 
->root@instance-template-1:~#cd
->root@instance-template-1:~# sudo wget https://github.com/aerospike-community/amc/releases/download/5.0.0/aerospike-amc-enterprise-5.0.0_amd64.deb
->root@instance-template-1:~# sudo dpkg -i aerospike-amc-enterprise-5.0.0_amd64.deb
+--for amc 
+sudo wget https://github.com/aerospike-community/amc/releases/download/5.0.0/aerospike-amc-enterprise-5.0.0_amd64.deb
+dpkg -i aerospike-amc-enterprise-5.0.0_amd64.deb
+
 >root@instance-template-1:~# sudo ufw allow 8081/tcp
+
 >root@instance-template-1:~# sudo /etc/init.d/amc start
 [ ok ] Starting amc (via systemctl): amc.service.
 
 OR
 >root@instance-template-1:~# sudo service amc start
 
->root@instance-template-1:~# /etc/init.d/amc status
-● amc.service - LSB: Manage the amc app server
-   Loaded: loaded (/etc/init.d/amc; generated)
-   Active: active (running) since Sun 2022-05-29 14:20:54 UTC; 5s ago
-     Docs: man:systemd-sysv-generator(8)
-  Process: 3345 ExecStart=/etc/init.d/amc start (code=exited, status=0/SUCCESS)
- Main PID: 3368 (amc)
-    Tasks: 5 (limit: 4915)
-   CGroup: /system.slice/amc.service
-           └─3368 /opt/amc/amc -config-file=/etc/amc/amc.conf -config-dir=/etc/amc
+OR
 
-May 29 14:20:54 instance-template-1 systemd[1]: Starting LSB: Manage the amc app server...
-May 29 14:20:54 instance-template-1 amc[3345]: Starting amc: 0
-May 29 14:20:54 instance-template-1 systemd[1]: Started LSB: Manage the amc app server.
-
+sudo systemctl start amc (on node1)
 
 #Access the console:
 
