@@ -1,6 +1,6 @@
 #using AQL in a cluster
 root@instance-template-2:~# aql
-Seed:         127.0.0.1
+Seed:         12X.0.0.1
 User:         None
 Config File:  /etc/aerospike/astools.conf /root/.aerospike/astools.conf
 Aerospike Query Client
@@ -14,7 +14,7 @@ aql> show namespaces
 | "test"     |
 | "bar"      |
 +------------+
-[127.0.0.1:3000] 2 rows in set (0.002 secs)
+[12X.0.0.1:3000] 2 rows in set (0.002 secs)
 
 +------------+
 | namespaces |
@@ -22,7 +22,7 @@ aql> show namespaces
 | "test"     |
 | "bar"      |
 +------------+
-[10.128.0.3:3000] 2 rows in set (0.002 secs)
+[10.12X.0.3:3000] 2 rows in set (0.002 secs)
 
 +------------+
 | namespaces |
@@ -30,25 +30,25 @@ aql> show namespaces
 | "test"     |
 | "bar"      |
 +------------+
-[10.128.0.5:3000] 2 rows in set (0.003 secs)
+[10.12X.0.5:3000] 2 rows in set (0.003 secs)
 
 OK
 
 aql> show bins
-[127.0.0.1:3000] 0 rows in set (0.001 secs)
+[12X.0.0.1:3000] 0 rows in set (0.001 secs)
 
-[10.128.0.3:3000] 0 rows in set (0.002 secs)
+[10.12X.0.3:3000] 0 rows in set (0.002 secs)
 
-[10.128.0.5:3000] 0 rows in set (0.002 secs)
+[10.12X.0.5:3000] 0 rows in set (0.002 secs)
 
 OK
 
 aql> show sets
-[127.0.0.1:3000] 0 rows in set (0.000 secs)
+[12X.0.0.1:3000] 0 rows in set (0.000 secs)
 
-[10.128.0.3:3000] 0 rows in set (0.001 secs)
+[10.12X.0.3:3000] 0 rows in set (0.001 secs)
 
-[10.128.0.5:3000] 0 rows in set (0.001 secs)
+[10.12X.0.5:3000] 0 rows in set (0.001 secs)
 
 OK
 
@@ -142,21 +142,21 @@ aql> show sets
 +------------------+--------+------------------+---------+-------------------+------------+--------------+----------+-------------------+-------------------+--------------+------------+
 | "false"          | "test" | "false"          | "3"     | "0"               | "firstset" | "false"      | "0"      | "166"             | "0"               | "0"          | "0"        |
 +------------------+--------+------------------+---------+-------------------+------------+--------------+----------+-------------------+-------------------+--------------+------------+
-[127.0.0.1:3000] 1 row in set (0.001 secs)
+[12X.0.0.1:3000] 1 row in set (0.001 secs)
 
 +------------------+--------+------------------+---------+-------------------+------------+--------------+----------+-------------------+-------------------+--------------+------------+
 | disable-eviction | ns     | index_populating | objects | stop-writes-count | set        | enable-index | sindexes | memory_data_bytes | device_data_bytes | truncate_lut | tombstones |
 +------------------+--------+------------------+---------+-------------------+------------+--------------+----------+-------------------+-------------------+--------------+------------+
 | "false"          | "test" | "false"          | "1"     | "0"               | "firstset" | "false"      | "0"      | "57"              | "0"               | "0"          | "0"        |
 +------------------+--------+------------------+---------+-------------------+------------+--------------+----------+-------------------+-------------------+--------------+------------+
-[10.128.0.3:3000] 1 row in set (0.001 secs)
+[10.12X.0.3:3000] 1 row in set (0.001 secs)
 
 +------------------+--------+------------------+---------+-------------------+------------+--------------+----------+-------------------+-------------------+--------------+------------+
 | disable-eviction | ns     | index_populating | objects | stop-writes-count | set        | enable-index | sindexes | memory_data_bytes | device_data_bytes | truncate_lut | tombstones |
 +------------------+--------+------------------+---------+-------------------+------------+--------------+----------+-------------------+-------------------+--------------+------------+
 | "false"          | "test" | "false"          | "2"     | "0"               | "firstset" | "false"      | "0"      | "109"             | "0"               | "0"          | "0"        |
 +------------------+--------+------------------+---------+-------------------+------------+--------------+----------+-------------------+-------------------+--------------+------------+
-[10.128.0.5:3000] 1 row in set (0.002 secs)
+[10.12X.0.5:3000] 1 row in set (0.002 secs)
 
 OK
 
@@ -191,7 +191,7 @@ aql> show bins
 | 65535 | "address"  | 6     | "test"    |
 | 65535 | "acad"     | 6     | "test"    |
 +-------+------------+-------+-----------+
-[10.128.0.3:3000] 6 rows in set (0.001 secs)
+[10.12X.0.3:3000] 6 rows in set (0.001 secs)
 
 +-------+------------+-------+-----------+
 | quota | bin        | count | namespace |
@@ -203,7 +203,7 @@ aql> show bins
 | 65535 | "acad"     | 6     | "test"    |
 | 65535 | "address"  | 6     | "test"    |
 +-------+------------+-------+-----------+
-[10.128.0.4:3000] 6 rows in set (0.001 secs)
+[10.12X.0.4:3000] 6 rows in set (0.001 secs)
 
 From AQL
 aql> show namespaces
@@ -394,7 +394,7 @@ aql> show indexes
 | "test" | "age"    | "DEFAULT" | "firstset" | "RW"  | "secindx"  | "age"    | "NUMERIC" |
 | "test" | "salary" | "DEFAULT" | "firstset" | "RW"  | "thrdindx" | "salary" | "NUMERIC" |
 +--------+----------+-----------+------------+-------+------------+----------+-----------+
-[127.0.0.1:3000] 3 rows in set (0.002 secs)
+[12X.0.0.1:3000] 3 rows in set (0.002 secs)
 
 OK
 
@@ -430,7 +430,7 @@ aql> show indexes
 +-------+-------+-----------+------------+-------+------------+-------+-----------+
 | "bar" | "age" | "DEFAULT" | "firstset" | "RW"  | "newindx1" | "age" | "NUMERIC" |
 +-------+-------+-----------+------------+-------+------------+-------+-----------+
-[127.0.0.1:3000] 1 row in set (0.000 secs)
+[12X.0.0.1:3000] 1 row in set (0.000 secs)
 
 OK
 
@@ -634,7 +634,7 @@ aql> stat index bar newindx1
 | "query_basic_avg_rec_count" | "2"     |
 | "histogram"                 | "false" |
 +-----------------------------+---------+
-[127.0.0.1:3000] 16 rows in set (0.001 secs)
+[12X.0.0.1:3000] 16 rows in set (0.001 secs)
 
 
 keys	Number of primary keys indexed to this index. >	Statistics to monitor the quantity of unique keys in a secondary index.

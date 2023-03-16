@@ -1,16 +1,15 @@
 #After adding/removing nodes from cluster and having a cluster of multiple nodes
-#we can set the cluster-name to make sure nodes having same cluster name will be part of 
-#a cluster
-
+#we can set the cluster-name to make sure nodes having same cluster name will be part of a cluster
+--as shown in service setting below
 
 (any other node trying to join cluster with different cluster name shows:
- WARNING (hb): (hb.c:4513) (repeated:33) ignoring message from BB904008A0A0142 with different cluster name(abcd..)
+WARNING (hb): (hb.c:4513) (repeated:33) ignoring message from BB904008A0A0142 with different cluster name(abcd..)
 
 #setting from amc (applicable till aerospike is restarted)
-manage> config editor > nodes > search: cluster > cluster-name: US-Cluster
+manage> config editor > nodes > search: cluster > cluster-name: My-Cluster
 
 #setting using command (applicable till aerospike is restarted)
-asinfo -v 'set-config:context=service;cluster-name=US-Cluster'
+asinfo -v 'set-config:context=service;cluster-name=My-Cluster'
 
 #setting in config
 service {
