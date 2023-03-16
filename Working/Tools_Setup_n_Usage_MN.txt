@@ -8,13 +8,26 @@ apt-get install python3-distutils (if not done )
 root@instance-template-1:~# ls /etc/aerospike/astools.conf
 
 ##IN CLUSTER
+
 root@instance-template-1:~# asadm
 Seed:        [('127.0.0.1', 3000, None)]
 Config_file: /root/.aerospike/astools.conf, /etc/aerospike/astools.conf
 Aerospike Interactive Shell, version 2.4.0
 
 Found 3 nodes
-Online:  10.128.0.3:3000, 10.128.0.5:3000, 10.128.0.4:3000
+Online:  10.12X.0.3:3000, 10.12X.0.5:3000, 10.12X.0.4:3000
+
+Admin> info network
+Admin> info namespace
+Admin> show stat 
+Admin> show stat sets
+Admin> show stat namespace
+Admin> show stat service
+Admin> show pmap
+Admin> show best-practices
+Admin> show mapping
+Admin> show roster
+Admin> show racks
 
 Admin> summary
 Cluster
@@ -38,6 +51,7 @@ bar      |    3|       1|12.000 GB|  0.0| 100.0|24.000 GB|  0.0|  99.0|         
 test     |    0|       0|12.000 GB|  0.0| 100.0| 0.000 B |  0.0|   0.0|          2|0.000
 Number of rows: 2
 -------------
+
 #Show 'info network' 3 times and pause for 1 second each time.
 #Admin> help watch
 Runs a command for a specified pause and iterations.
@@ -47,14 +61,15 @@ Usage: watch [pause] [iterations] [--no-diff] command
    iterations: Number of iterations to execute command.
                [default: until keyboard interrupt]
 
+
 Admin> watch 1 3 info network
 [ 2022-05-31 23:26:44 'info network' sleep: 1.0s iteration: 1  of 3 ]
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Network Information (2022-05-31 23:26:44 UTC)~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
                                                                 Node|         Node ID|             IP|     Build|Migrations|~~~~~~~~~~~~~~~~~~Cluster~~~~~~~~~~~~~~~~~~|Client|  Uptime
                                                                     |                |               |          |          |Size|         Key|Integrity|      Principal| Conns|
-instance-template-1.us-central1-a.c.model-block-277513.internal:3000| BB90300800A0142|10.128.0.3:3000|C-5.7.0.17|   0.000  |   3|9BC889C48AB5|True     |BB90500800A0142|     4|00:51:02
-instance-template-2.us-central1-a.c.model-block-277513.internal:3000| BB90400800A0142|10.128.0.4:3000|C-5.7.0.17|   0.000  |   3|9BC889C48AB5|True     |BB90500800A0142|     6|00:25:16
-instance-template-3.us-central1-a.c.model-block-277513.internal:3000|*BB90500800A0142|10.128.0.5:3000|C-5.7.0.17|   0.000  |   3|9BC889C48AB5|True     |BB90500800A0142|     6|00:21:29
+instance-template-1.us-central1-a.c.model-block-2775X3.internal:3000| BB90300800A0142|10.12X.0.3:3000|C-5.7.0.17|   0.000  |   3|9BC889C48AB5|True     |BB90500800A0142|     4|00:51:02
+instance-template-2.us-central1-a.c.model-block-2775X3.internal:3000| BB90400800A0142|10.12X.0.4:3000|C-5.7.0.17|   0.000  |   3|9BC889C48AB5|True     |BB90500800A0142|     6|00:25:16
+instance-template-3.us-central1-a.c.model-block-2775X3.internal:3000|*BB90500800A0142|10.12X.0.5:3000|C-5.7.0.17|   0.000  |   3|9BC889C48AB5|True     |BB90500800A0142|     6|00:21:29
 Number of rows: 3
 
 
@@ -62,12 +77,13 @@ Number of rows: 3
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Network Information (2022-05-31 23:26:45 UTC)~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
                                                                 Node|         Node ID|             IP|     Build|Migrations|~~~~~~~~~~~~~~~~~~Cluster~~~~~~~~~~~~~~~~~~|Client|  Uptime
                                                                     |                |               |          |          |Size|         Key|Integrity|      Principal| Conns|
-instance-template-1.us-central1-a.c.model-block-277513.internal:3000| BB90300800A0142|10.128.0.3:3000|C-5.7.0.17|   0.000  |   3|9BC889C48AB5|True     |BB90500800A0142|     3|00:51:03
-instance-template-2.us-central1-a.c.model-block-277513.internal:3000| BB90400800A0142|10.128.0.4:3000|C-5.7.0.17|   0.000  |   3|9BC889C48AB5|True     |BB90500800A0142|     4|00:25:17
-instance-template-3.us-central1-a.c.model-block-277513.internal:3000|*BB90500800A0142|10.128.0.5:3000|C-5.7.0.17|   0.000  |   3|9BC889C48AB5|True     |BB90500800A0142|     4|00:21:30
+instance-template-1.us-central1-a.c.model-block-2775X3.internal:3000| BB90300800A0142|10.12X.0.3:3000|C-5.7.0.17|   0.000  |   3|9BC889C48AB5|True     |BB90500800A0142|     3|00:51:03
+instance-template-2.us-central1-a.c.model-block-2775X3.internal:3000| BB90400800A0142|10.12X.0.4:3000|C-5.7.0.17|   0.000  |   3|9BC889C48AB5|True     |BB90500800A0142|     4|00:25:17
+instance-template-3.us-central1-a.c.model-block-2775X3.internal:3000|*BB90500800A0142|10.12X.0.5:3000|C-5.7.0.17|   0.000  |   3|9BC889C48AB5|True     |BB90500800A0142|     4|00:21:30
 Number of rows: 3
 
 ------------------
+
 #Show "info namespace" with 5 seconds pause until interrupted
 Admin> watch 5 info namespace
 [ 2022-05-31 23:27:51 'info namespace' sleep: 5.0s iteration: 1 ]
@@ -75,13 +91,13 @@ Admin> watch 5 info namespace
 Namespace|                                                                Node|  Total|Expirations|Evictions|  Stop|~~~~~~~~~~~Disk~~~~~~~~~~~|~~~~~~~~~~Memory~~~~~~~~~|~Primary~
          |                                                                    |Records|           |         |Writes|    Used|Used%|HWM%|Avail%|    Used|Used%|HWM%|Stop%|~~Index~~
          |                                                                    |       |           |         |      |        |     |    |      |        |     |    |     |     Type
-bar      |instance-template-1.us-central1-a.c.model-block-277513.internal:3000|0.000  |    0.000  |  0.000  |False |0.000 B |    0|   0|    99|0.000 B |    0|   0|   90|mem
-bar      |instance-template-2.us-central1-a.c.model-block-277513.internal:3000|0.000  |    0.000  |  0.000  |False |0.000 B |    0|   0|    99|0.000 B |    0|   0|   90|mem
-bar      |instance-template-3.us-central1-a.c.model-block-277513.internal:3000|0.000  |    0.000  |  0.000  |False |0.000 B |    0|   0|    99|0.000 B |    0|   0|   90|mem
+bar      |instance-template-1.us-central1-a.c.model-block-2775X3.internal:3000|0.000  |    0.000  |  0.000  |False |0.000 B |    0|   0|    99|0.000 B |    0|   0|   90|mem
+bar      |instance-template-2.us-central1-a.c.model-block-2775X3.internal:3000|0.000  |    0.000  |  0.000  |False |0.000 B |    0|   0|    99|0.000 B |    0|   0|   90|mem
+bar      |instance-template-3.us-central1-a.c.model-block-2775X3.internal:3000|0.000  |    0.000  |  0.000  |False |0.000 B |    0|   0|    99|0.000 B |    0|   0|   90|mem
 bar      |                                                                    |0.000  |    0.000  |  0.000  |      |0.000 B |     |    |      |0.000 B |     |    |     |
-test     |instance-template-1.us-central1-a.c.model-block-277513.internal:3000|0.000  |    0.000  |  0.000  |False |      --|   --|   0|    --|0.000 B |    0|   0|   90|mem
-test     |instance-template-2.us-central1-a.c.model-block-277513.internal:3000|0.000  |    0.000  |  0.000  |False |      --|   --|   0|    --|0.000 B |    0|   0|   90|mem
-test     |instance-template-3.us-central1-a.c.model-block-277513.internal:3000|0.000  |    0.000  |  0.000  |False |      --|   --|   0|    --|0.000 B |    0|   0|   90|mem
+test     |instance-template-1.us-central1-a.c.model-block-2775X3.internal:3000|0.000  |    0.000  |  0.000  |False |      --|   --|   0|    --|0.000 B |    0|   0|   90|mem
+test     |instance-template-2.us-central1-a.c.model-block-2775X3.internal:3000|0.000  |    0.000  |  0.000  |False |      --|   --|   0|    --|0.000 B |    0|   0|   90|mem
+test     |instance-template-3.us-central1-a.c.model-block-2775X3.internal:3000|0.000  |    0.000  |  0.000  |False |      --|   --|   0|    --|0.000 B |    0|   0|   90|mem
 test     |                                                                    |0.000  |    0.000  |  0.000  |      |      --|     |    |      |0.000 B |     |    |     |
 Number of rows: 6
 
@@ -89,13 +105,13 @@ Number of rows: 6
 Namespace|                                                                Node|Rack|  Repl|  Total|~~~~~~~~~~Objects~~~~~~~~~~|~~~~~~~~~Tombstones~~~~~~~~|~~~~Pending~~~~
          |                                                                    |  ID|Factor|Records| Master|  Prole|Non-Replica| Master|  Prole|Non-Replica|~~~~Migrates~~~
          |                                                                    |    |      |       |       |       |           |       |       |           |     Tx|     Rx
-bar      |instance-template-1.us-central1-a.c.model-block-277513.internal:3000|   0|     2|0.000  |0.000  |0.000  |    0.000  |0.000  |0.000  |    0.000  |0.000  |0.000
-bar      |instance-template-2.us-central1-a.c.model-block-277513.internal:3000|   0|     2|0.000  |0.000  |0.000  |    0.000  |0.000  |0.000  |    0.000  |0.000  |0.000
-bar      |instance-template-3.us-central1-a.c.model-block-277513.internal:3000|   0|     2|0.000  |0.000  |0.000  |    0.000  |0.000  |0.000  |    0.000  |0.000  |0.000
+bar      |instance-template-1.us-central1-a.c.model-block-2775X3.internal:3000|   0|     2|0.000  |0.000  |0.000  |    0.000  |0.000  |0.000  |    0.000  |0.000  |0.000
+bar      |instance-template-2.us-central1-a.c.model-block-2775X3.internal:3000|   0|     2|0.000  |0.000  |0.000  |    0.000  |0.000  |0.000  |    0.000  |0.000  |0.000
+bar      |instance-template-3.us-central1-a.c.model-block-2775X3.internal:3000|   0|     2|0.000  |0.000  |0.000  |    0.000  |0.000  |0.000  |    0.000  |0.000  |0.000
 bar      |                                                                    |    |      |0.000  |0.000  |0.000  |    0.000  |0.000  |0.000  |    0.000  |0.000  |0.000
-test     |instance-template-1.us-central1-a.c.model-block-277513.internal:3000|   0|     2|0.000  |0.000  |0.000  |    0.000  |0.000  |0.000  |    0.000  |0.000  |0.000
-test     |instance-template-2.us-central1-a.c.model-block-277513.internal:3000|   0|     2|0.000  |0.000  |0.000  |    0.000  |0.000  |0.000  |    0.000  |0.000  |0.000
-test     |instance-template-3.us-central1-a.c.model-block-277513.internal:3000|   0|     2|0.000  |0.000  |0.000  |    0.000  |0.000  |0.000  |    0.000  |0.000  |0.000
+test     |instance-template-1.us-central1-a.c.model-block-2775X3.internal:3000|   0|     2|0.000  |0.000  |0.000  |    0.000  |0.000  |0.000  |    0.000  |0.000  |0.000
+test     |instance-template-2.us-central1-a.c.model-block-2775X3.internal:3000|   0|     2|0.000  |0.000  |0.000  |    0.000  |0.000  |0.000  |    0.000  |0.000  |0.000
+test     |instance-template-3.us-central1-a.c.model-block-2775X3.internal:3000|   0|     2|0.000  |0.000  |0.000  |    0.000  |0.000  |0.000  |    0.000  |0.000  |0.000
 test     |                                                                    |    |      |0.000  |0.000  |0.000  |    0.000  |0.000  |0.000  |    0.000  |0.000  |0.000
 Number of rows: 6
 
@@ -106,13 +122,13 @@ Number of rows: 6
 Namespace|                                                                Node|  Total|Expirations|Evictions|  Stop|~~~~~~~~~~~Disk~~~~~~~~~~~|~~~~~~~~~~Memory~~~~~~~~~|~Primary~
          |                                                                    |Records|           |         |Writes|    Used|Used%|HWM%|Avail%|    Used|Used%|HWM%|Stop%|~~Index~~
          |                                                                    |       |           |         |      |        |     |    |      |        |     |    |     |     Type
-bar      |instance-template-1.us-central1-a.c.model-block-277513.internal:3000|0.000  |    0.000  |  0.000  |False |0.000 B |    0|   0|    99|0.000 B |    0|   0|   90|mem
-bar      |instance-template-2.us-central1-a.c.model-block-277513.internal:3000|0.000  |    0.000  |  0.000  |False |0.000 B |    0|   0|    99|0.000 B |    0|   0|   90|mem
-bar      |instance-template-3.us-central1-a.c.model-block-277513.internal:3000|0.000  |    0.000  |  0.000  |False |0.000 B |    0|   0|    99|0.000 B |    0|   0|   90|mem
+bar      |instance-template-1.us-central1-a.c.model-block-2775X3.internal:3000|0.000  |    0.000  |  0.000  |False |0.000 B |    0|   0|    99|0.000 B |    0|   0|   90|mem
+bar      |instance-template-2.us-central1-a.c.model-block-2775X3.internal:3000|0.000  |    0.000  |  0.000  |False |0.000 B |    0|   0|    99|0.000 B |    0|   0|   90|mem
+bar      |instance-template-3.us-central1-a.c.model-block-2775X3.internal:3000|0.000  |    0.000  |  0.000  |False |0.000 B |    0|   0|    99|0.000 B |    0|   0|   90|mem
 bar      |                                                                    |0.000  |    0.000  |  0.000  |      |0.000 B |     |    |      |0.000 B |     |    |     |
-test     |instance-template-1.us-central1-a.c.model-block-277513.internal:3000|0.000  |    0.000  |  0.000  |False |      --|   --|   0|    --|0.000 B |    0|   0|   90|mem
-test     |instance-template-2.us-central1-a.c.model-block-277513.internal:3000|0.000  |    0.000  |  0.000  |False |      --|   --|   0|    --|0.000 B |    0|   0|   90|mem
-test     |instance-template-3.us-central1-a.c.model-block-277513.internal:3000|0.000  |    0.000  |  0.000  |False |      --|   --|   0|    --|0.000 B |    0|   0|   90|mem
+test     |instance-template-1.us-central1-a.c.model-block-2775X3.internal:3000|0.000  |    0.000  |  0.000  |False |      --|   --|   0|    --|0.000 B |    0|   0|   90|mem
+test     |instance-template-2.us-central1-a.c.model-block-2775X3.internal:3000|0.000  |    0.000  |  0.000  |False |      --|   --|   0|    --|0.000 B |    0|   0|   90|mem
+test     |instance-template-3.us-central1-a.c.model-block-2775X3.internal:3000|0.000  |    0.000  |  0.000  |False |      --|   --|   0|    --|0.000 B |    0|   0|   90|mem
 test     |                                                                    |0.000  |    0.000  |  0.000  |      |      --|     |    |      |0.000 B |     |    |     |
 Number of rows: 6
 
@@ -120,17 +136,18 @@ Number of rows: 6
 Namespace|                                                                Node|Rack|  Repl|  Total|~~~~~~~~~~Objects~~~~~~~~~~|~~~~~~~~~Tombstones~~~~~~~~|~~~~Pending~~~~
          |                                                                    |  ID|Factor|Records| Master|  Prole|Non-Replica| Master|  Prole|Non-Replica|~~~~Migrates~~~
          |                                                                    |    |      |       |       |       |           |       |       |           |     Tx|     Rx
-bar      |instance-template-1.us-central1-a.c.model-block-277513.internal:3000|   0|     2|0.000  |0.000  |0.000  |    0.000  |0.000  |0.000  |    0.000  |0.000  |0.000
-bar      |instance-template-2.us-central1-a.c.model-block-277513.internal:3000|   0|     2|0.000  |0.000  |0.000  |    0.000  |0.000  |0.000  |    0.000  |0.000  |0.000
-bar      |instance-template-3.us-central1-a.c.model-block-277513.internal:3000|   0|     2|0.000  |0.000  |0.000  |    0.000  |0.000  |0.000  |    0.000  |0.000  |0.000
+bar      |instance-template-1.us-central1-a.c.model-block-2775X3.internal:3000|   0|     2|0.000  |0.000  |0.000  |    0.000  |0.000  |0.000  |    0.000  |0.000  |0.000
+bar      |instance-template-2.us-central1-a.c.model-block-2775X3.internal:3000|   0|     2|0.000  |0.000  |0.000  |    0.000  |0.000  |0.000  |    0.000  |0.000  |0.000
+bar      |instance-template-3.us-central1-a.c.model-block-2775X3.internal:3000|   0|     2|0.000  |0.000  |0.000  |    0.000  |0.000  |0.000  |    0.000  |0.000  |0.000
 bar      |                                                                    |    |      |0.000  |0.000  |0.000  |    0.000  |0.000  |0.000  |    0.000  |0.000  |0.000
-test     |instance-template-1.us-central1-a.c.model-block-277513.internal:3000|   0|     2|0.000  |0.000  |0.000  |    0.000  |0.000  |0.000  |    0.000  |0.000  |0.000
-test     |instance-template-2.us-central1-a.c.model-block-277513.internal:3000|   0|     2|0.000  |0.000  |0.000  |    0.000  |0.000  |0.000  |    0.000  |0.000  |0.000
-test     |instance-template-3.us-central1-a.c.model-block-277513.internal:3000|   0|     2|0.000  |0.000  |0.000  |    0.000  |0.000  |0.000  |    0.000  |0.000  |0.000
+test     |instance-template-1.us-central1-a.c.model-block-2775X3.internal:3000|   0|     2|0.000  |0.000  |0.000  |    0.000  |0.000  |0.000  |    0.000  |0.000  |0.000
+test     |instance-template-2.us-central1-a.c.model-block-2775X3.internal:3000|   0|     2|0.000  |0.000  |0.000  |    0.000  |0.000  |0.000  |    0.000  |0.000  |0.000
+test     |instance-template-3.us-central1-a.c.model-block-2775X3.internal:3000|   0|     2|0.000  |0.000  |0.000  |    0.000  |0.000  |0.000  |    0.000  |0.000  |0.000
 test     |                                                                    |    |      |0.000  |0.000  |0.000  |    0.000  |0.000  |0.000  |    0.000  |0.000  |0.000
 Number of rows: 6
 
 -------------
+
 root@instance-template-1:~# asinfo
 1 :  features
      batch-index;blob-bits;cdt-list;cdt-map;cluster-stable;float;geo;sindex-exists;peers;pipelining;pscans;
@@ -172,12 +189,13 @@ migrate_partitions_remaining=0;fabric_bulk_send_rate=0;
 fabric_bulk_recv_rate=0;fabric_ctrl_send_rate=0;fabric_ctrl_recv_rate=0;fabric_meta_send_rate=0;
 fabric_meta_recv_rate=0;fabric_rw_send_rate=0;fabric_rw_recv_rate=0
 10 :  services-alumni
-     10.128.0.4:3000;10.128.0.5:3000
+     10.12X.0.4:3000;10.12X.0.5:3000
 11 :  services
-     10.128.0.4:3000;10.128.0.5:3000
+     10.12X.0.4:3000;10.12X.0.5:3000
 12 :  partition-generation
      23166
 -------------------------
+
 #while writing we can use asloglatency
 The Aerospike Log Latency tool (asloglatency) analyzes Aerospike log files and returns the latency measurements. 
 It returns latency analysis for a given time period in a tabular, easy to read form. The utility analyzes a 
@@ -259,10 +277,10 @@ using asadm
 Admin> show latencies
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Latency  (2022-06-01 00:12:58 UTC)~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Namespace|Histogram|                                                                Node|ops/sec|>1ms|>8ms|>64ms
-test     |write    |instance-template-2.us-central1-a.c.model-block-277513.internal:3000|    0.0| 0.0| 0.0|  0.0
-test     |write    |instance-template-3.us-central1-a.c.model-block-277513.internal:3000|    0.0| 0.0| 0.0|  0.0
+test     |write    |instance-template-2.us-central1-a.c.model-block-2775X3.internal:3000|    0.0| 0.0| 0.0|  0.0
+test     |write    |instance-template-3.us-central1-a.c.model-block-2775X3.internal:3000|    0.0| 0.0| 0.0|  0.0
          |         |                                                                    |    0.0| 0.0| 0.0|  0.0
-~~       |~~       |instance-template-1.us-central1-a.c.model-block-277513.internal:3000|     ~~|  ~~|  ~~|   ~~
+~~       |~~       |instance-template-1.us-central1-a.c.model-block-2775X3.internal:3000|     ~~|  ~~|  ~~|   ~~
          |         |                                                                    |     ~~|  ~~|  ~~|   ~~
 Number of rows: 3
 
@@ -293,7 +311,7 @@ Aerospike Collectinfo Shell, version 2.4.0
 
  1: collect_info_20220601_002711.tgz (2022-06-01 00:27:11 UTC)
         Found 3 nodes
-        Online:  10.128.0.3:3000, 10.128.0.5:3000, 10.128.0.4:3000
+        Online:  10.12X.0.3:3000, 10.12X.0.5:3000, 10.12X.0.4:3000
 
 Collectinfo-analyzer>
 

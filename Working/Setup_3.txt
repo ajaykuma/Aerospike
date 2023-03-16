@@ -1,4 +1,4 @@
-Adding a node:
+#Adding a node in existing cluster or creating a cluster of nodes
 
 Aerospike supports adding a single or multiple nodes to a running cluster and does not have specific 
 requirements in the number of nodes that can be added based on the number of existing node.
@@ -7,12 +7,13 @@ Note**
 It is important to prepare the node. To avoid any scenario of pre-existing data, the drives must be initialized. 
 New SSD drives must be prepared/installed before use.
 The files under the /opt/aerospike/smd folder should be removed if the node was previously in use in a different cluster.
- The system metadata files in this folder contain details about secondary index definitions, udf modules, 
+The system metadata files in this folder contain details about secondary index definitions, udf modules, 
 user roles and permissions, truncate and truncate-namespace related information, roster information and more. 
 Adding a node in a cluster with existing data from a different cluster in the smd folder would result 
 in potentially disastrous situations.
 
-##1st Node--10.128.0.3
+--use sudo when needed
+##1st Node--10.1xx.0.x
 Login to your 1st node
 service aerospike status
 service amc status
@@ -32,14 +33,14 @@ root@instance-template-1:~#vi /etc/aerospike/aerospike.conf
 ---edit heartbeat stanza to have the following
 heartbeat {
                 mode mesh
-                address 10.128.0.3
+                address 10.1xx.0.x
                 port 3002 # Heartbeat port for this node
 
                 # List one or more other nodes, one ip-address & port per line:
                 # Please note that we do not have the address of the incoming node in this list
-                mesh-seed-address-port 10.128.0.3  3002
-                #mesh-seed-address-port 10.128.0.4  3002 #ip and port for 2nd node
-		#mesh-seed-address-port 10.128.0.5  3002 #ip and port for 3rd node
+                mesh-seed-address-port 10.1xx.0.x  3002
+                #mesh-seed-address-port 10.1xx.0.x  3002 #ip and port for 2nd node
+		#mesh-seed-address-port 10.1xx.0.x  3002 #ip and port for 3rd node
                 # Having the node itself as a mesh seed node is allowed
                 # and helps with consistent configuration files across the cluster
 		#we can just keep our 1st node as seed
@@ -61,7 +62,7 @@ heartbeat {
 network {
         service {
                 #address any
-                access-address 10.128.0.3
+                access-address 10.1xx.0.x
                 port 3000
         }
 ----
@@ -82,7 +83,7 @@ root@instance-template-1:~#service aerospike start
 #check in log /var/log/aerospike/aerospike.log 
 --might show msgs of unable to reach our other machine..
 
-##2nd Node--10.128.0.4
+##2nd Node--10.1xx.0.x
 #using your existing VM template , spin up a new machine
 #make sure you add your own public ssh key as we did in 1st machine before create & start of your new machine
 
@@ -90,8 +91,8 @@ root@instance-template-1:~#service aerospike start
 
 #before starting aerospike, edit aerospike.conf as done on 1st machine or copy the config from 1st node
 and change the 
-access-address in 'service' to 10.128.0.4
-address in 'heartbeat' to address 10.128.0.4
+access-address in 'service' to 10.1xx.0.x
+address in 'heartbeat' to address 10.1xx.0.x
 
 #make sure to create directory 'aerospike' under /var/log & check permissions
 
@@ -120,7 +121,7 @@ Config_file: /root/.aerospike/astools.conf, /etc/aerospike/astools.conf
 Aerospike Interactive Shell, version 2.4.0
 
 Found 2 nodes
-Online:  10.128.0.3:3000, 10.128.0.4:3000
+Online:  10.1xx.0.x:3000, 10.1xx.0.x:3000
 
 Admin> info namespace
 
@@ -147,16 +148,16 @@ $ asadm -e "enable; asinfo -v 'tip-clear:host-port-list=<hostname>:3002'"
 or
 
 $ asadm
-Admin+> asinfo -v 'tip-clear:host-port-list=10.128.0.4:3002'
+Admin+> asinfo -v 'tip-clear:host-port-list=10.1x8.0.x:3002'
 
 
 ----output
-Admin> asinfo -v 'tip-clear:host-port-list=10.128.0.4:3002'
+Admin> asinfo -v 'tip-clear:host-port-list=10.1x8.0.x:3002'
 ERROR: User must be in privileged mode to issue "asinfo" commands.
        Type "enable" to enter privileged mode.
 Admin> enable
-Admin+> asinfo -v 'tip-clear:host-port-list=10.128.0.4:3002'
-instance-template-1.us-central1-a.c.model-block-277513.internal:3000 (10.128.0.3) returned:
+Admin+> asinfo -v 'tip-clear:host-port-list=10.1x8.0.x:3002'
+instance-template-1.us-central1-a.c.model-block-277513.internal:3000 (10.1x8.0.x) returned:
 error: 0 cleared, 1 not found
 
 
@@ -171,7 +172,7 @@ even nodes that may have split from the cluster, so it is important to also clea
  This command should be run on all the remaining nodes in the cluster:
 
 Admin+> asinfo -v 'services-alumni-reset'
-instance-template-1.us-central1-a.c.model-block-277513.internal:3000 (10.128.0.3) returned:
+instance-template-1.us-central1-a.c.model-block-27751x.internal:3000 (10.12x.0.x) returned:
 ok
 
 --------------------

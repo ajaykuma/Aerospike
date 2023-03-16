@@ -1,5 +1,5 @@
 #Aerospike 
-
+#Install Aerospike community edition on Ubuntu 18
 Terminologies:
 Cluster Hosts namespaces.
 Namespace = Database
@@ -7,7 +7,6 @@ Sets = Tables
 Keys/Records = Rows
 Bins = Columns
 
-#Install Aerospike community edition on Ubuntu 18
 >wget -O aerospike.tgz https://download.aerospike.com/artifacts/aerospike-server-community/5.7.0.17/aerospike-server-community-5.7.0.17-ubuntu18.04.tgz
 >tar -xvf aerospike.tgz
 
@@ -56,7 +55,7 @@ Setting up aerospike-server-community (5.7.0.17-1) ...
 
 >root@instance-template-1:~/aerospike-server-community-5.7.0.17-ubuntu18.04# 
 
->root@instance-template-1:~/aerospike-server-community-5.7.0.17-ubuntu18.04# apt-get install python3-distutils
+>root@instance-template-1:~/aerospike-server-community-5.7.0.17-ubuntu18.04# sudo apt-get install python3-distutils
 
 >root@instance-template-1:~/aerospike-server-community-5.7.0.17-ubuntu18.04# python3
 Python 3.6.9 (default, Mar 15 2022, 13:55:28) 
@@ -74,7 +73,7 @@ Type "help", "copyright", "credits" or "license" for more information.
            └─aerospike.conf
    Active: inactive (dead)
 
->root@instance-template-1:~/aerospike-server-community-5.7.0.17-ubuntu18.04# ufw status
+>root@instance-template-1:~/aerospike-server-community-5.7.0.17-ubuntu18.04# sudo ufw status
 Status: inactive
 
 #if firewall turned on (replace eth1 with your interface)[interface can be found by using 'ip address']
@@ -118,14 +117,14 @@ May 27 07:09:11 instance-template-1 asd[3419]: May 27 2022 07:09:11 GMT: INFO (p
 #Install Aerospike management server -Default Dashboard
 
 >root@instance-template-1:~#cd
->root@instance-template-1:~# wget https://github.com/aerospike-community/amc/releases/download/5.0.0/aerospike-amc-enterprise-5.0.0_amd64.deb
->root@instance-template-1:~# dpkg -i aerospike-amc-enterprise-5.0.0_amd64.deb
->root@instance-template-1:~# ufw allow 8081/tcp
->root@instance-template-1:~# /etc/init.d/amc start
+>root@instance-template-1:~# sudo wget https://github.com/aerospike-community/amc/releases/download/5.0.0/aerospike-amc-enterprise-5.0.0_amd64.deb
+>root@instance-template-1:~# sudo dpkg -i aerospike-amc-enterprise-5.0.0_amd64.deb
+>root@instance-template-1:~# sudo ufw allow 8081/tcp
+>root@instance-template-1:~# sudo /etc/init.d/amc start
 [ ok ] Starting amc (via systemctl): amc.service.
 
 OR
->root@instance-template-1:~# service amc start
+>root@instance-template-1:~# sudo service amc start
 
 >root@instance-template-1:~# /etc/init.d/amc status
 ● amc.service - LSB: Manage the amc app server

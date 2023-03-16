@@ -1,18 +1,18 @@
 Admin> show statistics 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~test Bin Statistics (2022-06-01 00:41:08 UTC)~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Node           |10.128.0.4:3000|instance-template-1.us-central1-a.c.model-block-277513.internal:3000
+Node           |10.12X.0.4:3000|instance-template-1.us-central1-a.c.model-block-27751X.internal:3000
 bin_names      |--             |6
 bin_names_quota|--             |65535
 Number of rows: 3
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~bar Bin Statistics (2022-06-01 00:41:08 UTC)~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Node           |10.128.0.4:3000|instance-template-1.us-central1-a.c.model-block-277513.internal:3000
+Node           |10.12X.0.4:3000|instance-template-1.us-central1-a.c.model-block-27751X.internal:3000
 bin_names      |--             |0
 bin_names_quota|--             |65535
 Number of rows: 3
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~test firstset Set Statistics (2022-06-01 00:41:08 UTC)~~~~~~~~~~~~~~~~~~~~~~~~
-Node             |10.128.0.4:3000|instance-template-1.us-central1-a.c.model-block-277513.internal:3000
+Node             |10.12X.0.4:3000|instance-template-1.us-central1-a.c.model-block-27751X.internal:3000
 device_data_bytes|--             |0
 disable-eviction |--             |false
 enable-index     |--             |false
@@ -28,7 +28,7 @@ truncate_lut     |--             |0
 Number of rows: 13
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Service Statistics (2022-06-01 00:41:08 UTC)~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Node                                 |10.128.0.4:3000|instance-template-1.us-central1-a.c.model-block-277513.internal:3000
+Node                                 |10.12X.0.4:3000|instance-template-1.us-central1-a.c.model-block-27751X.internal:3000
 batch_index_complete                 |~~             |0
 batch_index_created_buffers          |~~             |0
 batch_index_delay                    |~~             |0
@@ -115,7 +115,7 @@ uptime                               |~~             |7511
 Number of rows: 84
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~bar Namespace Statistics (2022-06-01 00:41:08 UTC)~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Node                                     |10.128.0.4:3000|instance-template-1.us-central1-a.c.model-block-277513.internal:3000
+Node                                     |10.12X.0.4:3000|instance-template-1.us-central1-a.c.model-block-27751X.internal:3000
 allow-ttl-without-nsup                   |~~             |false
 appeals_records_exonerated               |~~             |0
 appeals_rx_active                        |~~             |0
@@ -446,7 +446,7 @@ xmem_id                                  |~~             |0
 Number of rows: 328
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~test Namespace Statistics (2022-06-01 00:41:08 UTC)~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Node                                  |10.128.0.4:3000|instance-template-1.us-central1-a.c.model-block-277513.internal:3000
+Node                                  |10.12X.0.4:3000|instance-template-1.us-central1-a.c.model-block-27751X.internal:3000
 allow-ttl-without-nsup                |~~             |true
 appeals_records_exonerated            |~~             |0
 appeals_rx_active                     |~~             |0
@@ -738,7 +738,7 @@ Number of rows: 287
 --------------
 Admin> show config
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Service Configuration (2022-06-01 00:47:52 UTC)~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Node                             |10.128.0.4:3000|instance-template-1.us-central1-a.c.model-block-277513.internal:3000
+Node                             |10.12X.0.4:3000|instance-template-1.us-central1-a.c.model-block-27751X.internal:3000
 advertise-ipv6                   |--             |false
 auto-pin                         |--             |none
 batch-index-threads              |--             |2
@@ -773,7 +773,7 @@ fabric.recv-rearm-threshold      |--             |1024
 fabric.send-threads              |--             |8
 fabric.tls-name                  |--             |null
 fabric.tls-port                  |--             |0
-heartbeat.address                |--             |10.128.0.3
+heartbeat.address                |--             |10.12X.0.3
 heartbeat.connect-timeout-ms     |--             |500
 heartbeat.interval               |--             |150
 heartbeat.mode                   |--             |mesh
@@ -820,9 +820,9 @@ query-worker-threads             |--             |15
 run-as-daemon                    |--             |true
 salt-allocations                 |--             |false
 scan-max-done                    |--             |100
-scan-threads-limit               |--             |128
+scan-threads-limit               |--             |12X
 service-threads                  |--             |2
-service.access-address           |--             |10.128.0.3
+service.access-address           |--             |10.12X.0.3
 service.access-port              |--             |0
 service.alternate-access-port    |--             |0
 service.disable-localhost        |--             |false
@@ -845,7 +845,7 @@ work-directory                   |--             |/opt/aerospike
 Number of rows: 104
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Network Configuration (2022-06-01 00:47:52 UTC)~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Node                             |10.128.0.4:3000|instance-template-1.us-central1-a.c.model-block-277513.internal:3000
+Node                             |10.12X.0.4:3000|instance-template-1.us-central1-a.c.model-block-27751X.internal:3000
 fabric.channel-bulk-fds          |--             |2
 fabric.channel-bulk-recv-threads |--             |4
 fabric.channel-ctrl-fds          |--             |1
@@ -865,7 +865,7 @@ fabric.recv-rearm-threshold      |--             |1024
 fabric.send-threads              |--             |8
 fabric.tls-name                  |--             |null
 fabric.tls-port                  |--             |0
-heartbeat.address                |--             |10.128.0.3
+heartbeat.address                |--             |10.12X.0.3
 heartbeat.connect-timeout-ms     |--             |500
 heartbeat.interval               |--             |150
 heartbeat.mode                   |--             |mesh
@@ -876,7 +876,7 @@ heartbeat.timeout                |--             |10
 heartbeat.tls-name               |--             |null
 heartbeat.tls-port               |--             |0
 info.port                        |--             |3003
-service.access-address           |--             |10.128.0.3
+service.access-address           |--             |10.12X.0.3
 service.access-port              |--             |0
 service.alternate-access-port    |--             |0
 service.disable-localhost        |--             |false
@@ -890,20 +890,20 @@ Number of rows: 40
 
 Admin> show statistics bins
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~test Bin Statistics (2022-06-01 00:52:55 UTC)~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Node           |10.128.0.4:3000|instance-template-1.us-central1-a.c.model-block-277513.internal:3000
+Node           |10.12X.0.4:3000|instance-template-1.us-central1-a.c.model-block-27751X.internal:3000
 bin_names      |--             |6
 bin_names_quota|--             |65535
 Number of rows: 3
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~bar Bin Statistics (2022-06-01 00:52:55 UTC)~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Node           |10.128.0.4:3000|instance-template-1.us-central1-a.c.model-block-277513.internal:3000
+Node           |10.12X.0.4:3000|instance-template-1.us-central1-a.c.model-block-27751X.internal:3000
 bin_names      |--             |0
 bin_names_quota|--             |65535
 Number of rows: 3
 ---------------
 
 
-Pmap--command displays partition map analysis of the Aerospike cluster.
+#Pmap--command displays partition map analysis of the Aerospike cluster.
 Primary Partitions: Total number of primary partitions for a specific namespace on that node.
 Secondary Partitions: Total number of secondary partitions for a specific namespace on that node.
 Unavailable Partitions: The number of partitions that are unavailable when roster nodes are missing.
@@ -912,9 +912,9 @@ Admin> show pmap
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Partition Map Analysis (2022-06-01 02:44:41 UTC)~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Namespace|                                                                Node| Cluster Key|~~~~~~~~~~~~Partitions~~~~~~~~~~~~
          |                                                                    |            |Primary|Secondary|Unavailable|Dead
-bar      |instance-template-1.us-central1-a.c.model-block-277513.internal:3000|3B4AE2010F1C|   4096|        0|          0|   0
+bar      |instance-template-1.us-central1-a.c.model-block-27751X.internal:3000|3B4AE2010F1C|   4096|        0|          0|   0
 bar      |                                                                    |            |   4096|        0|          0|   0
-test     |instance-template-1.us-central1-a.c.model-block-277513.internal:3000|3B4AE2010F1C|   4096|        0|          0|   0
+test     |instance-template-1.us-central1-a.c.model-block-27751X.internal:3000|3B4AE2010F1C|   4096|        0|          0|   0
 test     |                                                                    |            |   4096|        0|          0|   0
 Number of rows: 2
 
@@ -932,12 +932,12 @@ Descriptions of each can be found @ https://docs.aerospike.com/docs/operations/i
 Admin> show mapping
 ~IP to NODE-ID Mappings (2022-06-01 02:46:26 UTC)~
              IP|        Node ID
-10.128.0.3:3000|BB90300800A0142
+10.12X.0.3:3000|BB90300800A0142
 Number of rows: 1
 
 ~NODE-ID to IPs Mappings (2022-06-01 02:46:26 UTC)~
         Node ID|             IP
-BB90300800A0142|10.128.0.3:3000
+BB90300800A0142|10.12X.0.3:3000
 Number of rows: 1
 
 ----------------
@@ -946,12 +946,12 @@ Admin+> show distribution
 ~~~~~~~~~~~~~~~~~~~~~~~~~bar - TTL Distribution in Seconds (2022-06-02 00:33:31 UTC)~~~~~~~~~~~~~~~~~~~~~~~~~
                Percentage of records having ttl less than or equal to value measured in Seconds
                                                                 Node|10%|20%|30%|40%|50%|60%|70%|80%|90%|100%
-instance-template-1.us-central1-a.c.model-block-277513.internal:3000|  1|  1|  1|  1|  1|  1|  1|  1|  1|   1
+instance-template-1.us-central1-a.c.model-block-27751X.internal:3000|  1|  1|  1|  1|  1|  1|  1|  1|  1|   1
 Number of rows: 1
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~bar - Object Size Distribution in bytes (2022-06-02 00:33:31 UTC)~~~~~~~~~~~~~~~~~~~~~~~~~~~
                    Percentage of records having objsz less than or equal to value measured in bytes
                                                                 Node| 10%| 20%| 30%| 40%| 50%| 60%| 70%| 80%| 90%|100%
-instance-template-1.us-central1-a.c.model-block-277513.internal:3000|1023|1023|1023|1023|1023|1023|1023|1023|1023|1023
+instance-template-1.us-central1-a.c.model-block-27751X.internal:3000|1023|1023|1023|1023|1023|1023|1023|1023|1023|1023
 
 

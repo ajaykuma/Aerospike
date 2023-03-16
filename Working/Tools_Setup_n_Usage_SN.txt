@@ -52,7 +52,7 @@ Admin> watch 1 3 info network
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Network Information (2022-05-29 20:02:50 UTC)~~~~~~~~~~~~~~~             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
                                                                 Node|         Node ID|             IP|     Build|Migrations|~~~~             ~~~~~~~~~~~~~Cluster~~~~~~~~~~~~~~~~~~|Client|  Uptime
                                                                     |                |               |          |          |Size             |        Key|Integrity|      Principal| Conns|
-instance-template-1.us-central1-a.c.model-block-277513.internal:3000|*BB90300800A0142|10.128.0.3:3000|C-5.7.0.17|   0.000  |   1             |491429E3053|True     |BB90300800A0142|     5|00:38:41
+instance-template-1.us-central1-a.c.model-block-27751X.internal:3000|*BB90300800A0142|10.128.0.3:3000|C-5.7.0.17|   0.000  |   1             |491429E3053|True     |BB90300800A0142|     5|00:38:41
 Number of rows: 1
 
 
@@ -60,7 +60,7 @@ Number of rows: 1
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Network Information (2022-05-29 20:02:51 UTC)~~~~~~~~~~~~~~~             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
                                                                 Node|         Node ID|             IP|     Build|Migrations|~~~~             ~~~~~~~~~~~~~Cluster~~~~~~~~~~~~~~~~~~|Client|  Uptime
                                                                     |                |               |          |          |Size             |        Key|Integrity|      Principal| Conns|
-instance-template-1.us-central1-a.c.model-block-277513.internal:3000|*BB90300800A0142|10.128.0.3:3000|C-5.7.0.17|   0.000  |   1             |491429E3053|True     |BB90300800A0142|     4|00:38:42
+instance-template-1.us-central1-a.c.model-block-27751X.internal:3000|*BB90300800A0142|10.128.0.3:3000|C-5.7.0.17|   0.000  |   1             |491429E3053|True     |BB90300800A0142|     4|00:38:42
 Number of rows: 1
 
 
@@ -68,7 +68,7 @@ Number of rows: 1
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Network Information (2022-05-29 20:02:52 UTC)~~~~~~~~~~~~~~~             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
                                                                 Node|         Node ID|             IP|     Build|Migrations|~~~~             ~~~~~~~~~~~~~Cluster~~~~~~~~~~~~~~~~~~|Client|  Uptime
                                                                     |                |               |          |          |Size             |        Key|Integrity|      Principal| Conns|
-instance-template-1.us-central1-a.c.model-block-277513.internal:3000|*BB90300800A0142|10.128.0.3:3000|C-5.7.0.17|   0.000  |   1             |491429E3053|True     |BB90300800A0142|     4|00:38:43
+instance-template-1.us-central1-a.c.model-block-27751X.internal:3000|*BB90300800A0142|10.128.0.3:3000|C-5.7.0.17|   0.000  |   1             |491429E3053|True     |BB90300800A0142|     4|00:38:43
 Number of rows: 1
 
 --------------
@@ -80,9 +80,9 @@ Admin> watch 5 info namespace
 Namespace|                                                                Node|  Total|Expirations|Evictions|  Stop|~~~~~~~~~~~Disk~~~~~~~~~~    ~|~~~~~~~~~~Memory~~~~~~~~~~|~Primary~
          |                                                                    |Records|           |         |Writes|    Used|Used%|HWM%|Avail    %|     Used|Used%|HWM%|Stop%|~~Index~~
          |                                                                    |       |           |         |      |        |     |    |          |         |     |    |     |     Type
-bar      |instance-template-1.us-central1-a.c.model-block-277513.internal:3000|0.000  |    0.000  |  0.000  |False |0.000 B |    0|   0|    9    9| 0.000 B |    0|   0|   90|mem
+bar      |instance-template-1.us-central1-a.c.model-block-27751X.internal:3000|0.000  |    0.000  |  0.000  |False |0.000 B |    0|   0|    9    9| 0.000 B |    0|   0|   90|mem
 bar      |                                                                    |0.000  |    0.000  |  0.000  |      |0.000 B |     |    |          | 0.000 B |     |    |     |
-test     |instance-template-1.us-central1-a.c.model-block-277513.internal:3000|1.000  |    0.000  |  0.000  |False |      --|   --|   0|    -    -|88.000 B |    1|   0|   90|mem
+test     |instance-template-1.us-central1-a.c.model-block-27751X.internal:3000|1.000  |    0.000  |  0.000  |False |      --|   --|   0|    -    -|88.000 B |    1|   0|   90|mem
 test     |                                                                    |1.000  |    0.000  |  0.000  |      |      --|     |    |          |88.000 B |     |    |     |
 Number of rows: 2
 
@@ -90,9 +90,9 @@ Number of rows: 2
 Namespace|                                                                Node|Rack|  Repl|  Total|~~~~~~~~~~Objects~~~~~~~~~~|~~~~~~~~~Tombs    tones~~~~~~~~|~~~~Pending~~~~
          |                                                                    |  ID|Factor|Records| Master|  Prole|Non-Replica| Master|  Prol    e|Non-Replica|~~~~Migrates~~~
          |                                                                    |    |      |       |       |       |           |       |           |           |     Tx|     Rx
-bar      |instance-template-1.us-central1-a.c.model-block-277513.internal:3000|   0|     1|0.000  |0.000  |0.000  |    0.000  |0.000  |0.000      |    0.000  |0.000  |0.000
+bar      |instance-template-1.us-central1-a.c.model-block-27751X.internal:3000|   0|     1|0.000  |0.000  |0.000  |    0.000  |0.000  |0.000      |    0.000  |0.000  |0.000
 bar      |                                                                    |    |      |0.000  |0.000  |0.000  |    0.000  |0.000  |0.000      |    0.000  |0.000  |0.000
-test     |instance-template-1.us-central1-a.c.model-block-277513.internal:3000|   0|     1|1.000  |1.000  |0.000  |    0.000  |0.000  |0.000      |    0.000  |0.000  |0.000
+test     |instance-template-1.us-central1-a.c.model-block-27751X.internal:3000|   0|     1|1.000  |1.000  |0.000  |    0.000  |0.000  |0.000      |    0.000  |0.000  |0.000
 test     |                                                                    |    |      |1.000  |1.000  |0.000  |    0.000  |0.000  |0.000      |    0.000  |0.000  |0.000
 Number of rows: 2
 
@@ -102,9 +102,9 @@ Number of rows: 2
 Namespace|                                                                Node|  Total|Expirations|Evictions|  Stop|~~~~~~~~~~~Disk~~~~~~~~~~    ~|~~~~~~~~~~Memory~~~~~~~~~~|~Primary~
          |                                                                    |Records|           |         |Writes|    Used|Used%|HWM%|Avail    %|     Used|Used%|HWM%|Stop%|~~Index~~
          |                                                                    |       |           |         |      |        |     |    |          |         |     |    |     |     Type
-bar      |instance-template-1.us-central1-a.c.model-block-277513.internal:3000|0.000  |    0.000  |  0.000  |False |0.000 B |    0|   0|    9    9| 0.000 B |    0|   0|   90|mem
+bar      |instance-template-1.us-central1-a.c.model-block-27751X.internal:3000|0.000  |    0.000  |  0.000  |False |0.000 B |    0|   0|    9    9| 0.000 B |    0|   0|   90|mem
 bar      |                                                                    |0.000  |    0.000  |  0.000  |      |0.000 B |     |    |          | 0.000 B |     |    |     |
-test     |instance-template-1.us-central1-a.c.model-block-277513.internal:3000|1.000  |    0.000  |  0.000  |False |      --|   --|   0|    -    -|88.000 B |    1|   0|   90|mem
+test     |instance-template-1.us-central1-a.c.model-block-27751X.internal:3000|1.000  |    0.000  |  0.000  |False |      --|   --|   0|    -    -|88.000 B |    1|   0|   90|mem
 test     |                                                                    |1.000  |    0.000  |  0.000  |      |      --|     |    |          |88.000 B |     |    |     |
 Number of rows: 2
 
@@ -112,9 +112,9 @@ Number of rows: 2
 Namespace|                                                                Node|Rack|  Repl|  Total|~~~~~~~~~~Objects~~~~~~~~~~|~~~~~~~~~Tombs    tones~~~~~~~~|~~~~Pending~~~~
          |                                                                    |  ID|Factor|Records| Master|  Prole|Non-Replica| Master|  Prol    e|Non-Replica|~~~~Migrates~~~
          |                                                                    |    |      |       |       |       |           |       |           |           |     Tx|     Rx
-bar      |instance-template-1.us-central1-a.c.model-block-277513.internal:3000|   0|     1|0.000  |0.000  |0.000  |    0.000  |0.000  |0.000      |    0.000  |0.000  |0.000
+bar      |instance-template-1.us-central1-a.c.model-block-27751X.internal:3000|   0|     1|0.000  |0.000  |0.000  |    0.000  |0.000  |0.000      |    0.000  |0.000  |0.000
 bar      |                                                                    |    |      |0.000  |0.000  |0.000  |    0.000  |0.000  |0.000      |    0.000  |0.000  |0.000
-test     |instance-template-1.us-central1-a.c.model-block-277513.internal:3000|   0|     1|1.000  |1.000  |0.000  |    0.000  |0.000  |0.000      |    0.000  |0.000  |0.000
+test     |instance-template-1.us-central1-a.c.model-block-27751X.internal:3000|   0|     1|1.000  |1.000  |0.000  |    0.000  |0.000  |0.000      |    0.000  |0.000  |0.000
 test     |                                                                    |    |      |1.000  |1.000  |0.000  |    0.000  |0.000  |0.000      |    0.000  |0.000  |0.000
 Number of rows: 2
 

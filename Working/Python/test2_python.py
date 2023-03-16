@@ -11,10 +11,10 @@ client = aerospike.client(config).connect()
 
 i = 1
 while i < 100:
-        client.put(('test','foo',i), {'i':i}, meta={'ttl':-1}, policy={'exists': aerospike.POLICY_EXISTS_CREATE_OR_REPLACE})
+        client.put(('test','appl',i), {'i':i}, meta={'ttl':-1}, policy={'exists': aerospike.POLICY_EXISTS_CREATE_OR_REPLACE})
         i = i + 1
 
         i = 101
 while i < 200:
-        client.put(('test','foo',i), {'i':i, 'x':i}, meta={'ttl':3600})
+        client.put(('test','appl',i), {'i':i, 'x':i}, meta={'ttl':3600})
         i = i + 1

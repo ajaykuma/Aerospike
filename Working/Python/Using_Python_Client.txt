@@ -9,14 +9,11 @@ pip install aerospike
 pip3 install aerospike
 
 
-#use test_python.py to test your connection to aerospike
-and insert data into namespace>set>bin using API
+#use test_python.py to test your connection to aerospike and insert data into namespace>set>bin using API
 
-#use test2_python to insert data into namespace and setting ttl
-values
+#use test2_python to insert data into namespace and setting ttl values
 
-#use functions to purgedata(ttlpurge.lua) based on ttl or change ttl
-(changettl.lua)
+#use functions to purgedata(ttlpurge.lua) based on ttl or change ttl (changettl.lua)
 
 aql> get record_ttl
 aql> register module './ttlpurge.lua'

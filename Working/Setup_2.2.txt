@@ -21,14 +21,14 @@ namespace test {
 #allow-ttl-without-nsup true
 Note**
 #[allow-ttl-without-nsup is a paramter for testing only.
-  On systems where nsup-period 43 is set to 0 as normal, allow-ttl-without-nsup 22 should not be used to allow 
+  On systems where nsup-period is set to 0 as normal, allow-ttl-without-nsup should not be used to allow 
   records with TTL to be written.]
 #we can find value of nsup-period set using 'asadm' tool
 -----------
 For example:
 Admin> show statistics like nsup
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~bar Namespace Statistics (2022-05-31 UTC)~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~        ~~~~~~~~~~~~~~~~~~~~~~
-Node                  |instance-template-1.us-central1-a.c.model-block-277513.internal:3000|instance-template-2.us-central1-a.c.model-block        -277513.internal:3000
+Node                  |instance-template-1.us-central1-a.c.model-block-27751x.internal:3000|instance-template-2.us-central1-a.c.model-block        -27751x.internal:3000
 allow-ttl-without-nsup|false                                                               |false                                                  
 nsup-hist-period      |3600                                                                |3600                                                   
 nsup-period           |0                                                                   |0                                                      
@@ -36,35 +36,7 @@ nsup-threads          |1                                                        
 nsup_cycle_duration   |0                                                                   |0                                                      
 Number of rows: 6
 
-[#why allow-ttl-without-nsup true
-The NSUP or namespace supervisor sub-system is an internal process within Aerospike that takes care of removing 
-records when their time to live has elapsed, a process called expiration or, when certain thresholds are met, 
-before the TTL has elapsed, a process called eviction. 
-By default the time interval between which NSUP scans the primary index for records eligible for expiration is 0, 
-meaning that expiration and eviction are switched off. Unless this nsup-period is configured to a non-zero value, 
-Aerospike will not allow records with a TTL to be written to the database.
-
-The reason for this is that the developers would be expecting records with TTL to be removed via expiration 
-and as such may not have included explicit methods for record removal in their code 
-(such as expunges or durable deletes). If Aerospike allowed records with non-zero TTL to be written when NSUP 
-is not running it could lead to the database being overloaded with records and entering stop writes.
-
-#Ans:The reason to include allow-ttl-without-nsup is to allow us to measure the impact of NSUP 
-when running in a use case where TTL is non-zero. 
-When NSUP runs it locks to a single CPU 
-(by default, but configurable through the nsup-threads configuration parameter) and will utilise that CPU 
-as much as 100% which can be alarming for the operations team. 
-On modern multi core CPU systems, the NSUP process (running in user space) would typically not impact 
-the overall performance. Nevertheless, it can be useful to see exactly what impact NSUP really has on the system.
-The way in which this test is carried out is to have a system where nsup-period is set to a non-zero value 
-and records with a TTL are being written. 
-The CPU in normal conditions is measured and then allow-ttl-without-nsup 
-is set to true and nsup-period to 0. The CPU usage and system impact is measured again. 
-The delta between the measurements is the effect of NSUP. 
-The parameter allows the test to be carried out without disrupting incoming client workload on a production system. 
-Once the tests are finished allow-ttl-without-nsup is set back to false and nsup-period is switched back to the usual 
-value for the system. Expiration will then continue as normal.]
-
+--why nsup(read below)
 
 namespace bar {
         replication-factor 2
@@ -104,4 +76,36 @@ namespace bar {
 
 #Note** In a cluster setup, the configs for all namespaces should be same
 #For both namespaces we have set the replication to 2 and that can be achieved when minimum 2 nodes are available.
+--------------
+[#why allow-ttl-without-nsup true
+The NSUP or namespace supervisor sub-system is an internal process within Aerospike that takes care of removing 
+records when their time to live has elapsed, a process called expiration or, when certain thresholds are met, 
+before the TTL has elapsed, a process called eviction. 
+By default the time interval between which NSUP scans the primary index for records eligible for expiration is 0, 
+meaning that expiration and eviction are switched off. Unless this nsup-period is configured to a non-zero value, 
+Aerospike will not allow records with a TTL to be written to the database.
 
+The reason being that we would be expecting records with TTL to be removed via expiration 
+and as such may not have included explicit methods for record removal in code 
+(such as expunges or durable deletes). 
+
+If Aerospike allowed records with non-zero TTL to be written when NSUP 
+is not running it could lead to the database being overloaded with records and entering stop writes.
+
+explaination:
+The reason to include allow-ttl-without-nsup is to allow us to measure the impact of NSUP 
+when running in a use case where TTL is non-zero. 
+When NSUP runs it locks to a single CPU 
+(by default, but configurable through the nsup-threads configuration parameter) and will utilise that CPU 
+as much as 100% which can be alarming for the operations team. 
+
+On modern multi core CPU systems, the NSUP process (running in user space) would typically not impact 
+the overall performance. It can still be useful to see exactly what impact NSUP really has on the system.
+The way in which this test is carried out is to have a system where nsup-period is set to a non-zero value 
+and records with a TTL are being written. 
+The CPU in normal conditions is measured and then allow-ttl-without-nsup 
+is set to true and nsup-period to 0. The CPU usage and system impact is measured again. 
+The delta between the measurements is the effect of NSUP. 
+The parameter allows the test to be carried out without disrupting incoming client workload on a production system. 
+Once the tests are finished allow-ttl-without-nsup is set back to false and nsup-period is switched back to the usual 
+value for the system. Expiration will then continue as normal.]

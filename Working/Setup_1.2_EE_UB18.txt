@@ -1,0 +1,147 @@
+Install Aerospike on Ubuntu
+--------------------
+> sudo apt update
+> sudo apt-get install openjdk-8-jdk
+--check python
+> python
+OR
+> python3
+> sudo apt-get install python3-distutils
+
+#Download packages
+--enterprise edition
+visit https://aerospike.com/download/
+ and select enterprise edition:
+version: 6.1.0
+Ubuntu 18.04
+copy download link: https://enterprise.aerospike.com/enterprise/download/server/6.1.0/artifact/ubuntu18
+or from your home directory (where you are logged in as say 'hdu')
+
+> wget https://download.aerospike.com/artifacts/aerospike-server-enterprise/6.1.0/aerospike-server-enterprise-6.1.0.11-ubuntu18.04.tgz
+> ls
+aerospike-server-enterprise-6.1.0.11-ubuntu18.04.tgz
+
+similarly
+--community edition(if needed)
+> wget https://github.com/aerospike/aerospike-server/archive/refs/tags/6.1.0.10.tar.gz
+aerospike-server-6.1.0.10.tar.gz
+
+[not required for now]
+--community edition older version
+aerospike-server-4.9.0.34.tar.gz
+
+#Unpack the package
+tar -xvf aerospike-server-enterprise-6.1.0.11-ubuntu18.04.tgz
+
+--check if aerospike exists
+ls /etc/init.d/
+ls /etc/aero*
+ls /opt/aero*
+
+--get into aerospike directory
+cd aerospike-server-enterprise-6.1.0.11-ubuntu18.04/
+ls -all
+
+sudo ./asinstall 
+Checking dependencies
+Installing tools
+dpkg -i aerospike-tools_8.0.4-ubuntu18.04_amd64.deb
+(Reading database ... 222250 files and directories currently installed.)
+Preparing to unpack aerospike-tools_8.0.4-ubuntu18.04_amd64.deb ...
+Unpacking aerospike-tools (8.0.4) over (8.0.4) ...
+Setting up aerospike-tools (8.0.4) ...
+Installing /opt/aerospike
+Writing /usr/local/lib/python3.6/dist-packages/aerospike.pth
+Adding python path /opt/aerospike/lib/python
+Installing server
+dpkg -i aerospike-server-enterprise-6.1.0.11.ubuntu18.04.x86_64.deb
+(Reading database ... 222250 files and directories currently installed.)
+Preparing to unpack aerospike-server-enterprise-6.1.0.11.ubuntu18.04.x86_64.deb ...
+Unpacking aerospike-server-enterprise (6.1.0.11-1) over (6.1.0.11-1) ...
+Setting up aerospike-server-enterprise (6.1.0.11-1) ...
+usermod: no changes
+
+--check again
+ls /opt/aerospike/
+ls /etc/aerospike
+
+sudo systemctl status aerospike
+sudo systemctl start aerospike
+sudo systemctl status aerospike
+
+---
+aerospike.service - Aerospike Server
+   Loaded: loaded (/usr/lib/systemd/system/aerospike.service; disabled; vendor preset: enabled)
+  Drop-In: /etc/systemd/system/aerospike.service.d
+           └─aerospike.conf
+   Active: active (running) since Mon 2023-03-13 18:11:15 EDT; 3s ago
+  Process: 3228 ExecStartPre=/usr/bin/asd-systemd-helper (code=exited, status=0/SUCCESS)
+ Main PID: 3234 (asd)
+    Tasks: 97 (limit: 4915)
+   CGroup: /system.slice/aerospike.service
+           └─3234 /usr/bin/asd --config-file /etc/aerospike/aerospike.conf --fgdaemon
+
+ 13 18:11:17 a1 asd[3234]: Mar 13 2023 22:11:17 GMT: INFO (clustering): (clustering.c:5797) applied new succession list bb9cf6f0c270008
+ 13 18:11:17 a1 asd[3234]: Mar 13 2023 22:11:17 GMT: INFO (clustering): (clustering.c:5799) applied cluster size 1
+ 13 18:11:17 a1 asd[3234]: Mar 13 2023 22:11:17 GMT: INFO (exchange): (exchange.c:2347) data exchange started with cluster key 22e498b69109
+ 13 18:11:17 a1 asd[3234]: Mar 13 2023 22:11:17 GMT: INFO (exchange): (exchange.c:2732) exchange-compatibility-id: self 11 cluster-min 0 -> 11 cluster-m
+ 13 18:11:17 a1 asd[3234]: Mar 13 2023 22:11:17 GMT: INFO (exchange): (exchange.c:3298) received commit command from principal node bb9cf6f0c270008
+ 13 18:11:17 a1 asd[3234]: Mar 13 2023 22:11:17 GMT: INFO (exchange): (exchange.c:3261) data exchange completed with cluster key 22e498b69109
+ 13 18:11:17 a1 asd[3234]: Mar 13 2023 22:11:17 GMT: INFO (partition): (partition_balance.c:1004) {test} replication factor is 1
+ 13 18:11:17 a1 asd[3234]: Mar 13 2023 22:11:17 GMT: INFO (partition): (partition_balance.c:978) {test} rebalanced: expected-migrations (0,0,0) fresh-pa
+ 13 18:11:17 a1 asd[3234]: Mar 13 2023 22:11:17 GMT: INFO (partition): (partition_balance.c:1004) {bar} replication factor is 1
+ 13 18:11:17 a1 asd[3234]: Mar 13 2023 22:11:17 GMT: INFO (partition): (partition_balance.c:978) {bar} rebalanced: expected-migrations (0,0,0) fresh-par
+
+---
+sudo asinfo -v STATUS
+---
+ls /opt/aerospike/bin
+aql
+Seed:         127.0.0.1
+User:         None
+Config File:  /etc/aerospike/astools.conf /home/hdu/.aerospike/astools.conf 
+Aerospike Query Client
+Version 8.0.0
+C Client Version 6.3.0
+Copyright 2012-2022 Aerospike. All rights reserved.
+aql>help <enter>
+
+--confirms server is running
+
+===============
+--to monitor (instead of asmonitor)
+
+sudo /opt/aerospike/bin/asadm/asadm 
+Admin>?
+--shows all options
+
+Admin> info
+Admin> help info
+
+=============
+
+For logging, by default with systemd, Aerospike logs use the main console - Use the journalctl commands:
+$ sudo journalctl -u aerospike -a -o cat -f
+(-a = full lines, -o cat trims the timestamp off each line to make them shorter, -f is optional, and used to watch the service as its logging/running)
+---------
+#Setting AMC using docker image
+sudo apt install docker.io
+sudo docker pull aerospike/amc
+sudo docker run -d --name amc -p 8081:8081 aerospike/amc
+sudo docker stats
+sudo docker ps --all
+
+Access AMC using http://localhost:8081
+
+IP: ipaddress
+Port:3000
+
+--stop container
+sudo docker stop container 673d7ebd5469
+sudo docker rm amc
+
+
+
+
+
+
