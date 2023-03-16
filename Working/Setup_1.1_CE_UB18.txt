@@ -7,8 +7,18 @@ Sets = Tables
 Keys/Records = Rows
 Bins = Columns
 
+--older version
 >wget -O aerospike.tgz https://download.aerospike.com/artifacts/aerospike-server-community/5.7.0.17/aerospike-server-community-5.7.0.17-ubuntu18.04.tgz
 >tar -xvf aerospike.tgz
+
+[Optional: if aerospike already installed]
+--on Ubuntu
+apt --purge autoremove aerospike*
+
+--newer version
+wget https://github.com/aerospike/aerospike-server/releases/download/6.1.0.11/aerospike-server-community-6.1.0.11.debian10.x86_64.deb
+--for tools
+wget https://download.aerospike.com/artifacts/aerospike-tools/6.1.0/aerospike-tools-6.1.0-ubuntu18.04.tgz
 
 >root@instance-template-1:~# ls
 aerospike-server-community-5.7.0.17-ubuntu18.04  aerospike.tgz
