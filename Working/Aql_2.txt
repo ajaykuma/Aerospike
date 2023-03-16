@@ -386,6 +386,10 @@ aql> select * from bar.firstset where pk='k3'
 +------+---------+-----------+------+-------------+
 1 row in set (0.000 secs)
 
+#creating one more index using 'asadm manage'
+Admin+> manage sindex create string newindx1 ns  bar set firstset bin name
+Successfully created sindex newindx1.
+
 aql> show indexes
 +--------+----------+-----------+------------+-------+------------+----------+-----------+
 | ns     | bin      | indextype | set        | state | indexname  | path     | type      |
@@ -417,9 +421,6 @@ Admin+> manage sindex delete secindx ns test set testset
 Successfully deleted sindex secindx.
 Admin+> manage sindex delete thrdindx ns test set testset
 Successfully deleted sindex thrdindx.
-
-aql> create index newindx1 on bar.firstset (age) numeric
-OK, 1 index added.
 
 aql> insert into bar.firstset (pk, age) values ('k3', 33)
 OK, 1 record affected.
